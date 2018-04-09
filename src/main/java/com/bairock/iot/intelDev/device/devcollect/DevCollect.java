@@ -46,6 +46,7 @@ public class DevCollect extends Device{
 	public CollectProperty getCollectProperty() {
 		if(null == collectProperty) {
 			collectProperty = new CollectProperty();
+			collectProperty.setDevCollect(this);
 		}
 		return collectProperty;
 	}

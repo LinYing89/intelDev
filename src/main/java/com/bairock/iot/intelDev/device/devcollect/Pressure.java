@@ -15,7 +15,7 @@ import com.bairock.iot.intelDev.device.CtrlCodeHelper;
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorValue("Pressure")
-public class Pressure extends DevCollect {
+public class Pressure extends DevCollectSignal {
 
 	/**
 	 * 

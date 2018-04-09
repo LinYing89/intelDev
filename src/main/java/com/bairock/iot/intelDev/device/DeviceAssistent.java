@@ -2,6 +2,7 @@ package com.bairock.iot.intelDev.device;
 
 import java.util.List;
 
+import com.bairock.iot.intelDev.device.devcollect.DevCollectSignal;
 import com.bairock.iot.intelDev.device.devcollect.Pressure;
 import com.bairock.iot.intelDev.device.devswitch.DevSwitchOneRoad;
 import com.bairock.iot.intelDev.device.devswitch.DevSwitchThreeRoad;
@@ -71,11 +72,8 @@ public class DeviceAssistent {
 		case MainCodeHelper.YE_WEI:
 			device = new Pressure(mcId, sc);
 			break;
-		case MainCodeHelper.COLLECTOR_4_20mA:
-			device = new Pressure(mcId, sc);
-			break;
-		case MainCodeHelper.COLLECTOR_a_bV:
-			//device = new Pressure(mcId, sc);
+		case MainCodeHelper.COLLECTOR_SIGNAL:
+			device = new DevCollectSignal(mcId, sc);
 			break;
 		case MainCodeHelper.GUAGUA_MOUTH:
 			device = new GuaguaMouth(mcId, sc);

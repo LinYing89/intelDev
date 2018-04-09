@@ -33,9 +33,11 @@ public class CollectProperty {
 	private Float leastReferValue = 0f;
 	//current value
 	private Float currentValue;
+	private Float calibrationValue;
 	private Float percent;
+	private String formula;
 	private String unitSymbol;
-	private CollectSignalSource collectSrc;
+	private CollectSignalSource collectSrc = CollectSignalSource.DIGIT;
 	
 	@Transient
 	@JsonIgnore
@@ -191,7 +193,45 @@ public class CollectProperty {
 	 * @param collectSrc
 	 */
 	public void setCollectSrc(CollectSignalSource collectSrc) {
-		this.collectSrc = collectSrc;
+		if(this.collectSrc != collectSrc) {
+			this.collectSrc = collectSrc;
+			if(collectSrc == CollectSignalSource.ELECTRIC_CURRENT) {
+				setLeastValue(4f);
+				setCrestValue(20f);
+			}
+		}
+	}
+
+	public Float getCalibrationValue() {
+		return calibrationValue;
+	}
+
+	public void setCalibrationValue(Float calibrationValue) {
+		this.calibrationValue = calibrationValue;
+	}
+
+	public String getFormula() {
+		if(formula == null || formula.isEmpty()) {
+			switch(collectSrc) {
+			case ELECTRIC_CURRENT:
+				formula = "A4+(A-4)/(20-4)*(A20-A4)";
+				break;
+			case VOLTAGE:
+				formula = "Aa+(A-a)/(b-a)*(Ab-Aa)";
+				break;
+			case DIGIT:
+			case SWITCH:
+				formula = "A";
+				break;
+			default:
+				break;
+			}
+		}
+		return formula;
+	}
+
+	public void setFormula(String formula) {
+		this.formula = formula;
 	}
 
 	/**
