@@ -92,6 +92,9 @@ public class CollectProperty {
 	 * @param crestValue
 	 */
 	public void setCrestValue(Float crestValue) {
+		if(collectSrc == CollectSignalSource.DIGIT) {
+			this.crestReferValue = crestValue;
+		}
 		this.crestValue = crestValue;
 	}
 	
@@ -100,6 +103,9 @@ public class CollectProperty {
 	}
 
 	public void setCrestReferValue(Float crestReferValue) {
+		if(collectSrc == CollectSignalSource.DIGIT) {
+			this.crestValue = crestReferValue;
+		}
 		this.crestReferValue = crestReferValue;
 	}
 	
@@ -140,7 +146,7 @@ public class CollectProperty {
 	 * @param currentValue
 	 */
 	public void setCurrentValue(Float currentValue) {
-		if(this.currentValue != currentValue){
+		if(Math.abs(this.currentValue - currentValue) > 0.01f){
 			this.currentValue = currentValue;
 			if(null != onCurrentValueChanged){
 				onCurrentValueChanged.onCurrentValueChanged(devCollect, currentValue);

@@ -55,15 +55,15 @@ public class DevCollectSignal extends DevCollect {
 								+ (srcValue - cp.getLeastValue()) / (cp.getCrestValue() - cp.getLeastValue())
 										* (cp.getCrestReferValue() - cp.getLeastReferValue());
 						currentValue = IntelDevHelper.scale(currentValue);
-						cp.setCurrentValue(currentValue);
-
+						
 						float percent = currentValue * 100 / cp.getCrestReferValue();
 						cp.setPercent(IntelDevHelper.scale(percent));
+						cp.setCurrentValue(currentValue);
 						break;
 					case DIGIT:
-						cp.setCurrentValue(srcValue);
 						float percent2 = srcValue * 100 / cp.getCrestReferValue();
 						cp.setPercent(IntelDevHelper.scale(percent2));
+						cp.setCurrentValue(srcValue);
 						break;
 					case SWITCH:
 						if(srcValue == 0f) {

@@ -267,7 +267,9 @@ public class DevChannelBridge {
 //				return ONE_ORDER_COMMUNICATION_OFTEN;
 //			}
 //		}
-		if(device.canSend()) {
+		//boolean cansend = false;
+		//if(dev instanceof)
+		if(dev.canSend()) {
 			dev.setLastOrder(order);
     		dev.noResponsePlus();
     		dev.resetLastCommunicationTime();

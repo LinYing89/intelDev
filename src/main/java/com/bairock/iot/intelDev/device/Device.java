@@ -699,6 +699,8 @@ public class Device implements Comparable<Device>, IDevice {
 		return OrderHelper.getOrderMsg(OrderHelper.SET_HEAD + getCoding() + OrderHelper.SEPARATOR + "a1"
 				+ OrderHelper.SEPARATOR + "n" + ip + "," + port);
 	}
+	
+	
 
 	private static void copyChildDevices(DevHaveChild dev1, DevHaveChild dev2, boolean copyId){
         List<Device> listNewDevice = new ArrayList<>();
@@ -775,4 +777,9 @@ public class Device implements Comparable<Device>, IDevice {
 //		 System.out.println(device.createTurnLocalModelOrder());
 //		 System.out.println(device.createTurnRemoteModelOrder("123", 10));
 //	 }
+
+	@Override
+	public String createAbnormalOrder() {
+		return OrderHelper.getOrderMsg(OrderHelper.FEEDBACK_HEAD + getCoding() + OrderHelper.SEPARATOR + "2" + DevStateHelper.getIns().getDs(DevStateHelper.DS_ZHENG_CHANG));
+	}
 }

@@ -80,7 +80,12 @@ public class DevSwitch extends DevHaveChild {
 		}
 		
 		// msgs[0] is message sign
-		String[] msgs = msgUnit.split("");
+		char[] cMsgs = msgUnit.toCharArray();
+		String[] msgs = new String[cMsgs.length];
+		for(int i=0; i<cMsgs.length; i++) {
+			msgs[i] = String.valueOf(cMsgs[i]);
+		}
+		
 		int moduleNum;
 		int firstSubDevSc;
 		int iHexState;

@@ -316,6 +316,5 @@ public class User {
 				id, name, psd, email, tel, petName);
 		return str;
 	}
-
 	
 }
