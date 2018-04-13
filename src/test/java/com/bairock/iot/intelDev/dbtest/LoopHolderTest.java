@@ -1,4 +1,4 @@
-package com.bairock.iot.intelDev.linkage.loop;
+package com.bairock.iot.intelDev.dbtest;
 
 import java.util.List;
 import java.util.UUID;
@@ -17,6 +17,9 @@ import com.bairock.iot.intelDev.linkage.Linkage;
 import com.bairock.iot.intelDev.linkage.LinkageCondition;
 import com.bairock.iot.intelDev.linkage.LinkageHolder;
 import com.bairock.iot.intelDev.linkage.ZLogic;
+import com.bairock.iot.intelDev.linkage.loop.LoopDuration;
+import com.bairock.iot.intelDev.linkage.loop.LoopHolder;
+import com.bairock.iot.intelDev.linkage.loop.ZLoop;
 @Ignore
 public class LoopHolderTest {
 

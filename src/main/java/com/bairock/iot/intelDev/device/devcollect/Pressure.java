@@ -34,16 +34,6 @@ public class Pressure extends DevCollectSignal {
 		// TODO Auto-generated constructor stub
 	}
 
-	private void setRatio() {
-		CollectProperty cp = getCollectProperty();
-		if (null == cp.getCrestValue() || null == cp.getLeastValue() || null == cp.getPercent()) {
-			return;
-		}
-		float ratio = cp.getPercent() / 100;
-		ratio = ratio * (cp.getCrestValue() - cp.getLeastValue()) + cp.getLeastValue();
-		cp.setCurrentValue(ratio);
-	}
-
 	@Override
 	public boolean handle(String state) {
 		if (null != state) {

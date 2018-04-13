@@ -346,7 +346,7 @@ public class Device implements Comparable<Device>, IDevice {
 	 * @param dsId
 	 */
 	public void setDevStateId(String dsId) {
-		if (this.devStateId != dsId) {
+		if (!this.devStateId.equals(dsId)) {
 			String oldStateId = this.devStateId;
 			this.devStateId = dsId;
 			if (oldStateId.equals(DevStateHelper.DS_YI_CHANG)) {
@@ -780,6 +780,16 @@ public class Device implements Comparable<Device>, IDevice {
 
 	@Override
 	public String createAbnormalOrder() {
-		return OrderHelper.getOrderMsg(OrderHelper.FEEDBACK_HEAD + getCoding() + OrderHelper.SEPARATOR + "2" + DevStateHelper.getIns().getDs(DevStateHelper.DS_ZHENG_CHANG));
+		return OrderHelper.getOrderMsg(OrderHelper.FEEDBACK_HEAD + getCoding() + OrderHelper.SEPARATOR + "2" + DevStateHelper.getIns().getDs(DevStateHelper.DS_YI_CHANG));
+	}
+
+	@Override
+	public void turnOn() {
+		devStateId = DevStateHelper.DS_KAI;
+	}
+
+	@Override
+	public void turnOff() {
+		devStateId = DevStateHelper.DS_GUAN;
 	}
 }

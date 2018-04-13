@@ -1,4 +1,4 @@
-package com.bairock.iot.intelDev.linkage;
+package com.bairock.iot.intelDev.dbtest;
 
 import java.util.UUID;
 
@@ -10,6 +10,9 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
+
+import com.bairock.iot.intelDev.linkage.ChainHolder;
+import com.bairock.iot.intelDev.linkage.SubChain;
 @Ignore
 public class ChainHolderTest {
 

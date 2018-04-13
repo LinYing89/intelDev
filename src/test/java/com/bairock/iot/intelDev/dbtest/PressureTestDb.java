@@ -1,4 +1,4 @@
-package com.bairock.iot.intelDev.device.devcollect;
+package com.bairock.iot.intelDev.dbtest;
 
 import java.util.UUID;
 
@@ -14,6 +14,8 @@ import org.junit.Test;
 import com.bairock.iot.intelDev.device.Device;
 import com.bairock.iot.intelDev.device.DeviceAssistent;
 import com.bairock.iot.intelDev.device.MainCodeHelper;
+import com.bairock.iot.intelDev.device.devcollect.DevCollect;
+import com.bairock.iot.intelDev.device.devcollect.Pressure;
 
 @Ignore
 public class PressureTestDb {

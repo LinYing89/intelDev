@@ -1,4 +1,4 @@
-package com.bairock.iot.intelDev.linkage.timing;
+package com.bairock.iot.intelDev.dbtest;
 
 import java.util.UUID;
 
@@ -10,6 +10,10 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
+
+import com.bairock.iot.intelDev.linkage.timing.Timing;
+import com.bairock.iot.intelDev.linkage.timing.TimingHolder;
+import com.bairock.iot.intelDev.linkage.timing.ZTimer;
 @Ignore
 public class TimingHolderTest {
 

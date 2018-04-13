@@ -8,6 +8,7 @@ import javax.persistence.InheritanceType;
 import javax.persistence.OneToOne;
 
 import com.bairock.iot.intelDev.device.CtrlCodeHelper;
+import com.bairock.iot.intelDev.device.DevStateHelper;
 import com.bairock.iot.intelDev.device.Device;
 import com.bairock.iot.intelDev.device.MainCodeHelper;
 import com.bairock.iot.intelDev.device.OrderHelper;
@@ -56,6 +57,25 @@ public class DevCollect extends Device{
 			this.collectProperty = collectProperty;
 			this.collectProperty.setDevCollect(this);
 		}
+	}
+	
+	
+	@Override
+	public void setDevStateId(String dsId) {
+		super.setDevStateId(dsId);
+		if(dsId.equals(DevStateHelper.DS_YI_CHANG)) {
+			getCollectProperty().setCurrentValueExceptListener(null);
+		}
+	}
+
+	protected void setRatio() {
+		CollectProperty cp = getCollectProperty();
+		if (null == cp.getCrestValue() || null == cp.getLeastValue() || null == cp.getPercent()) {
+			return;
+		}
+		float ratio = cp.getPercent() / 100;
+		ratio = ratio * (cp.getCrestReferValue() - cp.getLeastReferValue()) + cp.getLeastValue();
+		cp.setCurrentValue(ratio);
 	}
 	
 	@Override

@@ -17,36 +17,36 @@ public class CollectProperty {
 	@Id
 	@Column(nullable = false)
 	private String id;
-	
+
 	@OneToOne
 	@JsonBackReference("devcollect_property")
-//	@JoinColumn(name="devCollect_id", insertable=true, unique=true)
+	// @JoinColumn(name="devCollect_id", insertable=true, unique=true)
 	private DevCollect devCollect;
-	
-	//max value
+
+	// max value
 	private Float crestValue;
-	//max value refer to show value
+	// max value refer to show value
 	private Float crestReferValue;
-	//min value
+	// min value
 	private Float leastValue = 0f;
-	//min value refer to show value
+	// min value refer to show value
 	private Float leastReferValue = 0f;
-	//current value
+	// current value
 	private Float currentValue;
 	private Float calibrationValue;
 	private Float percent;
 	private String formula;
 	private String unitSymbol;
 	private CollectSignalSource collectSrc = CollectSignalSource.DIGIT;
-	
+
 	@Transient
 	@JsonIgnore
 	private OnCurrentValueChangedListener onCurrentValueChanged;
-	
+
 	public CollectProperty() {
 		id = UUID.randomUUID().toString();
 	}
-	
+
 	/**
 	 * 
 	 * @return
@@ -54,7 +54,7 @@ public class CollectProperty {
 	public String getId() {
 		return id;
 	}
-	
+
 	/**
 	 * 
 	 * @param id
@@ -62,7 +62,7 @@ public class CollectProperty {
 	public void setId(String id) {
 		this.id = id;
 	}
-	
+
 	public DevCollect getDevCollect() {
 		return devCollect;
 	}
@@ -81,50 +81,54 @@ public class CollectProperty {
 
 	/**
 	 * get max value
+	 * 
 	 * @return
 	 */
 	public Float getCrestValue() {
 		return crestValue;
 	}
-	
+
 	/**
 	 * get max value
+	 * 
 	 * @param crestValue
 	 */
 	public void setCrestValue(Float crestValue) {
-		if(collectSrc == CollectSignalSource.DIGIT) {
+		if (collectSrc == CollectSignalSource.DIGIT) {
 			this.crestReferValue = crestValue;
 		}
 		this.crestValue = crestValue;
 	}
-	
+
 	public Float getCrestReferValue() {
 		return crestReferValue;
 	}
 
 	public void setCrestReferValue(Float crestReferValue) {
-		if(collectSrc == CollectSignalSource.DIGIT) {
+		if (collectSrc == CollectSignalSource.DIGIT) {
 			this.crestValue = crestReferValue;
 		}
 		this.crestReferValue = crestReferValue;
 	}
-	
+
 	/**
 	 * get min value
+	 * 
 	 * @return
 	 */
 	public Float getLeastValue() {
 		return leastValue;
 	}
-	
+
 	/**
 	 * set min value
+	 * 
 	 * @param leastValue
 	 */
 	public void setLeastValue(Float leastValue) {
 		this.leastValue = leastValue;
 	}
-	
+
 	public Float getLeastReferValue() {
 		return leastReferValue;
 	}
@@ -140,20 +144,48 @@ public class CollectProperty {
 	public Float getCurrentValue() {
 		return currentValue;
 	}
-	
+
 	/**
 	 * 
 	 * @param currentValue
 	 */
 	public void setCurrentValue(Float currentValue) {
-		if(Math.abs(this.currentValue - currentValue) > 0.01f){
+		if (this.currentValue == null) {
 			this.currentValue = currentValue;
-			if(null != onCurrentValueChanged){
+			if (null != onCurrentValueChanged) {
 				onCurrentValueChanged.onCurrentValueChanged(devCollect, currentValue);
+			}
+		} else{
+			if (null == currentValue) {
+				this.currentValue = currentValue;
+				if (null != onCurrentValueChanged) {
+					onCurrentValueChanged.onCurrentValueChanged(devCollect, currentValue);
+				}
+			} else if (Math.abs(this.currentValue - currentValue) > 0.01f) {
+				this.currentValue = currentValue;
+				if (null != onCurrentValueChanged) {
+					onCurrentValueChanged.onCurrentValueChanged(devCollect, currentValue);
+				}
 			}
 		}
 	}
-	
+
+	/**
+	 * 
+	 * @param currentValue
+	 */
+	public void setCurrentValueExceptListener(Float currentValue) {
+		if (this.currentValue == null) {
+			this.currentValue = currentValue;
+		} else {
+			if (null == currentValue) {
+				this.currentValue = currentValue;
+			} else if (Math.abs(this.currentValue - currentValue) > 0.01f) {
+				this.currentValue = currentValue;
+			}
+		}
+	}
+
 	/**
 	 * 
 	 * @return
@@ -161,7 +193,7 @@ public class CollectProperty {
 	public Float getPercent() {
 		return percent;
 	}
-	
+
 	/**
 	 * 
 	 * @param percent
@@ -169,7 +201,7 @@ public class CollectProperty {
 	public void setPercent(Float percent) {
 		this.percent = percent;
 	}
-	
+
 	/**
 	 * 
 	 * @return
@@ -177,7 +209,7 @@ public class CollectProperty {
 	public String getUnitSymbol() {
 		return unitSymbol;
 	}
-	
+
 	/**
 	 * 
 	 * @param unitSymbol
@@ -185,9 +217,10 @@ public class CollectProperty {
 	public void setUnitSymbol(String unitSymbol) {
 		this.unitSymbol = unitSymbol;
 	}
-	
+
 	/**
 	 * get signal source of this device
+	 * 
 	 * @return
 	 */
 	public CollectSignalSource getCollectSrc() {
@@ -196,12 +229,13 @@ public class CollectProperty {
 
 	/**
 	 * set signal source of this device
+	 * 
 	 * @param collectSrc
 	 */
 	public void setCollectSrc(CollectSignalSource collectSrc) {
-		if(this.collectSrc != collectSrc) {
+		if (this.collectSrc != collectSrc) {
 			this.collectSrc = collectSrc;
-			if(collectSrc == CollectSignalSource.ELECTRIC_CURRENT) {
+			if (collectSrc == CollectSignalSource.ELECTRIC_CURRENT) {
 				setLeastValue(4f);
 				setCrestValue(20f);
 			}
@@ -217,8 +251,8 @@ public class CollectProperty {
 	}
 
 	public String getFormula() {
-		if(formula == null || formula.isEmpty()) {
-			switch(collectSrc) {
+		if (formula == null || formula.isEmpty()) {
+			switch (collectSrc) {
 			case ELECTRIC_CURRENT:
 				formula = "A4+(A-4)/(20-4)*(A20-A4)";
 				break;
@@ -245,31 +279,31 @@ public class CollectProperty {
 	 * @return
 	 */
 	@JsonIgnore
-	public String getValueWithSymbol(){
-		if(getCurrentValue() != null){
-			if(unitSymbol != null){
+	public String getValueWithSymbol() {
+		if (getCurrentValue() != null) {
+			if (unitSymbol != null) {
 				return getCurrentValue() + unitSymbol;
-			}else{
+			} else {
 				return String.valueOf(getCurrentValue());
 			}
 		}
 		return null;
 	}
-	
+
 	/**
 	 * 
 	 * @return
 	 */
 	@JsonIgnore
-	public String getPercentWithSymbol(){
-		if(getPercent() != null){
+	public String getPercentWithSymbol() {
+		if (getPercent() != null) {
 			return getPercent() + "%";
 		}
 		return null;
 	}
-	
-	public interface OnCurrentValueChangedListener{
+
+	public interface OnCurrentValueChangedListener {
 		void onCurrentValueChanged(DevCollect dev, Float value);
 	}
-	
+
 }

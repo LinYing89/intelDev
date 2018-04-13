@@ -1,4 +1,4 @@
-package com.bairock.iot.intelDev.device;
+package com.bairock.iot.intelDev.dbtest;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -10,7 +10,10 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
-//@Ignore
+import com.bairock.iot.intelDev.device.Device;
+import com.bairock.iot.intelDev.device.MainCodeHelper;
+
+@Ignore
 public class DeviceTest {
 
 	private EntityManagerFactory entityManagerFactory;

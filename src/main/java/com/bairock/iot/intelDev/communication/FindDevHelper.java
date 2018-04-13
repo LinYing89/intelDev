@@ -65,7 +65,7 @@ public class FindDevHelper {
 		}
 	}
 
-	public void alreadFind(String devCoding) {
+	public void alreadyFind(String devCoding) {
 		stMsg.remove(devCoding);
 	}
 

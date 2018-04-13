@@ -1,5 +1,6 @@
-package com.bairock.iot.intelDev.device;
+package com.bairock.iot.intelDev.device.devswitch;
 
+import com.bairock.iot.intelDev.device.MainCodeHelper;
 import com.bairock.iot.intelDev.device.OrderHelper;
 import com.bairock.iot.intelDev.device.devswitch.DevSwitchTwoRoad;
 import com.bairock.iot.intelDev.device.devswitch.SubDev;

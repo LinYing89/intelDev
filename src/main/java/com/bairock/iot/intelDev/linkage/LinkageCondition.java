@@ -13,7 +13,6 @@ import com.bairock.iot.intelDev.device.CompareSymbol;
 import com.bairock.iot.intelDev.device.Device;
 import com.bairock.iot.intelDev.device.IStateDev;
 import com.bairock.iot.intelDev.device.devcollect.DevCollect;
-import com.bairock.iot.intelDev.device.devcollect.Pressure;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -43,6 +42,7 @@ public class LinkageCondition {
 
 	private float compareValue;
 	private boolean deleted;
+	private TriggerStyle triggerStyle = TriggerStyle.VALUE;
 
 	public LinkageCondition() {
 		id = UUID.randomUUID().toString();
@@ -162,6 +162,14 @@ public class LinkageCondition {
 		this.deleted = deleted;
 	}
 
+	public TriggerStyle getTriggerStyle() {
+		return triggerStyle;
+	}
+
+	public void setTriggerStyle(TriggerStyle triggerStyle) {
+		this.triggerStyle = triggerStyle;
+	}
+
 	/**
 	 * the result of condition
 	 * 
@@ -176,15 +184,14 @@ public class LinkageCondition {
 		float value = 0;
 		if (device instanceof IStateDev) {
 			value = device.isKaiState() ? 1 : 0;
-		} else if (device instanceof Pressure) {
-			Float fValue = ((Pressure) device).getCollectProperty().getPercent();
-			if (fValue == null) {
-				return null;
-			}
-			value = fValue;
 		} else if (device instanceof DevCollect) {
 			DevCollect cd = (DevCollect) device;
-			Float fValue = cd.getCollectProperty().getCurrentValue();
+			Float fValue = null;
+			if(getTriggerStyle() == TriggerStyle.PERCENT) {
+				fValue = cd.getCollectProperty().getPercent();
+			}else {
+				fValue = cd.getCollectProperty().getCurrentValue();
+			}
 			if (fValue == null) {
 				return null;
 			}

@@ -24,6 +24,9 @@ public interface IDevice {
 	@JsonIgnore
 	String getCoding();
 	
+	void turnOn();
+	
+	void turnOff();
 	/**
 	 * turn device gear to on
 	 */

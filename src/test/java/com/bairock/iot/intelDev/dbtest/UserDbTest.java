@@ -1,4 +1,4 @@
-package com.bairock.iot.intelDev.user;
+package com.bairock.iot.intelDev.dbtest;
 
 import java.io.IOException;
 import java.util.Date;
@@ -33,6 +33,8 @@ import com.bairock.iot.intelDev.linkage.timing.Timing;
 import com.bairock.iot.intelDev.linkage.timing.TimingHolder;
 import com.bairock.iot.intelDev.linkage.timing.WeekHelper;
 import com.bairock.iot.intelDev.linkage.timing.ZTimer;
+import com.bairock.iot.intelDev.user.DevGroup;
+import com.bairock.iot.intelDev.user.User;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class UserDbTest {

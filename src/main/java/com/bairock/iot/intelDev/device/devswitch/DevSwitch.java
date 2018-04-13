@@ -59,6 +59,23 @@ public class DevSwitch extends DevHaveChild {
 		return OrderHelper.getOrderMsg(OrderHelper.QUERY_HEAD + getCoding() + OrderHelper.SEPARATOR + "8");
 	}
 
+	
+	@Override
+	public void turnOn() {
+		super.turnOn();
+		for(Device dev : getListDev()) {
+			dev.turnOn();
+		}
+	}
+
+	@Override
+	public void turnOff() {
+		super.turnOff();
+		for(Device dev : getListDev()) {
+			dev.turnOff();
+		}
+	}
+
 	@Override
 	public boolean handle(String state) {
 		super.handle(state);
@@ -89,6 +106,7 @@ public class DevSwitch extends DevHaveChild {
 		int moduleNum;
 		int firstSubDevSc;
 		int iHexState;
+		
 		switch (msgs[0]) {
 		case DevSwitchMsgSign.ORDER_CTRL_FEEDBACK:
 			// feedback because of order control
@@ -107,7 +125,6 @@ public class DevSwitch extends DevHaveChild {
 			break;
 		case DevSwitchMsgSign.ORDER_QUERY_FEEDBACK:
 			// feedback because of order query
-			// c[0-n] is road state, index is module number
 			if(msgs.length < 2) {
 				return;
 			}
