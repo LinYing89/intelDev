@@ -75,7 +75,7 @@ public class Device implements Comparable<Device>, IDevice {
 	@Transient
 	@JsonIgnore
 	private long lastResponseTime;
-	
+
 	@Transient
 	@JsonIgnore
 	private LinkType linkType = LinkType.NET;
@@ -354,11 +354,11 @@ public class Device implements Comparable<Device>, IDevice {
 					onStateChanged.onAbnormalToNormal(this);
 				}
 			} else if (dsId.equals(DevStateHelper.DS_YI_CHANG)) {
-//				if (this instanceof DevHaveChild) {
-//					for (Device dev : ((DevHaveChild) this).getListDev()) {
-//						dev.setDevStateId(DevStateHelper.DS_YI_CHANG);
-//					}
-//				}
+				// if (this instanceof DevHaveChild) {
+				// for (Device dev : ((DevHaveChild) this).getListDev()) {
+				// dev.setDevStateId(DevStateHelper.DS_YI_CHANG);
+				// }
+				// }
 				if (null != onStateChanged) {
 					onStateChanged.onNormalToAbnormal(this);
 				}
@@ -465,7 +465,7 @@ public class Device implements Comparable<Device>, IDevice {
 	public void noResponsePlus() {
 		noResponse++;
 		if (noResponse > 3 && getLastResponseInterval() > 20000) {
-			if(null != onStateChanged) {
+			if (null != onStateChanged) {
 				onStateChanged.onNoResponse(this);
 			}
 		}
@@ -483,7 +483,6 @@ public class Device implements Comparable<Device>, IDevice {
 		lastCommunicationTime = System.currentTimeMillis();
 	}
 
-	
 	public LinkType getLinkType() {
 		return linkType;
 	}
@@ -562,25 +561,26 @@ public class Device implements Comparable<Device>, IDevice {
 	public boolean isKaiState() {
 		return getDevStateId().equals("ds_k");
 	}
-	
+
 	/**
-	 * if last communication interval great 5s,can send
-	 * if last communication interval lest 5s, but device responded, can send
-	 * if last communication interval lest 5s, and device didn't responded, can't send
+	 * if last communication interval great 5s,can send if last communication
+	 * interval lest 5s, but device responded, can send if last communication
+	 * interval lest 5s, and device didn't responded, can't send
+	 * 
 	 * @return
 	 */
 	public boolean canSend() {
-        if(getCommunicationInterval() >= 5000 || getNoResponse() == 0){
-    		return true;
-        }else {
-        	return false;
-        }
+		if (getCommunicationInterval() >= 5000 || getNoResponse() == 0) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	@Override
 	public boolean handle(String state) {
 		noResponse = 0;
-		//resetLastCommunicationTime();
+		// resetLastCommunicationTime();
 		lastResponseTime = System.currentTimeMillis();
 		setDevStateId(DevStateHelper.DS_ZHENG_CHANG);
 		return true;
@@ -662,7 +662,7 @@ public class Device implements Comparable<Device>, IDevice {
 		void onNormalToAbnormal(Device dev);
 
 		void onAbnormalToNormal(Device dev);
-		
+
 		void onNoResponse(Device dev);
 	}
 
@@ -689,8 +689,8 @@ public class Device implements Comparable<Device>, IDevice {
 
 	@Override
 	public String createTurnLocalModelOrder(String ip, int port) {
-		String order = OrderHelper.SET_HEAD + getCoding() + OrderHelper.SEPARATOR + "a2"
-				+ OrderHelper.SEPARATOR + "n" + ip + "," + port;
+		String order = OrderHelper.SET_HEAD + getCoding() + OrderHelper.SEPARATOR + "a2" + OrderHelper.SEPARATOR + "n"
+				+ ip + "," + port;
 		return OrderHelper.getOrderMsg(order);
 	}
 
@@ -699,88 +699,93 @@ public class Device implements Comparable<Device>, IDevice {
 		return OrderHelper.getOrderMsg(OrderHelper.SET_HEAD + getCoding() + OrderHelper.SEPARATOR + "a1"
 				+ OrderHelper.SEPARATOR + "n" + ip + "," + port);
 	}
-	
-	
 
-	private static void copyChildDevices(DevHaveChild dev1, DevHaveChild dev2, boolean copyId){
-        List<Device> listNewDevice = new ArrayList<>();
-        for(Device device2 : dev2.getListDev()){
-            boolean haved = false;
-            for(Device device1 : dev1.getListDev()){
-                if (device1.getCoding().equals(device2.getCoding())) {
-                    if(copyId) {
-                        copyDevice(device1, device2);
-                    }else{
-                        copyDeviceExceptId(device1, device2);
-                    }
-                    haved = true;
-                    break;
-                }
-            }
-            if(!haved){
-                listNewDevice.add(device2);
-            }
-        }
-        for(Device device : listNewDevice){
-            dev1.addChildDev(device);
-        }
-    }
+	private static void copyChildDevices(DevHaveChild dev1, DevHaveChild dev2, boolean copyId) {
+		List<Device> listNewDevice = new ArrayList<>();
+		for (Device device2 : dev2.getListDev()) {
+			boolean haved = false;
+			for (Device device1 : dev1.getListDev()) {
+				if (device1.getCoding().equals(device2.getCoding())) {
+					if (copyId) {
+						copyDevice(device1, device2);
+					} else {
+						copyDeviceExceptId(device1, device2);
+					}
+					haved = true;
+					break;
+				}
+			}
+			if (!haved) {
+				listNewDevice.add(device2);
+			}
+		}
+		for (Device device : listNewDevice) {
+			dev1.addChildDev(device);
+		}
+	}
 
-    /**
-     * replace dev1 attribute with dev2 attribute include id
-     * @param dev1 target device
-     * @param dev2 source device
-     */
-    public static void copyDevice(Device dev1, Device dev2){
-        dev1.setId(dev2.getId());
-        copyDeviceExceptId(dev1, dev2);
-        if(dev1 instanceof DevHaveChild){
-            copyChildDevices((DevHaveChild) dev1, (DevHaveChild) dev2, true);
-        }
-    }
+	/**
+	 * replace dev1 attribute with dev2 attribute include id
+	 * 
+	 * @param dev1
+	 *            target device
+	 * @param dev2
+	 *            source device
+	 */
+	public static void copyDevice(Device dev1, Device dev2) {
+		dev1.setId(dev2.getId());
+		copyDeviceExceptId(dev1, dev2);
+		if (dev1 instanceof DevHaveChild) {
+			copyChildDevices((DevHaveChild) dev1, (DevHaveChild) dev2, true);
+		}
+	}
 
-    /**
-     * replace dev1 attribute with dev2 attribute but not replace id
-     * @param dev1 target device
-     * @param dev2 source device
-     */
-    public static void copyDeviceExceptId(Device dev1, Device dev2){
-        dev1.setName(dev2.getName());
-        dev1.setMainCodeId(dev2.getMainCodeId());
-        dev1.setSubCode(dev2.getSubCode());
-        dev1.setSn(dev2.getSn());
-        dev1.setDevCategory(dev2.getDevCategory());
-        dev1.setPlace(dev2.getPlace());
-        dev1.setAlias(dev2.getAlias());
-        dev1.setGear(dev2.getGear());
-        dev1.setDevStateId(dev2.getDevStateId());
-        dev1.setCtrlModel(dev2.getCtrlModel());
-        dev1.setSortIndex(dev2.getSortIndex());
-        dev1.setVisibility(dev2.isVisibility());
-        dev1.setDeleted(dev2.isDeleted());
-        if(dev1 instanceof DevHaveChild){
-            copyChildDevices((DevHaveChild) dev1, (DevHaveChild) dev2, false);
-        }
-        if(dev1 instanceof DevCollect && dev2 instanceof DevCollect){
-            DevCollect dc1 = (DevCollect)dev1;
-            DevCollect dc2 = (DevCollect)dev2;
-            dc1.getCollectProperty().setCollectSrc(dc2.getCollectProperty().getCollectSrc());
-            dc1.getCollectProperty().setCrestValue(dc2.getCollectProperty().getCrestValue());
-            dc1.getCollectProperty().setCurrentValue(dc2.getCollectProperty().getCurrentValue());
-            dc1.getCollectProperty().setLeastValue(dc2.getCollectProperty().getLeastValue());
-            dc1.getCollectProperty().setPercent(dc2.getCollectProperty().getPercent());
-            dc1.getCollectProperty().setUnitSymbol(dc2.getCollectProperty().getUnitSymbol());
-        }
-    }
-//	 public static void main(String[] args) {
-//		 Device device = DeviceAssistent.createDeviceByCoding("B10001");
-//		 System.out.println(device.createTurnLocalModelOrder());
-//		 System.out.println(device.createTurnRemoteModelOrder("123", 10));
-//	 }
+	/**
+	 * replace dev1 attribute with dev2 attribute but not replace id
+	 * 
+	 * @param dev1
+	 *            target device
+	 * @param dev2
+	 *            source device
+	 */
+	public static void copyDeviceExceptId(Device dev1, Device dev2) {
+		dev1.setName(dev2.getName());
+		dev1.setMainCodeId(dev2.getMainCodeId());
+		dev1.setSubCode(dev2.getSubCode());
+		dev1.setSn(dev2.getSn());
+		dev1.setDevCategory(dev2.getDevCategory());
+		dev1.setPlace(dev2.getPlace());
+		dev1.setAlias(dev2.getAlias());
+		dev1.setGear(dev2.getGear());
+		dev1.setDevStateId(dev2.getDevStateId());
+		dev1.setCtrlModel(dev2.getCtrlModel());
+		dev1.setSortIndex(dev2.getSortIndex());
+		dev1.setVisibility(dev2.isVisibility());
+		dev1.setDeleted(dev2.isDeleted());
+		if (dev1 instanceof DevHaveChild) {
+			copyChildDevices((DevHaveChild) dev1, (DevHaveChild) dev2, false);
+		}
+		if (dev1 instanceof DevCollect && dev2 instanceof DevCollect) {
+			DevCollect dc1 = (DevCollect) dev1;
+			DevCollect dc2 = (DevCollect) dev2;
+			dc1.getCollectProperty().setCollectSrc(dc2.getCollectProperty().getCollectSrc());
+			dc1.getCollectProperty().setCrestValue(dc2.getCollectProperty().getCrestValue());
+			dc1.getCollectProperty().setCurrentValue(dc2.getCollectProperty().getCurrentValue());
+			dc1.getCollectProperty().setLeastValue(dc2.getCollectProperty().getLeastValue());
+			dc1.getCollectProperty().setPercent(dc2.getCollectProperty().getPercent());
+			dc1.getCollectProperty().setUnitSymbol(dc2.getCollectProperty().getUnitSymbol());
+		}
+	}
+	// public static void main(String[] args) {
+	// Device device = DeviceAssistent.createDeviceByCoding("B10001");
+	// System.out.println(device.createTurnLocalModelOrder());
+	// System.out.println(device.createTurnRemoteModelOrder("123", 10));
+	// }
 
 	@Override
 	public String createAbnormalOrder() {
-		return OrderHelper.getOrderMsg(OrderHelper.FEEDBACK_HEAD + getCoding() + OrderHelper.SEPARATOR + "2" + DevStateHelper.getIns().getDs(DevStateHelper.DS_YI_CHANG));
+		return OrderHelper.getOrderMsg(OrderHelper.FEEDBACK_HEAD + getCoding() + OrderHelper.SEPARATOR + "2"
+				+ DevStateHelper.getIns().getDs(DevStateHelper.DS_YI_CHANG));
 	}
 
 	@Override
@@ -791,5 +796,10 @@ public class Device implements Comparable<Device>, IDevice {
 	@Override
 	public void turnOff() {
 		devStateId = DevStateHelper.DS_GUAN;
+	}
+
+	@Override
+	public String createInitOrder() {
+		return OrderHelper.getOrderMsg(OrderHelper.QUERY_HEAD + getCoding() + OrderHelper.SEPARATOR + "2");
 	}
 }

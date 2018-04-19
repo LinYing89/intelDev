@@ -135,31 +135,31 @@ public class DevChannelBridgeHelper {
 		this.onHeartSendListener = onHeartSendListener;
 	}
 
-	public void sendDevOrder(Device dev, String order) {
+	public void sendDevOrder(Device dev, String order, boolean immediately) {
 		if (dev == null || !dev.isNormal()) {
 			return;
 		}
 		DevChannelBridge db = getDevChannelBridge(dev.findSuperParent());
-		sendToDb(db, dev, order);
+		sendToDb(db, dev, order, immediately);
 	}
 	
-	public void sendDevOrder(Device dev, String order, String userName, String groupName) {
+	public void sendDevOrder(Device dev, String order, String userName, String groupName, boolean immediately) {
 		if (dev == null || !dev.isNormal()) {
 			return;
 		}
 		DevChannelBridge db = getDevChannelBridge(dev.findSuperParent(), userName, groupName);
 		if(null != db) {
-			sendToDb(db, dev, order);
+			sendToDb(db, dev, order, immediately);
 		}
 	}
 	
-	private void sendToDb(DevChannelBridge db, Device dev, String order) {
+	private void sendToDb(DevChannelBridge db, Device dev, String order, boolean immediately) {
 		if (db != null) {
 			int result;
 			if(dev instanceof SubDev) {
-				result = db.sendOrder(order, dev.getParent());
+				result = db.sendOrder(order, dev.getParent(), immediately);
 			}else {
-				result = db.sendOrder(order, dev);
+				result = db.sendOrder(order, dev, immediately);
 			}
 			switch (result) {
 			case DevChannelBridge.NO_CHANNEL:
@@ -173,25 +173,25 @@ public class DevChannelBridgeHelper {
 		}
 	}
 	
-	public void sendDevOrder(String devCoding, String order) {
+	public void sendDevOrder(String devCoding, String order, boolean immediately) {
 		if (devCoding == null || devCoding.isEmpty()) {
 			return;
 		}
 		DevChannelBridge db = getDevChannelBridge(devCoding);
 		if(null != db) {
 			Device dev = db.findDevice(devCoding);
-			sendToDb(db, dev, order);
+			sendToDb(db, dev, order, immediately);
 		}
 	}
 	
-	public void sendDevOrder(String devCoding, String order, String userName, String groupName) {
+	public void sendDevOrder(String devCoding, String order, String userName, String groupName, boolean immediately) {
 		if (devCoding == null || devCoding.isEmpty()) {
 			return;
 		}
 		DevChannelBridge db = getDevChannelBridge(devCoding, userName, groupName);
 		if(null != db) {
 			Device dev = db.findDevice(devCoding);
-			sendToDb(db, dev, order);
+			sendToDb(db, dev, order, immediately);
 		}
 	}
 

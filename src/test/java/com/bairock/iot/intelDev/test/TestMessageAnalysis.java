@@ -21,7 +21,7 @@ public class TestMessageAnalysis {
 		}
 
 		@Override
-		public void noTheDev(String msg) {
+		public void unKnowMsg(String msg) {
 			// TODO Auto-generated method stub
 			
 		}

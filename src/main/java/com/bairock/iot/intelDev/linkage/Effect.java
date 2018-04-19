@@ -13,6 +13,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 
 /**
  * chain effect
+ * 
  * @author LinQiang
  *
  */
@@ -21,21 +22,21 @@ public class Effect {
 
 	@Id
 	private String id;
-	
+
 	@ManyToOne
 	@JsonBackReference("linkage_effect")
 	private Linkage linkage;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "dev_id", foreignKey = @ForeignKey(name = "DEV_ID_FK"))
 	private Device device;
-	
+
 	private String dsId;
 	private boolean deleted;
-	
+
 	private int effectCount;
 	private String effectContent;
-	
+
 	/**
 	 * 
 	 */
@@ -61,6 +62,7 @@ public class Effect {
 
 	/**
 	 * get device
+	 * 
 	 * @return
 	 */
 	public Device getDevice() {
@@ -69,6 +71,7 @@ public class Effect {
 
 	/**
 	 * set device
+	 * 
 	 * @param device
 	 */
 	public void setDevice(Device device) {
@@ -77,6 +80,7 @@ public class Effect {
 
 	/**
 	 * get device state identify
+	 * 
 	 * @return
 	 */
 	public String getDsId() {
@@ -85,6 +89,7 @@ public class Effect {
 
 	/**
 	 * set device state identify
+	 * 
 	 * @param dsId
 	 */
 	public void setDsId(String dsId) {
@@ -93,6 +98,7 @@ public class Effect {
 
 	/**
 	 * is deleted
+	 * 
 	 * @return
 	 */
 	public boolean isDeleted() {
@@ -101,6 +107,7 @@ public class Effect {
 
 	/**
 	 * set deleted
+	 * 
 	 * @param deleted
 	 */
 	public void setDeleted(boolean deleted) {
@@ -133,40 +140,40 @@ public class Effect {
 
 	@Override
 	public boolean equals(Object obj) {
-		if(null == obj || !(obj instanceof Effect)) {
+		if (null == obj || !(obj instanceof Effect)) {
 			return false;
 		}
-		Effect effect = (Effect)obj;
-		if(!effect.getDevice().equals(getDevice())) {
+		Effect effect = (Effect) obj;
+		if (!effect.getDevice().equals(getDevice())) {
 			return false;
 		}
-		if(effect.getDsId() == null && this.dsId != null) {
+		if (effect.getDsId() == null && this.dsId != null) {
 			return false;
 		}
-		if(effect.getDsId() != null && this.dsId == null) {
+		if (effect.getDsId() != null && this.dsId == null) {
 			return false;
 		}
-		if(!effect.getDsId().equals(dsId)) {
+
+		if (effect.getEffectContent() == null && this.effectContent != null) {
 			return false;
 		}
-		
-		
-		if(effect.getEffectContent() == null && this.effectContent != null) {
+		if (effect.getEffectContent() != null && this.effectContent == null) {
 			return false;
 		}
-		if(effect.getEffectContent() != null && this.effectContent == null) {
+		if (!effect.getEffectContent().equals(effectContent)) {
 			return false;
 		}
-		if(!effect.getEffectContent().equals(effectContent)) {
+
+		if (effect.getEffectCount() != effectCount) {
 			return false;
 		}
-		
-		if(effect.getEffectCount() != effectCount) {
-			return false;
+
+		if (effect.getDsId() != null && this.dsId != null) {
+			if (!effect.getDsId().equals(dsId)) {
+				return false;
+			}
 		}
-		
 		return true;
 	}
 
-	
 }

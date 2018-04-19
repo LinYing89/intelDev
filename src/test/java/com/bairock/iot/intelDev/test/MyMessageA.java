@@ -11,7 +11,7 @@ public class MyMessageA extends MessageAnalysiser {
 	}
 
 	@Override
-	public void noTheDev(String msg) {
+	public void unKnowMsg(String msg) {
 //		System.out.println("noTheDev: " + msg);
 	}
 

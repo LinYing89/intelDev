@@ -53,6 +53,7 @@ public interface IDevice {
 	String createTurnLocalModelOrder(String ip, int port);
 	String createTurnRemoteModelOrder(String ip, int port);
 	String createAbnormalOrder();
+	String createInitOrder();
 	/**
 	 * get device state
 	 * @return

@@ -122,7 +122,7 @@ public abstract class MessageAnalysiser{
 				unKnowDev(device, msg);
 				return device;
 			}else {
-				noTheDev(msg);
+				unKnowMsg(msg);
 				return null;
 			}
 		}
@@ -191,7 +191,7 @@ public abstract class MessageAnalysiser{
 	
 	public abstract void unKnowDev(Device device, String msg);
 	
-	public abstract void noTheDev(String msg);
+	public abstract void unKnowMsg(String msg);
 	
 	/**
 	 * all message is finished

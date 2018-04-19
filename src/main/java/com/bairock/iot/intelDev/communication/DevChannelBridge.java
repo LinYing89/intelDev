@@ -1,10 +1,11 @@
 package com.bairock.iot.intelDev.communication;
 
-import com.bairock.iot.intelDev.device.Coordinator;
+import com.bairock.iot.intelDev.device.DevContainer;
 import com.bairock.iot.intelDev.device.DevHaveChild;
 import com.bairock.iot.intelDev.device.DevStateHelper;
 import com.bairock.iot.intelDev.device.Device;
 import com.bairock.iot.intelDev.device.OrderHelper;
+import com.bairock.iot.intelDev.device.devcollect.DevCollectSignalContainer;
 import com.bairock.iot.intelDev.user.User;
 
 import io.netty.buffer.Unpooled;
@@ -24,15 +25,16 @@ public class DevChannelBridge {
 	private Channel channel;
 	// the channel have no response count,0 if have response
 	private int noReponse;
-	//send count
+	// send count
 	private int sendCount;
 	private int receivedCount;
 	private String lastSendMsg;
 	private String lastReceivedMsg;
 	private MessageAnalysiser messageAnalysiser;
+	private boolean needInit = true;
 
 	private OnCommunicationListener onCommunicationListener;
-	
+
 	public Device getDevice() {
 		return device;
 	}
@@ -98,33 +100,37 @@ public class DevChannelBridge {
 	}
 
 	public void sendCountAnd1() {
-		if(sendCount >= Integer.MAX_VALUE) {
+		if (sendCount >= Integer.MAX_VALUE) {
 			sendCount = 0;
 		}
 		sendCount++;
 	}
-	
+
 	public void receivedCountAnd1() {
-		if(receivedCount >= Integer.MAX_VALUE) {
+		if (receivedCount >= Integer.MAX_VALUE) {
 			receivedCount = 0;
 		}
 		receivedCount++;
 	}
-	
+
 	public void channelReceived(String msg, User user) {
-		if(null != onCommunicationListener) {
+		if (null != onCommunicationListener) {
 			onCommunicationListener.onReceived(this, msg);
 		}
 		noReponse = 0;
 		if (getMessageAnalysiser() != null) {
 			Device dev = messageAnalysiser.putMsg(msg, user);
 			if (dev != null) {
-				if(null == device) {
+				if (null == device) {
 					DevChannelBridgeHelper.getIns().cleanBrigdes(dev.findSuperParent());
 				}
 				if (dev.findSuperParent() != device) {
 					device = dev.findSuperParent();
 					device.setNoResponse(0);
+					if(needInit) {
+						sendOrder(device.createInitOrder(), device, true);
+						needInit = false;
+					}
 				}
 			}
 		}
@@ -158,7 +164,7 @@ public class DevChannelBridge {
 			return null;
 		}
 
-		if(null == channel) {
+		if (null == channel) {
 			for (Channel c : channelGroup) {
 				if (c.id().asShortText().equals(channelId)) {
 					channel = c;
@@ -173,7 +179,7 @@ public class DevChannelBridge {
 		String heart;
 		//
 		if (device == null) {
-			heart = OrderHelper.getOrderMsg("h2");
+			heart = OrderHelper.getOrderMsg("H0:h2");
 		} else {
 			heart = device.getHeartOrder();
 		}
@@ -189,48 +195,47 @@ public class DevChannelBridge {
 	public int sendHeart() {
 		int result = 0;
 		if (null == device) {
-			result = sendOrder(getHeart(), null);
+			result = sendOrder(getHeart(), null, false);
 		} else {
 			System.out.println("DevChannelBridge sendHeart " + device + ":" + device.getCommunicationInterval());
-			if (device.getCommunicationInterval() > 7000) {
-				result = sendOrder(getHeart(), device);
-			} else {
-				result = HAVE_COMMUNICATION_RECENTLY;
-			}
-
-			if (device instanceof Coordinator) {
-				for (Device dev : ((Coordinator) device).getListDev()) {
-					sendHeart(dev);
-				}
-			}
+			result = sendHeart(device);
 		}
 		return result;
 	}
 
 	public Device findDevice(String devCoding) {
-		if(null == devCoding || null == device) {
+		if (null == devCoding || null == device) {
 			return null;
 		}
-		if(device.getCoding().equals(devCoding)) {
+		if (device.getCoding().equals(devCoding)) {
 			return device;
-		}else if(device instanceof DevHaveChild) {
-			return ((DevHaveChild)device).getDevByCoding(devCoding);
+		} else if (device instanceof DevHaveChild) {
+			return ((DevHaveChild) device).getDevByCoding(devCoding);
 		}
 		return null;
 	}
-	
-	private void sendHeart(Device dev) {
+
+	private int sendHeart(Device dev) {
+		int res = 0;
 		if (dev.getCommunicationInterval() > 7000) {
-			sendOrder(dev.getHeartOrder(), dev);
+			res = sendOrder(dev.getHeartOrder(), dev, false);
+		}else {
+			res = HAVE_COMMUNICATION_RECENTLY;
 		}
+		if(dev instanceof DevContainer && !(dev instanceof DevCollectSignalContainer)) {
+			for (Device dev1 : ((DevContainer) dev).getListDev()) {
+				res = sendHeart(dev1);
+			}
+		}
+		return res;
 	}
 
-	public int sendOrder(String order, Device dev) {
-		//System.out.println("sendOrder " + order + ":" + dev);
+	public int sendOrder(String order, Device dev, boolean immediately) {
+		// System.out.println("sendOrder " + order + ":" + dev);
 		Channel ch = getChannel();
 		if (ch == null) {
 			channelId = null;
-			if(null != dev) {
+			if (null != dev) {
 				dev.setDevStateId(DevStateHelper.DS_YI_CHANG);
 			}
 			return NO_CHANNEL;
@@ -239,7 +244,7 @@ public class DevChannelBridge {
 			if (noReponse > 2) {
 				ch.close();
 				DevChannelBridgeHelper.getIns().removeBridge(this);
-				//System.out.println("sendOrder remove channel");
+				// System.out.println("sendOrder remove channel");
 				return NO_REPONSE;
 			} else {
 				noReponsePlus();
@@ -249,48 +254,58 @@ public class DevChannelBridge {
 		}
 
 		noReponse = dev.getNoResponse();
-//		System.out.println("sendOrder dev noresponse " + noReponse);
+		// System.out.println("sendOrder dev noresponse " + noReponse);
 		if (noReponse > 3 && dev.getLastResponseInterval() > 20000) {
-			// if device no response great than 3 and device's last response interval great than 20000ms, prevent communication fast
-			//don't close the channel while this device is coordinator and the parameter device is child device of coordinator
-			//only the parameter device is this device,example wifi switch, there should close the channel
+			// if device no response great than 3 and device's last response interval great
+			// than 20000ms, prevent communication fast
+			// don't close the channel while this device is coordinator and the parameter
+			// device is child device of coordinator
+			// only the parameter device is this device,example wifi switch, there should
+			// close the channel
 			if (dev == device) {
 				ch.close();
 				DevChannelBridgeHelper.getIns().removeBridge(this);
-			} 
+			}
 			dev.setNoResponse(0);
 			dev.setDevStateId(DevStateHelper.DS_YI_CHANG);
 			return NO_REPONSE;
 		}
-//		if (dev.getLastOrder().equals(order)) {
-//			if (dev.getCommunicationInterval() < 5000 && noReponse > 0) {
-//				return ONE_ORDER_COMMUNICATION_OFTEN;
-//			}
-//		}
-		//boolean cansend = false;
-		//if(dev instanceof)
-		if(dev.canSend()) {
+		// if (dev.getLastOrder().equals(order)) {
+		// if (dev.getCommunicationInterval() < 5000 && noReponse > 0) {
+		// return ONE_ORDER_COMMUNICATION_OFTEN;
+		// }
+		// }
+		if (immediately) {
 			dev.setLastOrder(order);
-    		dev.noResponsePlus();
-    		dev.resetLastCommunicationTime();
-    		sendOrder(order);
-    		return OK;
-		}else {
-			return ONE_ORDER_COMMUNICATION_OFTEN;
+			dev.noResponsePlus();
+			dev.resetLastCommunicationTime();
+			sendOrder(order);
+			return OK;
+		} else {
+			if (dev.canSend()) {
+				dev.setLastOrder(order);
+				dev.noResponsePlus();
+				dev.resetLastCommunicationTime();
+				sendOrder(order);
+				return OK;
+			} else {
+				return ONE_ORDER_COMMUNICATION_OFTEN;
+			}
 		}
 	}
-	
+
 	public void sendOrder(String msg) {
-		if(null != getChannel()) {
+		if (null != getChannel()) {
 			getChannel().writeAndFlush(Unpooled.copiedBuffer(msg.getBytes()));
-			if(null != onCommunicationListener) {
+			if (null != onCommunicationListener) {
 				onCommunicationListener.onSend(this, msg);
 			}
 		}
 	}
-	
+
 	public interface OnCommunicationListener {
 		void onSend(DevChannelBridge bridge, String msg);
+
 		void onReceived(DevChannelBridge bridge, String msg);
 	}
 }

@@ -35,6 +35,11 @@ public class CollectProperty {
 	private Float currentValue;
 	private Float calibrationValue;
 	private Float percent;
+
+	@Transient
+	@JsonIgnore
+	private float simulatorValue;
+
 	private String formula;
 	private String unitSymbol;
 	private CollectSignalSource collectSrc = CollectSignalSource.DIGIT;
@@ -42,6 +47,14 @@ public class CollectProperty {
 	@Transient
 	@JsonIgnore
 	private OnCurrentValueChangedListener onCurrentValueChanged;
+
+	@Transient
+	@JsonIgnore
+	private OnSignalSourceChangedListener onSignalSourceChangedListener;
+
+	@Transient
+	@JsonIgnore
+	private OnSimulatorChangedListener onSimulatorChangedListener;
 
 	public CollectProperty() {
 		id = UUID.randomUUID().toString();
@@ -79,6 +92,22 @@ public class CollectProperty {
 		this.onCurrentValueChanged = onCurrentValueChanged;
 	}
 
+	public OnSignalSourceChangedListener getOnSignalSourceChangedListener() {
+		return onSignalSourceChangedListener;
+	}
+
+	public void setOnSignalSourceChangedListener(OnSignalSourceChangedListener onSignalSourceChangedListener) {
+		this.onSignalSourceChangedListener = onSignalSourceChangedListener;
+	}
+
+	public OnSimulatorChangedListener getOnSimulatorChangedListener() {
+		return onSimulatorChangedListener;
+	}
+
+	public void setOnSimulatorChangedListener(OnSimulatorChangedListener onSimulatorChangedListener) {
+		this.onSimulatorChangedListener = onSimulatorChangedListener;
+	}
+
 	/**
 	 * get max value
 	 * 
@@ -94,10 +123,12 @@ public class CollectProperty {
 	 * @param crestValue
 	 */
 	public void setCrestValue(Float crestValue) {
-		if (collectSrc == CollectSignalSource.DIGIT) {
-			this.crestReferValue = crestValue;
+		if (this.crestValue != crestValue) {
+			this.crestValue = crestValue;
+			if (null != onSignalSourceChangedListener) {
+				onSignalSourceChangedListener.onSignalSourceChanged(devCollect);
+			}
 		}
-		this.crestValue = crestValue;
 	}
 
 	public Float getCrestReferValue() {
@@ -105,9 +136,6 @@ public class CollectProperty {
 	}
 
 	public void setCrestReferValue(Float crestReferValue) {
-		if (collectSrc == CollectSignalSource.DIGIT) {
-			this.crestValue = crestReferValue;
-		}
 		this.crestReferValue = crestReferValue;
 	}
 
@@ -126,7 +154,12 @@ public class CollectProperty {
 	 * @param leastValue
 	 */
 	public void setLeastValue(Float leastValue) {
-		this.leastValue = leastValue;
+		if (this.leastValue != leastValue) {
+			this.leastValue = leastValue;
+			if (null != onSignalSourceChangedListener) {
+				onSignalSourceChangedListener.onSignalSourceChanged(devCollect);
+			}
+		}
 	}
 
 	public Float getLeastReferValue() {
@@ -155,7 +188,7 @@ public class CollectProperty {
 			if (null != onCurrentValueChanged) {
 				onCurrentValueChanged.onCurrentValueChanged(devCollect, currentValue);
 			}
-		} else{
+		} else {
 			if (null == currentValue) {
 				this.currentValue = currentValue;
 				if (null != onCurrentValueChanged) {
@@ -239,6 +272,9 @@ public class CollectProperty {
 				setLeastValue(4f);
 				setCrestValue(20f);
 			}
+			if (null != onSignalSourceChangedListener) {
+				onSignalSourceChangedListener.onSignalSourceChanged(devCollect);
+			}
 		}
 	}
 
@@ -274,6 +310,19 @@ public class CollectProperty {
 		this.formula = formula;
 	}
 
+	public float getSimulatorValue() {
+		return simulatorValue;
+	}
+
+	public void setSimulatorValue(float simulatorValue) {
+		if (this.simulatorValue != simulatorValue) {
+			this.simulatorValue = simulatorValue;
+			if (null != onSimulatorChangedListener) {
+				onSimulatorChangedListener.onSimulatorChanged(devCollect, simulatorValue);
+			}
+		}
+	}
+
 	/**
 	 * 
 	 * @return
@@ -304,6 +353,14 @@ public class CollectProperty {
 
 	public interface OnCurrentValueChangedListener {
 		void onCurrentValueChanged(DevCollect dev, Float value);
+	}
+
+	public interface OnSignalSourceChangedListener {
+		void onSignalSourceChanged(DevCollect dev);
+	}
+
+	public interface OnSimulatorChangedListener {
+		void onSimulatorChanged(DevCollect dev, Float simulator);
 	}
 
 }

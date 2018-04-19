@@ -82,6 +82,11 @@ public class DevCollect extends Device{
 	public String createQueueOrder() {
 		return OrderHelper.getOrderMsg(OrderHelper.QUERY_HEAD + getCoding() + OrderHelper.SEPARATOR + "8");
 	}
+	
+	@Override
+	public String createInitOrder() {
+		return createQueueOrder();
+	}
 
 	public String createPrecentOrder() {
 		String order = OrderHelper.FEEDBACK_HEAD + getCoding() + OrderHelper.SEPARATOR 

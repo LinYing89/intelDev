@@ -7,7 +7,7 @@ package com.bairock.iot.intelDev.device;
  */
 public enum CompareSymbol {
 
-	GREAT,
-	LESS, 
-	EQUAL 
+	LESS,
+	EQUAL,
+	GREAT
 }

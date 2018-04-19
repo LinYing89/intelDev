@@ -120,8 +120,9 @@ public class SubChain extends Linkage {
 			return false;
 		}
 
-		for(int i=0; i< listCondition.size(); i++){
-			LinkageCondition event = listCondition.get(i);
+		List<LinkageCondition> list = new ArrayList<>(listCondition);
+		for(int i=0; i< list.size(); i++){
+			LinkageCondition event = list.get(i);
 			//获取每个条件的结果
 			Integer er = event.getResult();
 			if(er == null){

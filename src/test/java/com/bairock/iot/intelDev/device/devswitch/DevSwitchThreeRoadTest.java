@@ -55,59 +55,18 @@ public class DevSwitchThreeRoadTest extends TestCase {
 
 	public void testHandler7() {
 		dsor.turnOff();
-		String state = "700";
+		String state = "7000";
 		dsor.handle(state);
 		assertEquals(true, dsor.getSubDevBySc("1").isKaiState());
-		assertEquals(true, dsor.getSubDevBySc("2").isKaiState());
-		assertEquals(true, dsor.getSubDevBySc("3").isKaiState());
 		
 		dsor.turnOn();
-		state = "707";
+		state = "7011";
 		dsor.handle(state);
-		assertEquals(false, dsor.getSubDevBySc("1").isKaiState());
 		assertEquals(false, dsor.getSubDevBySc("2").isKaiState());
-		assertEquals(false, dsor.getSubDevBySc("3").isKaiState());
 		
 		dsor.turnOn();
-		state = "701";
+		state = "7021";
 		dsor.handle(state);
-		assertEquals(false, dsor.getSubDevBySc("1").isKaiState());
-		assertEquals(true, dsor.getSubDevBySc("2").isKaiState());
-		assertEquals(true, dsor.getSubDevBySc("3").isKaiState());
-		
-		dsor.turnOn();
-		state = "702";
-		dsor.handle(state);
-		assertEquals(true, dsor.getSubDevBySc("1").isKaiState());
-		assertEquals(false, dsor.getSubDevBySc("2").isKaiState());
-		assertEquals(true, dsor.getSubDevBySc("3").isKaiState());
-		
-		dsor.turnOn();
-		state = "703";
-		dsor.handle(state);
-		assertEquals(false, dsor.getSubDevBySc("1").isKaiState());
-		assertEquals(false, dsor.getSubDevBySc("2").isKaiState());
-		assertEquals(true, dsor.getSubDevBySc("3").isKaiState());
-		
-		dsor.turnOn();
-		state = "704";
-		dsor.handle(state);
-		assertEquals(true, dsor.getSubDevBySc("1").isKaiState());
-		assertEquals(true, dsor.getSubDevBySc("2").isKaiState());
-		assertEquals(false, dsor.getSubDevBySc("3").isKaiState());
-		
-		dsor.turnOn();
-		state = "705";
-		dsor.handle(state);
-		assertEquals(false, dsor.getSubDevBySc("1").isKaiState());
-		assertEquals(true, dsor.getSubDevBySc("2").isKaiState());
-		assertEquals(false, dsor.getSubDevBySc("3").isKaiState());
-		
-		dsor.turnOn();
-		state = "706";
-		dsor.handle(state);
-		assertEquals(true, dsor.getSubDevBySc("1").isKaiState());
-		assertEquals(false, dsor.getSubDevBySc("2").isKaiState());
 		assertEquals(false, dsor.getSubDevBySc("3").isKaiState());
 	}
 	

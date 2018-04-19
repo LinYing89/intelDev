@@ -58,7 +58,7 @@ public class FindDevHelper {
 
 	public void findDev(String devCoding) {
 		stMsg.add(devCoding);
-		if(!isFinding) {
+		if (!isFinding) {
 			isFinding = true;
 			tSender = new TSender();
 			IntelDevHelper.executeThread(tSender);
@@ -78,19 +78,11 @@ public class FindDevHelper {
 			while (!isInterrupted() && stMsg.size() > 0) {
 				String localIp = IntelDevHelper.getLocalIp();
 				try {
-					if (localIp != null) {
-						int i = 0;
-						sendMsg = "S:" + localIp + "," + DevServer.PORT;
-						for (String str : stMsg) {
-							//10 device is a group
-							sendMsg += (":" + str);
-							if(i == stMsg.size() - 1 || (i!=0 && i % 10 == 0)) {
-								send(OrderHelper.getOrderMsg(sendMsg));
-								TimeUnit.SECONDS.sleep(1);
-								sendMsg = "S:" + localIp + "," + DevServer.PORT;
-							}
-							i++;
-						}
+					Set<String> st = new HashSet<>(stMsg);
+					for (String str : st) {
+						String order = createSeekOrder(str, localIp);
+						send(OrderHelper.getOrderMsg(order));
+						TimeUnit.MILLISECONDS.sleep(200);
 					}
 					TimeUnit.SECONDS.sleep(5);
 				} catch (InterruptedException e) {
@@ -98,6 +90,41 @@ public class FindDevHelper {
 				}
 			}
 			isFinding = false;
+
+		}
+
+		private String createSeekOrder(String coding, String localIp) {
+			return OrderHelper.SET_HEAD + coding + OrderHelper.SEPARATOR + "n" + localIp + "," + DevServer.PORT + OrderHelper.SEPARATOR + "+";
+		}
+	}
+
+	@SuppressWarnings("unused")
+	private void seekAllDevice(String localIp) {
+		try {
+			if (localIp != null) {
+				int i = 0;
+				// sendMsg = "S:" + localIp + "," + DevServer.PORT;
+				String codings = "";
+				for (String str : stMsg) {
+					// 10 device is a group
+					if (codings.isEmpty()) {
+						codings = str;
+					} else {
+						codings = codings + "," + str;
+					}
+					if (i == stMsg.size() - 1 || (i != 0 && i % 10 == 0)) {
+						String order = OrderHelper.SET_HEAD + codings + OrderHelper.SEPARATOR + "n" + localIp + ","
+								+ DevServer.PORT;
+						send(OrderHelper.getOrderMsg(order));
+						TimeUnit.SECONDS.sleep(1);
+						codings = "";
+						// sendMsg = "S:" + localIp + "," + DevServer.PORT;
+					}
+					i++;
+				}
+			}
+		} catch (InterruptedException e) {
+			e.printStackTrace();
 		}
 	}
 

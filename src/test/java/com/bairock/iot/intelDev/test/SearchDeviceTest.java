@@ -148,7 +148,7 @@ public class SearchDeviceTest {
 		}
 
 		@Override
-		public void noTheDev(String msg) {
+		public void unKnowMsg(String msg) {
 			System.out.println("noTheDev: ");
 		}
 

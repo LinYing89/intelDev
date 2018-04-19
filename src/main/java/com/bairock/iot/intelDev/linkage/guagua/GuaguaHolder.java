@@ -1,5 +1,8 @@
 package com.bairock.iot.intelDev.linkage.guagua;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.Inheritance;
@@ -47,7 +50,8 @@ public class GuaguaHolder extends ChainHolder{
 		if(linkageDevValue.getConditionResult()){
 			if(!linkageDevValue.isTriggered()){
 				linkageDevValue.setTriggered(true);
-				for(Effect effect : linkageDevValue.getListEffect()){
+				List<Effect> list = new ArrayList<>(linkageDevValue.getListEffect());
+				for(Effect effect : list){
 					if(effect.getDevice() instanceof GuaguaMouth){
 						GuaguaMouth guagua = (GuaguaMouth)(effect.getDevice());
 						String order = guagua.getDevOrder(effect.getEffectCount(), effect.getEffectContent());

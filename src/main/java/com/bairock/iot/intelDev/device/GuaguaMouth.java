@@ -35,7 +35,8 @@ public class GuaguaMouth extends Device {
 	 * 
 	 */
 	public String getDevOrder(int speakCount, String speakContent) {
-		String order = "C" + getCoding() + ":" + speakCount + ":" + speakContent;
+		//String order = "C" + getCoding() + ":" + speakCount + ":" + speakContent;
+		String order = "C" + getCoding() + ":" + speakContent;
 		return OrderHelper.getOrderMsg(order);
 	}
 }

@@ -557,6 +557,7 @@ public class DevGroup {
 				}
 			}else if(dev.getId().equals(devId)) {
 				device = dev;
+				break;
 			}
 		}
 		return device;

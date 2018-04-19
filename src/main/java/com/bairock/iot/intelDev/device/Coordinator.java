@@ -16,7 +16,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorValue("Coordinator")
-public class Coordinator extends DevHaveChild {
+public class Coordinator extends DevContainer {
 
 	private String panid;
 

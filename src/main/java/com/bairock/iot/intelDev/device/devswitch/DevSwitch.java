@@ -75,6 +75,11 @@ public class DevSwitch extends DevHaveChild {
 			dev.turnOff();
 		}
 	}
+	
+	@Override
+	public String createInitOrder() {
+		return OrderHelper.getOrderMsg(OrderHelper.QUERY_HEAD + getCoding() + OrderHelper.SEPARATOR + "8");
+	}
 
 	@Override
 	public boolean handle(String state) {
@@ -106,48 +111,68 @@ public class DevSwitch extends DevHaveChild {
 		int moduleNum;
 		int firstSubDevSc;
 		int iHexState;
+		int subCode;
+		String strState;
 		
 		switch (msgs[0]) {
 		case DevSwitchMsgSign.ORDER_CTRL_FEEDBACK:
-			// feedback because of order control
+			// 7, feedback because of order control
 			// msgs[1] is module number, begin with 0
 			// msgs[2] is four road state of the module, the lowest bit is road one
 
-			if(msgs.length != 3) {
+			if(msgs.length != 4) {
 				return;
 			}
 			
-			moduleNum = Integer.parseInt(msgs[1], 16);
+			subCode = Integer.parseInt(msgs[1] + msgs[2], 16) + 1;
+			strState = msgs[3].equals("0") ? "1" : "0";
+			SubDev sd1 = (SubDev) getSubDevBySc(String.valueOf(subCode));
+			if(null == sd1) {
+				return;
+			}
+			DevStateHelper.getIns().setDsId(sd1, strState);
+			//moduleNum = Integer.parseInt(msgs[1], 16);
 			//first SubDev subCode number = module number * 4 + 1, subCode begin with 1
-			firstSubDevSc = moduleNum * 4 + 1;
-			iHexState = Integer.parseInt(msgs[2], 16);
-			setDevStateFromFirstSubCode(firstSubDevSc, iHexState);
+			//firstSubDevSc = moduleNum * 4 + 1;
+			//iHexState = Integer.parseInt(msgs[2], 16);
+			//setDevStateFromFirstSubCode(firstSubDevSc, iHexState);
 			break;
 		case DevSwitchMsgSign.ORDER_QUERY_FEEDBACK:
-			// feedback because of order query
+			//8, feedback because of order query
 			if(msgs.length < 2) {
 				return;
 			}
 			
 			//msgs[1] is the module state begin
 			for (int i = 1; i < msgs.length; i++) {
+				String strHex = "";
+				
+				int step = 8;
+				if(i + 1 == msgs.length) {
+					strHex = msgs[i];
+					iHexState = Integer.parseInt(strHex, 16);
+					step = 4;
+				}
 				//module number = i - 1;, module begin with 0
 				moduleNum = i - 1;
+				
 				//first SubDev subCode number = module number * 4 + 1, subCode begin with 1
 				firstSubDevSc = moduleNum * 4 + 1;
-				iHexState = Integer.parseInt(msgs[i], 16);
-				setDevStateFromFirstSubCode(firstSubDevSc, iHexState);
+				strHex = msgs[i] + msgs[++i];
+				iHexState = Integer.parseInt(strHex, 16);
+				setDevStateFromFirstSubCode(firstSubDevSc, iHexState, step);
 			}
 			break;
 		case DevSwitchMsgSign.MSG_DEV_PUSHED:
+			//9
 			if(msgs.length != 3) {
 				return;
 			}
 			moduleNum = Integer.parseInt(msgs[1], 16);
 			int roadAndState = Integer.parseInt(msgs[2], 16);
-			int subCode = ((roadAndState >> 2) & 3) + 1 + moduleNum * 4;
+			subCode = ((roadAndState >> 2) & 3) + 1 + moduleNum * 4;
 			int iState = roadAndState & 3;
-			String strState = iState == 0 ? "1" : "0";
+			strState = iState == 0 ? "1" : "0";
 			SubDev sd = (SubDev) getSubDevBySc(String.valueOf(subCode));
 			if(null == sd) {
 				return;
@@ -168,8 +193,8 @@ public class DevSwitch extends DevHaveChild {
 	 * @param firstSubDevSc first device subCode
 	 * @param iHexState a hex number 
 	 */
-	private void setDevStateFromFirstSubCode(int firstSubDevSc, int iHexState) {
-		for(int j = 0; j < 4; j++) {
+	private void setDevStateFromFirstSubCode(int firstSubDevSc, int iHexState, int step) {
+		for(int j = 0; j < step; j++) {
 			int subCode = firstSubDevSc + j;
 			SubDev sd = (SubDev) getSubDevBySc(String.valueOf(subCode));
 			if(null != sd) {

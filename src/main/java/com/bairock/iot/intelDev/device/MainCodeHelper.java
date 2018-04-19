@@ -21,6 +21,8 @@ public class MainCodeHelper {
 	public static final String DGN_CAI_JI = "omc_dcj";
 	//ye wei ji
 	public static final String YE_WEI = "omc_ywj";
+	//xin hao cai ji kong zhi qi
+	public static final String COLLECTOR_SIGNAL_CONTAINER = "signal_collector_container";
 	//xin hao cai ji qi
 	public static final String COLLECTOR_SIGNAL = "signal_collector";
 	//yan wu tan ci qi
@@ -92,6 +94,7 @@ public class MainCodeHelper {
 		listMainCode.add(new MainCode(DGN_CAI_JI, "x1", "duogongnengcaijiqi"));
 		listMainCode.add(new MainCode(YE_WEI, "y1", "qiyachuanganyeweiji"));
 		listMainCode.add(new MainCode(COLLECTOR_SIGNAL, "b1", "xinhaocaijiqi"));
+		listMainCode.add(new MainCode(COLLECTOR_SIGNAL_CONTAINER, "bx", "xinhaocaijikongzhiqi"));
 		listMainCode.add(new MainCode(YAN_WU, "z1", "yanwutanciqi"));
 		listMainCode.add(new MainCode(WEN_DU, "E1", "wendu"));
 		listMainCode.add(new MainCode(KG_1LU_2TAI, "B1", "1lu2taikaiguan"));
