@@ -21,15 +21,15 @@ public class DevSwitchTwoRoadTest extends TestCase {
 	
 	public void testTurnOn() {
 		SubDev dev = (SubDev)dsor.getListDev().get(0);
-		String msg = "B20001:31";
+		String msg = "CB20001:31";
 		assertEquals(OrderHelper.getOrderMsg(msg), dev.getTurnOnOrder());
-		msg = "B20001:41";
+		msg = "CB20001:41";
 		assertEquals(OrderHelper.getOrderMsg(msg), dev.getTurnOffOrder());
 		
 		dev = (SubDev)dsor.getListDev().get(1);
-		msg = "B20001:33";
+		msg = "CB20001:33";
 		assertEquals(OrderHelper.getOrderMsg(msg), dev.getTurnOnOrder());
-		msg = "B20001:43";
+		msg = "CB20001:43";
 		assertEquals(OrderHelper.getOrderMsg(msg), dev.getTurnOffOrder());
 	}
 

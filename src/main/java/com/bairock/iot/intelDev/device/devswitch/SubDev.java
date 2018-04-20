@@ -77,7 +77,7 @@ public class SubDev extends Device implements IStateDev{
 		if(null == orderHead) {
 			orderHead = "";
 		}
-		int road = Integer.parseInt(getSubCode()) - 1;
+		int road = Integer.parseInt(getSubCode());
 		String order = orderHead + getParent().getCoding() + ":" 
 				+ CtrlCodeHelper.getIns().getDct(dctId) + Integer.toHexString(road);
 		return OrderHelper.getOrderMsg(order);

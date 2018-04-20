@@ -160,9 +160,6 @@ public class Effect {
 		if (effect.getEffectContent() != null && this.effectContent == null) {
 			return false;
 		}
-		if (!effect.getEffectContent().equals(effectContent)) {
-			return false;
-		}
 
 		if (effect.getEffectCount() != effectCount) {
 			return false;
@@ -170,6 +167,12 @@ public class Effect {
 
 		if (effect.getDsId() != null && this.dsId != null) {
 			if (!effect.getDsId().equals(dsId)) {
+				return false;
+			}
+		}
+
+		if (effect.getEffectContent() != null && this.effectContent != null) {
+			if (!effect.getEffectContent().equals(effectContent)) {
 				return false;
 			}
 		}

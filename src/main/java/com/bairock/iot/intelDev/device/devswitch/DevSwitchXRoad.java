@@ -1,5 +1,13 @@
 package com.bairock.iot.intelDev.device.devswitch;
 
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+
+@Entity
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorValue("DevSwitchXRoad")
 public class DevSwitchXRoad extends DevSwitch {
 
 	public DevSwitchXRoad() {

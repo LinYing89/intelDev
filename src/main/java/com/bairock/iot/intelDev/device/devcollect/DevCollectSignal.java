@@ -98,6 +98,9 @@ public class DevCollectSignal extends DevCollect {
 			// a is min voltage, b is max voltage
 			// Aa is min voltage refer used value
 			// Ab is max voltage refer used value
+			if(cp.getCrestValue() - cp.getLeastValue() == 0) {
+				return;
+			}
 			float currentValue = cp.getLeastReferValue()
 					+ (simulator - cp.getLeastValue()) / (cp.getCrestValue() - cp.getLeastValue())
 							* (cp.getCrestReferValue() - cp.getLeastReferValue());
@@ -118,6 +121,9 @@ public class DevCollectSignal extends DevCollect {
 		cp.setSimulatorValue(srcValue);
 		switch (msgId) {
 		case "8":
+			if(cp.getCrestValue() - cp.getLeastValue() == 0) {
+				return;
+			}
 			//percent = (A - Aa) * 100 / (Ab - Aa)
 			float percent = computePercentByCurrentValue(srcValue, cp);
 			cp.setPercent(IntelDevHelper.scale(percent));
@@ -154,6 +160,9 @@ public class DevCollectSignal extends DevCollect {
 	
 	//percent = (A - Aa) * 100 / (Ab - Aa)
 	private float computePercentByCurrentValue(float currentValue, CollectProperty cp) {
+		if(cp.getCrestValue() - cp.getLeastValue() == 0) {
+			return 0;
+		}
 		float percent = (currentValue - cp.getLeastReferValue()) * 100 / (cp.getCrestReferValue() - cp.getLeastReferValue());
 		return percent;
 	}

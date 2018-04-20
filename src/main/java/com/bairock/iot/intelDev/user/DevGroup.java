@@ -62,7 +62,7 @@ public class DevGroup {
 	@Transient
 	@JsonIgnore
 	private Set<OnDeviceCollectionChangedListener> stOnDeviceCollectionChangedListener = new HashSet<>();
-	
+
 	/**
 	 * 
 	 */
@@ -72,7 +72,7 @@ public class DevGroup {
 		listLinkageHolder.add(new LoopHolder());
 		listLinkageHolder.add(new TimingHolder());
 		listLinkageHolder.add(new GuaguaHolder());
-		for(LinkageHolder lh : listLinkageHolder) {
+		for (LinkageHolder lh : listLinkageHolder) {
 			lh.setDevGroup(this);
 		}
 	}
@@ -189,11 +189,11 @@ public class DevGroup {
 	 * @param listDevice
 	 */
 	public void setListDevice(List<Device> listDevice) {
-		if(null == listDevice) {
+		if (null == listDevice) {
 			return;
 		}
 		this.listDevice.clear();
-		for(Device dev : listDevice) {
+		for (Device dev : listDevice) {
 			addDevice(dev);
 		}
 	}
@@ -204,7 +204,7 @@ public class DevGroup {
 
 	public void setListLinkageHolder(List<LinkageHolder> listLinkageHolder) {
 		this.listLinkageHolder = listLinkageHolder;
-		for(LinkageHolder lh : listLinkageHolder) {
+		for (LinkageHolder lh : listLinkageHolder) {
 			lh.setDevGroup(this);
 		}
 	}
@@ -215,42 +215,42 @@ public class DevGroup {
 	 */
 	@JsonIgnore
 	public ChainHolder getChainHolder() {
-		for(LinkageHolder holder : listLinkageHolder) {
-			if(holder.getClass().getSimpleName().equals(ChainHolder.class.getSimpleName())) {
-				return (ChainHolder)holder;
+		for (LinkageHolder holder : listLinkageHolder) {
+			if (holder.getClass().getSimpleName().equals(ChainHolder.class.getSimpleName())) {
+				return (ChainHolder) holder;
 			}
-//			if(holder instanceof ChainHolder) {
-//				return (ChainHolder)holder;
-//			}
+			// if(holder instanceof ChainHolder) {
+			// return (ChainHolder)holder;
+			// }
 		}
 		return null;
 	}
-	
+
 	@JsonIgnore
 	public TimingHolder getTimingHolder() {
-		for(LinkageHolder holder : listLinkageHolder) {
-			if(holder instanceof TimingHolder) {
-				return (TimingHolder)holder;
+		for (LinkageHolder holder : listLinkageHolder) {
+			if (holder instanceof TimingHolder) {
+				return (TimingHolder) holder;
 			}
 		}
 		return null;
 	}
-	
+
 	@JsonIgnore
 	public LoopHolder getLoopHolder() {
-		for(LinkageHolder holder : listLinkageHolder) {
-			if(holder instanceof LoopHolder) {
-				return (LoopHolder)holder;
+		for (LinkageHolder holder : listLinkageHolder) {
+			if (holder instanceof LoopHolder) {
+				return (LoopHolder) holder;
 			}
 		}
 		return null;
 	}
-	
+
 	@JsonIgnore
 	public GuaguaHolder getGuaguaHolder() {
-		for(LinkageHolder holder : listLinkageHolder) {
-			if(holder instanceof GuaguaHolder) {
-				return (GuaguaHolder)holder;
+		for (LinkageHolder holder : listLinkageHolder) {
+			if (holder instanceof GuaguaHolder) {
+				return (GuaguaHolder) holder;
 			}
 		}
 		return null;
@@ -262,12 +262,12 @@ public class DevGroup {
 	 */
 	public void setChainHolder(ChainHolder chainHolder) {
 		chainHolder.setDevGroup(this);
-		for(LinkageHolder holder : listLinkageHolder) {
-			if(holder.getClass().getSimpleName().equals(ChainHolder.class.getSimpleName())) {
+		for (LinkageHolder holder : listLinkageHolder) {
+			if (holder.getClass().getSimpleName().equals(ChainHolder.class.getSimpleName())) {
 				holder = chainHolder;
 				return;
 			}
-			if(holder instanceof ChainHolder) {
+			if (holder instanceof ChainHolder) {
 				holder = chainHolder;
 				return;
 			}
@@ -276,8 +276,8 @@ public class DevGroup {
 
 	public void setTimingHolder(TimingHolder timingHolder) {
 		timingHolder.setDevGroup(this);
-		for(LinkageHolder holder : listLinkageHolder) {
-			if(holder instanceof TimingHolder) {
+		for (LinkageHolder holder : listLinkageHolder) {
+			if (holder instanceof TimingHolder) {
 				holder = timingHolder;
 				return;
 			}
@@ -286,8 +286,8 @@ public class DevGroup {
 
 	public void setLoopHolder(LoopHolder loopHolder) {
 		loopHolder.setDevGroup(this);
-		for(LinkageHolder holder : listLinkageHolder) {
-			if(holder instanceof LoopHolder) {
+		for (LinkageHolder holder : listLinkageHolder) {
+			if (holder instanceof LoopHolder) {
 				holder = loopHolder;
 				return;
 			}
@@ -296,8 +296,8 @@ public class DevGroup {
 
 	public void setGuaguaHolder(GuaguaHolder guaguaHolder) {
 		guaguaHolder.setDevGroup(this);
-		for(LinkageHolder holder : listLinkageHolder) {
-			if(holder instanceof GuaguaHolder) {
+		for (LinkageHolder holder : listLinkageHolder) {
+			if (holder instanceof GuaguaHolder) {
 				holder = guaguaHolder;
 				return;
 			}
@@ -320,23 +320,23 @@ public class DevGroup {
 
 		device.setDevGroup(this);
 		listDevice.add(device);
-		for(OnDeviceCollectionChangedListener listener : stOnDeviceCollectionChangedListener) {
+		for (OnDeviceCollectionChangedListener listener : stOnDeviceCollectionChangedListener) {
 			listener.onAdded(device);
 		}
 	}
 
 	public void removeDeletedDevice() {
 		List<Device> listDeleted = new ArrayList<>();
-		for(Device dev : listDevice) {
-			if(dev.isDeleted()) {
+		for (Device dev : listDevice) {
+			if (dev.isDeleted()) {
 				listDeleted.add(dev);
 			}
 		}
-		for(Device dev : listDeleted) {
+		for (Device dev : listDeleted) {
 			listDevice.remove(dev);
 		}
 	}
-	
+
 	/**
 	 * 
 	 * @param device
@@ -344,21 +344,21 @@ public class DevGroup {
 	public boolean removeDevice(Device device) {
 		return removeDevice(listDevice, device);
 	}
-	
+
 	private boolean removeDevice(List<Device> list, Device device) {
 		boolean res = false;
 		List<Device> newList = new ArrayList<>(list);
-		for(Device dev : newList) {
-			if(dev == device) {
-				for(OnDeviceCollectionChangedListener listener : stOnDeviceCollectionChangedListener) {
+		for (Device dev : newList) {
+			if (dev == device) {
+				for (OnDeviceCollectionChangedListener listener : stOnDeviceCollectionChangedListener) {
 					listener.onRemoved(device);
 				}
 				dev.setDevGroup(null);
 				list.remove(dev);
 				res = true;
-			}else {
-				if(dev instanceof DevHaveChild) {
-					res = removeDevice(((DevHaveChild)dev).getListDev(), device);
+			} else {
+				if (dev instanceof DevHaveChild) {
+					res = removeDevice(((DevHaveChild) dev).getListDev(), device);
 				}
 			}
 		}
@@ -399,7 +399,6 @@ public class DevGroup {
 		return null;
 	}
 
-	@JsonIgnore
 	private Device findDevice(Device dev, String mcId, String sc) {
 		if (dev.getMainCodeId().equals(mcId) && dev.getSubCode().equals(sc)) {
 			return dev;
@@ -422,7 +421,6 @@ public class DevGroup {
 	 *            sub code
 	 * @return
 	 */
-	@JsonIgnore
 	public Device findDeviceWithMc(String mc, String sc) {
 		if (null == mc || null == sc) {
 			return null;
@@ -434,12 +432,11 @@ public class DevGroup {
 	/**
 	 * 
 	 * @param coding
-	 *            coding is main code + sub code of default device, like B10001,
-	 *            or parent code + sub code + _ + sub device main code + _ + sub device sub code 
-	 *            of sub device, like B10001_10_1
+	 *            coding is main code + sub code of default device, like B10001, or
+	 *            parent code + sub code + _ + sub device main code + _ + sub device
+	 *            sub code of sub device, like B10001_10_1
 	 * @return
 	 */
-	@JsonIgnore
 	public Device findDeviceWithCoding(String coding) {
 		if (null == coding) {
 			return null;
@@ -457,7 +454,7 @@ public class DevGroup {
 			}
 			dev = parentDev.getDeviceByMainCodeAndSubCode(codes[1], codes[2]);
 		} else {
-			//it maybe not the sub device
+			// it maybe not the sub device
 			if (coding.length() < 6) {
 				return null;
 			}
@@ -467,166 +464,188 @@ public class DevGroup {
 		}
 		return dev;
 	}
-	
+
 	/**
 	 * get all the device which is IStateDev
+	 * 
 	 * @return
 	 */
-	@JsonIgnore
-	public List<Device> findListIStateDev(boolean visibility){
+	public List<Device> findListIStateDev(boolean visibility) {
 		List<Device> listDev = new ArrayList<>();
-		for(Device dev : getListDevice()){
+		for (Device dev : getListDevice()) {
 			findListIStateDev(listDev, dev, visibility);
 		}
 		Collections.sort(listDev);
 		return listDev;
 	}
-	
+
 	public static void findListIStateDev(List<Device> listDev, Device dev, boolean visibility) {
-		if(dev instanceof DevHaveChild){
-			for(Device childDev : ((DevHaveChild)dev).getListDev()){
+		if (dev instanceof DevHaveChild) {
+			for (Device childDev : ((DevHaveChild) dev).getListDev()) {
 				findListIStateDev(listDev, childDev, visibility);
 			}
-		}else if(dev instanceof IStateDev && dev.isVisibility()){
-			listDev.add(dev);
+		} else if (dev instanceof IStateDev) {
+			if (visibility) {
+				if (dev.isVisibility()) {
+					listDev.add(dev);
+				}
+			} else {
+				listDev.add(dev);
+			}
 		}
 	}
-	
+
 	/**
 	 * get all the device which is collect
+	 * 
 	 * @return
 	 */
-	@JsonIgnore
-	public List<DevCollect> findListCollectDev(){
+	public List<DevCollect> findListCollectDev(boolean visibility) {
 		List<DevCollect> listDev = new ArrayList<>();
-		for(Device dev : getListDevice()){
-			findListCollectDev(listDev, dev);
+		for (Device dev : getListDevice()) {
+			findListCollectDev(listDev, dev, visibility);
 		}
 		Collections.sort(listDev);
 		return listDev;
 	}
-	
-	private void findListCollectDev(List<DevCollect> listDev, Device dev) {
-		if(dev instanceof DevHaveChild){
-			for(Device childDev : ((DevHaveChild)dev).getListDev()){
-				findListCollectDev(listDev, childDev);
+
+	private void findListCollectDev(List<DevCollect> listDev, Device dev, boolean visibility) {
+		if (dev instanceof DevHaveChild) {
+			for (Device childDev : ((DevHaveChild) dev).getListDev()) {
+				findListCollectDev(listDev, childDev, visibility);
 			}
-		}else if(dev instanceof DevCollect){
-			listDev.add((DevCollect)dev);
+		} else if (dev instanceof DevCollect) {
+			if (visibility) {
+				if (dev.isVisibility()) {
+					listDev.add((DevCollect) dev);
+				}
+			} else {
+				listDev.add((DevCollect) dev);
+			}
 		}
 	}
-	
+
 	/**
 	 * get all the device which is guagua mouth
+	 * 
 	 * @return
 	 */
-	@JsonIgnore
-	public List<GuaguaMouth> findListGuaguaMouth(){
+	public List<GuaguaMouth> findListGuaguaMouth(boolean visibility) {
 		List<GuaguaMouth> listDev = new ArrayList<>();
-		for(Device dev : getListDevice()){
-			findListGuaguaMouth(listDev, dev);
+		for (Device dev : getListDevice()) {
+			findListGuaguaMouth(listDev, dev, visibility);
 		}
 		Collections.sort(listDev);
 		return listDev;
 	}
-	
-	private void findListGuaguaMouth(List<GuaguaMouth> listDev, Device dev) {
-		if(dev instanceof DevHaveChild){
-			for(Device childDev : ((DevHaveChild)dev).getListDev()){
-				findListGuaguaMouth(listDev, childDev);
+
+	private void findListGuaguaMouth(List<GuaguaMouth> listDev, Device dev, boolean visibility) {
+		if (dev instanceof DevHaveChild) {
+			for (Device childDev : ((DevHaveChild) dev).getListDev()) {
+				findListGuaguaMouth(listDev, childDev, visibility);
 			}
-		}else if(dev instanceof GuaguaMouth){
-			listDev.add((GuaguaMouth)dev);
+		} else if (dev instanceof GuaguaMouth) {
+			if (visibility) {
+				if (dev.isVisibility()) {
+					listDev.add((GuaguaMouth) dev);
+				}
+			} else {
+				listDev.add((GuaguaMouth) dev);
+			}
 		}
 	}
-	
+
 	public Device findDeviceByDevId(String devId) {
-		if(null == devId) {
+		if (null == devId) {
 			return null;
 		}
 		return findDeviceByDevId(listDevice, devId);
 	}
-	
+
 	private Device findDeviceByDevId(List<Device> listDev, String devId) {
 		Device device = null;
-		for(Device dev : listDev) {
-			if(dev instanceof DevHaveChild){
-				device = findDeviceByDevId(((DevHaveChild)dev).getListDev(), devId);
-				if(device != null) {
+		for (Device dev : listDev) {
+			if (dev instanceof DevHaveChild) {
+				device = findDeviceByDevId(((DevHaveChild) dev).getListDev(), devId);
+				if (device != null) {
 					return device;
 				}
-			}else if(dev.getId().equals(devId)) {
+			} else if (dev.getId().equals(devId)) {
 				device = dev;
 				break;
 			}
 		}
 		return device;
 	}
-	
+
 	/**
 	 * rename the device's name
+	 * 
 	 * @param device
-	 * @param devName new device name
+	 * @param devName
+	 *            new device name
 	 * @return
 	 */
 	public int renameDevice(Device device, String devName) {
-		if(null == device || null == devName) {
+		if (null == device || null == devName) {
 			return ErrorCodes.NULL_POINT;
 		}
-		
-		if(deviceNameIsHaved(devName)) {
+
+		if (deviceNameIsHaved(devName)) {
 			return ErrorCodes.DEV_NAME_IS_EXISTS;
 		}
 		device.setName(devName);
 		return ErrorCodes.OK;
 	}
-	
+
 	/**
 	 * if the give name is already exists in the device group
-	 * @param devName the new name of device
+	 * 
+	 * @param devName
+	 *            the new name of device
 	 * @return
 	 */
 	public boolean deviceNameIsHaved(String devName) {
-		if(null == devName) {
+		if (null == devName) {
 			return false;
 		}
-		for(Device dev : listDevice) {
-			if(deviceNameIsHaved(dev, devName)) {
+		for (Device dev : listDevice) {
+			if (deviceNameIsHaved(dev, devName)) {
 				return true;
 			}
 		}
 		return false;
 	}
-	
+
 	private boolean deviceNameIsHaved(Device dev, String devName) {
-//		if(null == dev || null == devName) {
-//			return false;
-//		}
-		if(dev.getName().equals(devName)) {
+		// if(null == dev || null == devName) {
+		// return false;
+		// }
+		if (dev.getName().equals(devName)) {
 			return true;
 		}
-		if(dev instanceof DevHaveChild){
-			for(Device childDev : ((DevHaveChild)dev).getListDev()){
+		if (dev instanceof DevHaveChild) {
+			for (Device childDev : ((DevHaveChild) dev).getListDev()) {
 				deviceNameIsHaved(childDev, devName);
 			}
 		}
 		return false;
 	}
-	
+
 	public void addOnDeviceCollectionChangedListener(OnDeviceCollectionChangedListener listener) {
 		stOnDeviceCollectionChangedListener.add(listener);
 	}
-	
+
 	public void removeOnDeviceCollectionChangedListener(OnDeviceCollectionChangedListener listener) {
 		stOnDeviceCollectionChangedListener.remove(listener);
 	}
 
 	public void sendOnDeviceCollectionChangedListenerAdd(Device device) {
-		for(OnDeviceCollectionChangedListener listener : stOnDeviceCollectionChangedListener) {
+		for (OnDeviceCollectionChangedListener listener : stOnDeviceCollectionChangedListener) {
 			listener.onAdded(device);
 		}
 	}
-	
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -676,9 +695,10 @@ public class DevGroup {
 				psd, petName);
 		return str;
 	}
-	
-	public interface OnDeviceCollectionChangedListener{
+
+	public interface OnDeviceCollectionChangedListener {
 		void onAdded(Device device);
+
 		void onRemoved(Device device);
 	}
 

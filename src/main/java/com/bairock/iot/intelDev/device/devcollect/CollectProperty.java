@@ -24,21 +24,21 @@ public class CollectProperty {
 	private DevCollect devCollect;
 
 	// max value
-	private Float crestValue;
+	private Float crestValue = 0f;
 	// max value refer to show value
-	private Float crestReferValue;
+	private Float crestReferValue = 0f;
 	// min value
 	private Float leastValue = 0f;
 	// min value refer to show value
 	private Float leastReferValue = 0f;
 	// current value
-	private Float currentValue;
-	private Float calibrationValue;
-	private Float percent;
+	private Float currentValue = 0f;
+	private Float calibrationValue = 0f;
+	private Float percent = 0f;
 
 	@Transient
 	@JsonIgnore
-	private float simulatorValue;
+	private float simulatorValue = 0f;
 
 	private String formula;
 	private String unitSymbol;

@@ -124,7 +124,7 @@ public class DevSwitch extends DevHaveChild {
 				return;
 			}
 			
-			subCode = Integer.parseInt(msgs[1] + msgs[2], 16) + 1;
+			subCode = Integer.parseInt(msgs[1] + msgs[2], 16);
 			strState = msgs[3].equals("0") ? "1" : "0";
 			SubDev sd1 = (SubDev) getSubDevBySc(String.valueOf(subCode));
 			if(null == sd1) {
@@ -152,13 +152,15 @@ public class DevSwitch extends DevHaveChild {
 					strHex = msgs[i];
 					iHexState = Integer.parseInt(strHex, 16);
 					step = 4;
+				}else {
+					strHex = msgs[i] + msgs[++i];
 				}
 				//module number = i - 1;, module begin with 0
 				moduleNum = i - 1;
 				
 				//first SubDev subCode number = module number * 4 + 1, subCode begin with 1
 				firstSubDevSc = moduleNum * 4 + 1;
-				strHex = msgs[i] + msgs[++i];
+				
 				iHexState = Integer.parseInt(strHex, 16);
 				setDevStateFromFirstSubCode(firstSubDevSc, iHexState, step);
 			}
@@ -170,7 +172,7 @@ public class DevSwitch extends DevHaveChild {
 			}
 			moduleNum = Integer.parseInt(msgs[1], 16);
 			int roadAndState = Integer.parseInt(msgs[2], 16);
-			subCode = ((roadAndState >> 2) & 3) + 1 + moduleNum * 4;
+			subCode = ((roadAndState >> 2) & 3) + moduleNum * 4;
 			int iState = roadAndState & 3;
 			strState = iState == 0 ? "1" : "0";
 			SubDev sd = (SubDev) getSubDevBySc(String.valueOf(subCode));
