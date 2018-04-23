@@ -144,7 +144,7 @@ public class DevSwitch extends DevHaveChild {
 			}
 			
 			//msgs[1] is the module state begin
-			for (int i = 1; i < msgs.length; i++) {
+			for (int i = 1; i < msgs.length; i+=2) {
 				String strHex = "";
 				
 				int step = 8;
@@ -153,7 +153,7 @@ public class DevSwitch extends DevHaveChild {
 					iHexState = Integer.parseInt(strHex, 16);
 					step = 4;
 				}else {
-					strHex = msgs[i] + msgs[++i];
+					strHex = msgs[i] + msgs[i+1];
 				}
 				//module number = i - 1;, module begin with 0
 				moduleNum = i - 1;

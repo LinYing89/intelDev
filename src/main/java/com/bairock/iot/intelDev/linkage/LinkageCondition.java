@@ -187,11 +187,12 @@ public class LinkageCondition {
 		} else if (device instanceof DevCollect) {
 			DevCollect cd = (DevCollect) device;
 			Float fValue = null;
-			if(getTriggerStyle() == TriggerStyle.PERCENT) {
-				fValue = cd.getCollectProperty().getPercent();
-			}else {
-				fValue = cd.getCollectProperty().getCurrentValue();
-			}
+//			if(getTriggerStyle() == TriggerStyle.PERCENT) {
+//				fValue = cd.getCollectProperty().getPercent();
+//			}else {
+//				fValue = cd.getCollectProperty().getCurrentValue();
+//			}
+			fValue = cd.getCollectProperty().getCurrentValue();
 			if (fValue == null) {
 				return null;
 			}

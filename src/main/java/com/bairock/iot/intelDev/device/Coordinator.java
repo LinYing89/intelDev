@@ -96,8 +96,35 @@ public class Coordinator extends DevContainer {
 				return false;
 			}
 
-			String head = strState.substring(0, 1);
-			String value = strState.substring(1);
+			String[] msgUnits = strState.split(":");
+			if (analysisDevCodings(msgUnits)) {
+				return true;
+			}
+			analysisMsgUnits(msgUnits);
+
+//			String head = strState.substring(0, 1);
+//			String value = strState.substring(1);
+//			switch (head) {
+//			case CtrlCodeHelper.DCT_XIETIAO_PANID:
+//				setPanid(value);
+//				break;
+//			case CtrlCodeHelper.DCT_NORMAL:
+//				setDevStateId(DevStateHelper.DS_YI_CHANG);
+//				break;
+//			}
+		}
+		return super.handle(strState);
+	}
+
+	private boolean analysisDevCodings(String[] codings) {
+
+		return false;
+	}
+
+	private boolean analysisMsgUnits(String[] msgUnits) {
+		for (String str : msgUnits) {
+			String head = str.substring(0, 1);
+			String value = str.substring(1);
 			switch (head) {
 			case CtrlCodeHelper.DCT_XIETIAO_PANID:
 				setPanid(value);
@@ -107,6 +134,6 @@ public class Coordinator extends DevContainer {
 				break;
 			}
 		}
-		return super.handle(strState);
+		return false;
 	}
 }

@@ -103,7 +103,7 @@ public class DevHaveChild extends Device {
 		super.setVisibility(visibility);
 	}
 
-	public Device getDevByCoding(String coding){
+	public Device findDevByCoding(String coding){
 		if(null == coding){
 			return null;
 		}
@@ -111,7 +111,7 @@ public class DevHaveChild extends Device {
 			if(dev.getCoding().equals(coding)){
 				return dev;
 			}else if(dev instanceof DevHaveChild) {
-				Device dd = ((DevHaveChild)dev).getDevByCoding(coding);
+				Device dd = ((DevHaveChild)dev).findDevByCoding(coding);
 				if(null != dd) {
 					return dd;
 				}
@@ -121,7 +121,7 @@ public class DevHaveChild extends Device {
 	}
 	
 	
-	public Device getDeviceByMainCodeAndSubCode(String mainCode, String subCode){
+	public Device findDeviceByMainCodeAndSubCode(String mainCode, String subCode){
 		if(null == mainCode || null == subCode) {
 			return null;
 		}

@@ -24,6 +24,17 @@ public interface IDevice {
 	@JsonIgnore
 	String getCoding();
 	
+	/**
+	 * get main code and sub code contains parent's coding
+	 * if device is main device,return main code + sub code of main device
+	 * then if device have parent, return parent's main code + sub code of + 
+	 * "_" + main code + sub code of this device
+	 * @return main code + cub code, like B10001 of main device or B10001_101 of sub device
+	 * 	and like bx0001_b11 or A10001_B10001
+	 */
+	@JsonIgnore
+	String getLongCoding();
+	
 	void turnOn();
 	
 	void turnOff();

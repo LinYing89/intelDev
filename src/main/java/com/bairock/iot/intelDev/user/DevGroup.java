@@ -452,7 +452,7 @@ public class DevGroup {
 			if (null == parentDev) {
 				return null;
 			}
-			dev = parentDev.getDeviceByMainCodeAndSubCode(codes[1], codes[2]);
+			dev = parentDev.findDeviceByMainCodeAndSubCode(codes[1], codes[2]);
 		} else {
 			// it maybe not the sub device
 			if (coding.length() < 6) {

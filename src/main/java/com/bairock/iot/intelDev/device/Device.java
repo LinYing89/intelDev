@@ -612,8 +612,7 @@ public class Device implements Comparable<Device>, IDevice {
 		if (o == null) {
 			return -1;
 		}
-
-		return (this.sortIndex + getCoding()).compareTo(o.sortIndex + o.getCoding());
+		return this.sortIndex - o.sortIndex;
 	}
 
 	public OnStateChangedListener getOnStateChanged() {
@@ -801,5 +800,15 @@ public class Device implements Comparable<Device>, IDevice {
 	@Override
 	public String createInitOrder() {
 		return OrderHelper.getOrderMsg(OrderHelper.QUERY_HEAD + getCoding() + OrderHelper.SEPARATOR + "2");
+	}
+
+	@Override
+	public String getLongCoding() {
+		String longCoding = "";
+		if(getParent() != null) {
+			longCoding = getParent().getLongCoding() + "_";
+		}
+		longCoding += getCoding();
+		return longCoding;
 	}
 }

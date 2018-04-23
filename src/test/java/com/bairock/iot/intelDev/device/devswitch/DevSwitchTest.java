@@ -72,5 +72,74 @@ public class DevSwitchTest {
 		ds.handle(state);
 		assertEquals(true, ds.getSubDevBySc("16").isKaiState());
 	}
+	
+	@Test
+	public void testHandler8() {
+		ds.turnOff();
+		String state = "80";
+		ds.handle(state);
+		assertEquals(true, ds.getSubDevBySc("1").isKaiState());
+		assertEquals(true, ds.getSubDevBySc("2").isKaiState());
+		assertEquals(true, ds.getSubDevBySc("3").isKaiState());
+		assertEquals(true, ds.getSubDevBySc("4").isKaiState());
+		assertEquals(false, ds.getSubDevBySc("5").isKaiState());
+		assertEquals(false, ds.getSubDevBySc("9").isKaiState());
+		
+		ds.turnOff();
+		state = "800";
+		ds.handle(state);
+		assertEquals(true, ds.getSubDevBySc("1").isKaiState());
+		assertEquals(true, ds.getSubDevBySc("2").isKaiState());
+		assertEquals(true, ds.getSubDevBySc("3").isKaiState());
+		assertEquals(true, ds.getSubDevBySc("4").isKaiState());
+		assertEquals(true, ds.getSubDevBySc("5").isKaiState());
+		assertEquals(false, ds.getSubDevBySc("9").isKaiState());
+		assertEquals(false, ds.getSubDevBySc("13").isKaiState());
+		ds.turnOff();
+		
+		ds.turnOff();
+		state = "8000";
+		ds.handle(state);
+		assertEquals(true, ds.getSubDevBySc("1").isKaiState());
+		assertEquals(true, ds.getSubDevBySc("2").isKaiState());
+		assertEquals(true, ds.getSubDevBySc("3").isKaiState());
+		assertEquals(true, ds.getSubDevBySc("4").isKaiState());
+		assertEquals(true, ds.getSubDevBySc("5").isKaiState());
+		assertEquals(true, ds.getSubDevBySc("9").isKaiState());
+		assertEquals(false, ds.getSubDevBySc("13").isKaiState());
+		
+		ds.turnOn();
+		state = "8f";
+		ds.handle(state);
+		assertEquals(false, ds.getSubDevBySc("1").isKaiState());
+		assertEquals(false, ds.getSubDevBySc("2").isKaiState());
+		assertEquals(false, ds.getSubDevBySc("3").isKaiState());
+		assertEquals(false, ds.getSubDevBySc("4").isKaiState());
+		assertEquals(true, ds.getSubDevBySc("5").isKaiState());
+		assertEquals(true, ds.getSubDevBySc("9").isKaiState());
+		
+		ds.turnOn();
+		state = "8ff";
+		ds.handle(state);
+		assertEquals(false, ds.getSubDevBySc("1").isKaiState());
+		assertEquals(false, ds.getSubDevBySc("2").isKaiState());
+		assertEquals(false, ds.getSubDevBySc("3").isKaiState());
+		assertEquals(false, ds.getSubDevBySc("4").isKaiState());
+		assertEquals(false, ds.getSubDevBySc("5").isKaiState());
+		assertEquals(true, ds.getSubDevBySc("9").isKaiState());
+		assertEquals(true, ds.getSubDevBySc("13").isKaiState());
+		ds.turnOff();
+		
+		ds.turnOn();
+		state = "8fff";
+		ds.handle(state);
+		assertEquals(false, ds.getSubDevBySc("1").isKaiState());
+		assertEquals(false, ds.getSubDevBySc("2").isKaiState());
+		assertEquals(false, ds.getSubDevBySc("3").isKaiState());
+		assertEquals(false, ds.getSubDevBySc("4").isKaiState());
+		assertEquals(false, ds.getSubDevBySc("5").isKaiState());
+		assertEquals(false, ds.getSubDevBySc("9").isKaiState());
+		assertEquals(true, ds.getSubDevBySc("13").isKaiState());
+	}
 
 }

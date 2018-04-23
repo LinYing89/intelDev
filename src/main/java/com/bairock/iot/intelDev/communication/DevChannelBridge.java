@@ -1,5 +1,7 @@
 package com.bairock.iot.intelDev.communication;
 
+import java.io.UnsupportedEncodingException;
+
 import com.bairock.iot.intelDev.device.DevContainer;
 import com.bairock.iot.intelDev.device.DevHaveChild;
 import com.bairock.iot.intelDev.device.DevStateHelper;
@@ -210,7 +212,7 @@ public class DevChannelBridge {
 		if (device.getCoding().equals(devCoding)) {
 			return device;
 		} else if (device instanceof DevHaveChild) {
-			return ((DevHaveChild) device).getDevByCoding(devCoding);
+			return ((DevHaveChild) device).findDevByCoding(devCoding);
 		}
 		return null;
 	}
@@ -296,7 +298,12 @@ public class DevChannelBridge {
 
 	public void sendOrder(String msg) {
 		if (null != getChannel()) {
-			getChannel().writeAndFlush(Unpooled.copiedBuffer(msg.getBytes()));
+			try {
+				getChannel().writeAndFlush(Unpooled.copiedBuffer(msg.getBytes("GBK")));
+			} catch (UnsupportedEncodingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			if (null != onCommunicationListener) {
 				onCommunicationListener.onSend(this, msg);
 			}

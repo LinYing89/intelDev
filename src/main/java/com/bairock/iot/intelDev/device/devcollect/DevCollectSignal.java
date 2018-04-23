@@ -47,10 +47,10 @@ public class DevCollectSignal extends DevCollect {
 			try {
 				String strState = state.substring(1);
 				int iHexValue = Integer.parseInt(strState, 16);
-				srcValue = (float)iHexValue;
-//				if (getCollectProperty().getCollectSrc() != CollectSignalSource.SWITCH) {
-//					srcValue = srcValue * 0.01f;
-//				}
+				srcValue = (float) iHexValue;
+				// if (getCollectProperty().getCollectSrc() != CollectSignalSource.SWITCH) {
+				// srcValue = srcValue * 0.01f;
+				// }
 			} catch (Exception e) {
 				return false;
 			}
@@ -81,33 +81,43 @@ public class DevCollectSignal extends DevCollect {
 		}
 		return true;
 	}
-	
+
 	private void simulatorHandler(float srcValue, CollectProperty cp, String msgId, float simulator) {
-		
-		
+
 		switch (msgId) {
 		case "8":
-			//f(srcValue) = least + (srcValue - 0) / (0x3fff - 0) * (crest - least))
-//			float simulator = cp.getLeastValue() + (srcValue) / 16383f * (cp.getCrestValue() - cp.getLeastValue());
-//			cp.setSimulatorValue(IntelDevHelper.scale(simulator));
-			
-//			float simulator = (srcValue) / 4095f * (cp.getCrestValue());
-//			cp.setSimulatorValue(IntelDevHelper.scale(simulator));
-			
+			// f(srcValue) = least + (srcValue - 0) / (0x3fff - 0) * (crest - least))
+			// float simulator = cp.getLeastValue() + (srcValue) / 16383f *
+			// (cp.getCrestValue() - cp.getLeastValue());
+			// cp.setSimulatorValue(IntelDevHelper.scale(simulator));
+
+			// float simulator = (srcValue) / 4095f * (cp.getCrestValue());
+			// cp.setSimulatorValue(IntelDevHelper.scale(simulator));
+
 			// f(A) = Aa + (A - a) / (b - a) * (Ab - Aa)
 			// a is min voltage, b is max voltage
 			// Aa is min voltage refer used value
 			// Ab is max voltage refer used value
-			if(cp.getCrestValue() - cp.getLeastValue() == 0) {
+			if (cp.getCrestValue() - cp.getLeastValue() == 0) {
 				return;
 			}
-			float currentValue = cp.getLeastReferValue()
-					+ (simulator - cp.getLeastValue()) / (cp.getCrestValue() - cp.getLeastValue())
-							* (cp.getCrestReferValue() - cp.getLeastReferValue());
+
+			float currentValue = cp.getLeastReferValue() + (simulator - cp.getLeastValue())
+					/ (cp.getCrestValue() - cp.getLeastValue()) * (cp.getCrestReferValue() - cp.getLeastReferValue());
+
+			if (cp.getCollectSrc() == CollectSignalSource.VOLTAGE) {
+				currentValue += 1;
+			}
 			currentValue = IntelDevHelper.scale(currentValue);
 
-			float percent = computePercentByCurrentValue(currentValue, cp);
-			cp.setPercent(IntelDevHelper.scale(percent));
+
+			//float percent = computePercentByCurrentValue(currentValue, cp);
+//			if (cp.getUnitSymbol().equals("%")) {
+//				cp.setCurrentValue(IntelDevHelper.scale(percent));
+//			}else {
+//				cp.setPercent(IntelDevHelper.scale(percent));
+//				cp.setCurrentValue(currentValue);
+//			}
 			cp.setCurrentValue(currentValue);
 			break;
 		case "p":
@@ -116,15 +126,15 @@ public class DevCollectSignal extends DevCollect {
 			break;
 		}
 	}
-	
+
 	private void digitHandler(float srcValue, CollectProperty cp, String msgId) {
 		cp.setSimulatorValue(srcValue);
 		switch (msgId) {
 		case "8":
-			if(cp.getCrestValue() - cp.getLeastValue() == 0) {
+			if (cp.getCrestValue() - cp.getLeastValue() == 0) {
 				return;
 			}
-			//percent = (A - Aa) * 100 / (Ab - Aa)
+			// percent = (A - Aa) * 100 / (Ab - Aa)
 			float percent = computePercentByCurrentValue(srcValue, cp);
 			cp.setPercent(IntelDevHelper.scale(percent));
 			cp.setCurrentValue(IntelDevHelper.scale(srcValue));
@@ -135,7 +145,7 @@ public class DevCollectSignal extends DevCollect {
 			break;
 		}
 	}
-	
+
 	private void switchHandler(float srcValue, CollectProperty cp, String msgId) {
 		cp.setSimulatorValue(srcValue);
 		switch (msgId) {
@@ -157,13 +167,14 @@ public class DevCollectSignal extends DevCollect {
 			break;
 		}
 	}
-	
-	//percent = (A - Aa) * 100 / (Ab - Aa)
+
+	// percent = (A - Aa) * 100 / (Ab - Aa)
 	private float computePercentByCurrentValue(float currentValue, CollectProperty cp) {
-		if(cp.getCrestValue() - cp.getLeastValue() == 0) {
+		if (cp.getCrestValue() - cp.getLeastValue() == 0) {
 			return 0;
 		}
-		float percent = (currentValue - cp.getLeastReferValue()) * 100 / (cp.getCrestReferValue() - cp.getLeastReferValue());
+		float percent = (currentValue - cp.getLeastReferValue()) * 100
+				/ (cp.getCrestReferValue() - cp.getLeastReferValue());
 		return percent;
 	}
 }
