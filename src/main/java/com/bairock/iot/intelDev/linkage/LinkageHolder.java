@@ -110,7 +110,7 @@ public class LinkageHolder {
 	
 	/**
 	 * remove an sub chain
-	 * @param subChain
+	 * @param linkage
 	 * @return
 	 */
 	public boolean removeLinkage(Linkage linkage){

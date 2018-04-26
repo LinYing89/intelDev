@@ -1,0 +1,9 @@
+com.bairock.iot.intelDev.communication
+com.bairock.iot.intelDev.device
+com.bairock.iot.intelDev.device.devcollect
+com.bairock.iot.intelDev.device.devswitch
+com.bairock.iot.intelDev.linkage
+com.bairock.iot.intelDev.linkage.guagua
+com.bairock.iot.intelDev.linkage.loop
+com.bairock.iot.intelDev.linkage.timing
+com.bairock.iot.intelDev.user

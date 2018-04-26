@@ -236,6 +236,9 @@ public class User {
 		Device dev =  null;
 		for(DevGroup group : listDevGroup){
 			dev = group.findDeviceWithCoding(devCoding);
+			if(null != dev) {
+				return dev;
+			}
 		}
 		return dev;
 	}

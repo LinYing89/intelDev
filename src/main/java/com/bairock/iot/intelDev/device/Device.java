@@ -320,7 +320,7 @@ public class Device implements Comparable<Device>, IDevice {
 	/**
 	 * set device gear
 	 * 
-	 * @param dg
+	 * @param gear
 	 */
 	public void setGear(Gear gear) {
 		if (this.gear != gear) {
@@ -430,7 +430,6 @@ public class Device implements Comparable<Device>, IDevice {
 	/**
 	 * if or not the device is visibility
 	 * 
-	 * @return
 	 */
 	public void setVisibility(boolean visibility) {
 		this.visibility = visibility;

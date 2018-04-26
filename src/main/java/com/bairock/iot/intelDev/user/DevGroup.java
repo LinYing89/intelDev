@@ -356,9 +356,13 @@ public class DevGroup {
 				dev.setDevGroup(null);
 				list.remove(dev);
 				res = true;
+				break;
 			} else {
 				if (dev instanceof DevHaveChild) {
 					res = removeDevice(((DevHaveChild) dev).getListDev(), device);
+					if(res) {
+						break;
+					}
 				}
 			}
 		}

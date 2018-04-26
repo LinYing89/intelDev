@@ -64,7 +64,7 @@ public class LinkageTab {
 	 * set linkage mark
 	 * @param device device
 	 * @param which which linkage CHAIN/TIMING/LOOP
-	 * @param event target state，1 or 0
+	 * @param event target state,1 or 0
 	 */
 	public void setChain(Device device, int which, int event){
 		LinkageTabRow eqTabRow = getEqLinkageTabRow(device);

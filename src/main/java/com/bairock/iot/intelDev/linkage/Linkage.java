@@ -90,7 +90,7 @@ public class Linkage {
 	
 	/**
 	 * 
-	 * @param subLinkageName
+	 * @param name
 	 */
 	public void setName(String name) {
 		this.name = name;

@@ -173,7 +173,7 @@ public class LinkageCondition {
 	/**
 	 * the result of condition
 	 * 
-	 * @return 1 is success，0 is fail, null is no result
+	 * @return 1 is success, 0 is fail, null is no result
 	 */
 	@JsonIgnore
 	public Integer getResult() {

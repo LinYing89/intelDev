@@ -139,6 +139,8 @@ public abstract class MessageAnalysiser{
 				}
 			}
 			//device.handle(codingState[1]);
+		}else {
+			device.handle("21");
 		}
 
 		deviceFeedback(device, msg);

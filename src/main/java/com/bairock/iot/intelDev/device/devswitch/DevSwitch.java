@@ -95,6 +95,21 @@ public class DevSwitch extends DevHaveChild {
 
 		return result;
 	}
+	
+	protected void handle7(String[] msgs) {
+		if(msgs.length != 3) {
+			return;
+		}
+		int iHexState = Integer.parseInt(msgs[2], 16);
+		for(int i = 0; i < 8; i++) {
+//			if(i >= getListDev().size()) {
+//				break;
+//			}
+			SubDev sd1 = (SubDev) getSubDevBySc(String.valueOf(i + 1));
+			String strState = getEnsureState(iHexState, i);
+			DevStateHelper.getIns().setDsId(sd1, strState);
+		}
+	}
 
 	private void analysisMsgUnit(String msgUnit) {
 		if (null == msgUnit || msgUnit.isEmpty()) {
@@ -120,17 +135,18 @@ public class DevSwitch extends DevHaveChild {
 			// msgs[1] is module number, begin with 0
 			// msgs[2] is four road state of the module, the lowest bit is road one
 
-			if(msgs.length != 4) {
-				return;
-			}
-			
-			subCode = Integer.parseInt(msgs[1] + msgs[2], 16);
-			strState = msgs[3].equals("0") ? "1" : "0";
-			SubDev sd1 = (SubDev) getSubDevBySc(String.valueOf(subCode));
-			if(null == sd1) {
-				return;
-			}
-			DevStateHelper.getIns().setDsId(sd1, strState);
+			handle7(msgs);
+//			if(msgs.length != 4) {
+//				return;
+//			}
+//			
+//			subCode = Integer.parseInt(msgs[1] + msgs[2], 16);
+//			strState = msgs[3].equals("0") ? "1" : "0";
+//			SubDev sd1 = (SubDev) getSubDevBySc(String.valueOf(subCode));
+//			if(null == sd1) {
+//				return;
+//			}
+//			DevStateHelper.getIns().setDsId(sd1, strState);
 			//moduleNum = Integer.parseInt(msgs[1], 16);
 			//first SubDev subCode number = module number * 4 + 1, subCode begin with 1
 			//firstSubDevSc = moduleNum * 4 + 1;
@@ -212,7 +228,7 @@ public class DevSwitch extends DevHaveChild {
 	 * @param offset begin with 0
 	 * @return
 	 */
-	private String getEnsureState(int iHexState, int offset) {
+	protected String getEnsureState(int iHexState, int offset) {
 		//int iHexState = Integer.parseInt(strHex);
 		int iState = (iHexState >> offset) & 1;
 		return iState == 0 ? "1" : "0";

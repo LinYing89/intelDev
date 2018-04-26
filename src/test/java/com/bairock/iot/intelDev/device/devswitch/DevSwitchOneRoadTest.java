@@ -55,12 +55,12 @@ public class DevSwitchOneRoadTest extends TestCase {
 	
 	public void testHandler7() {
 		dsor.turnOff();
-		String state = "7020";
+		String state = "70c";
 		dsor.handle(state);
 		assertEquals(true, ((SubDev)(dsor.getListDev().get(0))).isKaiState());
 		
 		dsor.turnOn();
-		state = "7021";
+		state = "702";
 		dsor.handle(state);
 		assertEquals(false, ((SubDev)(dsor.getListDev().get(0))).isKaiState());
 	}

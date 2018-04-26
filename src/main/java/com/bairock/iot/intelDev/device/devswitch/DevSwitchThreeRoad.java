@@ -5,6 +5,8 @@ import javax.persistence.Entity;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 
+import com.bairock.iot.intelDev.device.DevStateHelper;
+
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorValue("DevSwitchThreeRoad")
@@ -27,4 +29,22 @@ public class DevSwitchThreeRoad extends DevSwitch {
 		addChildDev(sd3);
 	}
 
+	protected void handle7(String[] msgs) {
+		if(msgs.length != 3) {
+			return;
+		}
+		int iHexState = Integer.parseInt(msgs[2], 16);
+		SubDev sd1 = (SubDev) getSubDevBySc(String.valueOf("1"));
+		String strState = getEnsureState(iHexState, 0);
+		DevStateHelper.getIns().setDsId(sd1, strState);
+		
+		SubDev sd2 = (SubDev) getSubDevBySc(String.valueOf("2"));
+		strState = getEnsureState(iHexState, 1);
+		DevStateHelper.getIns().setDsId(sd2, strState);
+		
+		SubDev sd3 = (SubDev) getSubDevBySc(String.valueOf("3"));
+		strState = getEnsureState(iHexState, 2);
+		DevStateHelper.getIns().setDsId(sd3, strState);
+	}
+	
 }

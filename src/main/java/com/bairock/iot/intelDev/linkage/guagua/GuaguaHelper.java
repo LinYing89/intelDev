@@ -107,7 +107,7 @@ public class GuaguaHelper {
 	public interface OnOrderSendListener{
 		/**
 		 * guaguaMouth device order send listener
-		 * @param guaguaHolder guagua device
+		 * @param guaguaMouth guagua device
 		 * @param order order message
 		 * @param ctrlModel
 		 */

@@ -87,7 +87,7 @@ public class DevState {
 	
 	/**
 	 * set device info
-	 * @param dsInfo
+	 * @param info
 	 */
 	public void setInfo(String info) {
 		this.info = info;

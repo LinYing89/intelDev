@@ -115,15 +115,15 @@ public class SubChain extends Linkage {
 	@Override
 	@JsonIgnore
 	public boolean getConditionResult(){
-		Integer result = null;
 		if(listCondition.isEmpty()){
-			return false;
+			return true;
 		}
 
+		Integer result = null;
 		List<LinkageCondition> list = new ArrayList<>(listCondition);
 		for(int i=0; i< list.size(); i++){
 			LinkageCondition event = list.get(i);
-			//获取每个条件的结果
+			//get result of every condition
 			Integer er = event.getResult();
 			if(er == null){
 				continue;
@@ -147,7 +147,7 @@ public class SubChain extends Linkage {
 	 */
 	@Override
 	public void run(){
-		if(!isEnable() || listCondition.isEmpty() || getListEffect().isEmpty()){
+		if(!isEnable() || getListEffect().isEmpty()){
 			return;
 		}
 		if(getConditionResult()){

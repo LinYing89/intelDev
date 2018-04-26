@@ -45,18 +45,18 @@ public class DevStateHelper {
 	
 	private DevStateHelper() {
 		listState = new ArrayList<DevState>();
-		listState.add(new DevState(DS_KAI,"1","开"));
-		listState.add(new DevState(DS_GUAN,"0","关"));
-		listState.add(new DevState(DS_TING,"2","停"));
-		listState.add(new DevState(DS_ZHENG_CHANG,"3","正常"));
-		listState.add(new DevState(DS_YI_CHANG,"4","异常"));
-		listState.add(new DevState(CONFIGING,"5","配置中"));
-		listState.add(new DevState(CONFIG_OK,"6","配置成功"));
+		listState.add(new DevState(DS_KAI,"1","on"));
+		listState.add(new DevState(DS_GUAN,"0","off"));
+		listState.add(new DevState(DS_TING,"2","stop"));
+		listState.add(new DevState(DS_ZHENG_CHANG,"3","normal"));
+		listState.add(new DevState(DS_YI_CHANG,"4","abnormal"));
+		listState.add(new DevState(CONFIGING,"5","configing"));
+		listState.add(new DevState(CONFIG_OK,"6","config_ok"));
 	}
 
 	/**
 	 * get instance of DevStateHelper
-	 * @return
+	 * @return ins
 	 */
 	public static DevStateHelper getIns(){
 		if(null == ins){
@@ -67,7 +67,7 @@ public class DevStateHelper {
 
 	/**
 	 * get list of state
-	 * @return
+	 * @return list device state
 	 */
 	public List<DevState> getListState() {
 		return listState;
@@ -75,7 +75,7 @@ public class DevStateHelper {
 
 	/**
 	 * set list of state
-	 * @param listState
+	 * @param listState list state
 	 */
 	public void setListState(List<DevState> listState) {
 		this.listState = listState;
@@ -83,7 +83,7 @@ public class DevStateHelper {
 	
 	/**
 	 * add an device state
-	 * @param devState
+	 * @param devState device state
 	 */
 	public void add(DevState devState){
 		boolean haved = false;
@@ -103,8 +103,8 @@ public class DevStateHelper {
 	
 	/**
 	 * remove an device state
-	 * @param devState
-	 * @return
+	 * @param devState device state
+	 * @return true if remove success, false else
 	 */
 	public boolean remove(DevState devState){
 		for(DevState dState : getListState()){
@@ -121,7 +121,7 @@ public class DevStateHelper {
 	/**
 	 * get device state code
 	 * @param dsId device state identify
-	 * @return
+	 * @return device state
 	 */
 	public String getDs(String dsId){
 		if(null == dsId){
@@ -138,7 +138,7 @@ public class DevStateHelper {
 	/**
 	 * get device state identify
 	 * @param ds device state code
-	 * @return
+	 * @return device state id
 	 */
 	public String getDsId(String ds){
 		if(null == ds){
@@ -154,8 +154,8 @@ public class DevStateHelper {
 	
 	/**
 	 * 
-	 * @param dev
-	 * @param state
+	 * @param dev device
+	 * @param state device state
 	 */
 	public void setDsId(Device dev, String state){
 		if(null == dev) {

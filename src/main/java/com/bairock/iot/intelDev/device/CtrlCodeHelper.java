@@ -60,7 +60,7 @@ public class CtrlCodeHelper {
 		listCtrlCode.add(new CtrlCode(DCT_YAOKONG_SAVE, "6", "save"));
 		listCtrlCode.add(new CtrlCode(DCT_YAOKONG_CTRL, "7", "control"));
 		listCtrlCode.add(new CtrlCode(DCT_YAOKONG_CLEAN, "8", "clean"));
-		listCtrlCode.add(new CtrlCode(DCT_YAOKONG_TYPE, "9", "type of remove，0：hongwai，1:315MHz，2:433MHz"));
+		listCtrlCode.add(new CtrlCode(DCT_YAOKONG_TYPE, "9", "type of remove,0：hongwai,1:315MHz,2:433MHz"));
 		
 		listCtrlCode.add(new CtrlCode(DCT_CAIJI_WENDU, "3", "duoGongNengCaiJiQi，wenDu"));
 		listCtrlCode.add(new CtrlCode(DCT_CAIJI_SHIDU, "4", "shiDu"));

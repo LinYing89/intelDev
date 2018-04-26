@@ -1,7 +1,6 @@
 package com.bairock.iot.intelDev.device.devswitch;
 
 import com.bairock.iot.intelDev.device.Device;
-import com.bairock.iot.intelDev.device.Gear;
 import com.bairock.iot.intelDev.device.MainCodeHelper;
 import com.bairock.iot.intelDev.device.OrderHelper;
 
@@ -53,22 +52,46 @@ public class DevSwitchThreeRoadTest extends TestCase {
 		assertEquals(OrderHelper.getOrderMsg(msg), dev.getTurnOffOrder());
 	}
 
+//	public void testHandler7() {
+//		dsor.turnOff();
+//		String state = "7010";
+//		dsor.handle(state);
+//		assertEquals(true, dsor.getSubDevBySc("1").isKaiState());
+//		
+//		dsor.turnOn();
+//		state = "7021";
+//		dsor.handle(state);
+//		assertEquals(false, dsor.getSubDevBySc("2").isKaiState());
+//		
+//		dsor.turnOn();
+//		state = "7031";
+//		dsor.handle(state);
+//		assertEquals(false, dsor.getSubDevBySc("3").isKaiState());
+//	}
+	
 	public void testHandler7() {
 		dsor.turnOff();
-		String state = "7010";
+		String state = "700";
 		dsor.handle(state);
 		assertEquals(true, dsor.getSubDevBySc("1").isKaiState());
+		assertEquals(true, dsor.getSubDevBySc("2").isKaiState());
+		assertEquals(true, dsor.getSubDevBySc("3").isKaiState());
 		
 		dsor.turnOn();
-		state = "7021";
+		state = "707";
 		dsor.handle(state);
+		assertEquals(false, dsor.getSubDevBySc("1").isKaiState());
 		assertEquals(false, dsor.getSubDevBySc("2").isKaiState());
+		assertEquals(false, dsor.getSubDevBySc("3").isKaiState());
 		
 		dsor.turnOn();
-		state = "7031";
+		state = "705";
 		dsor.handle(state);
+		assertEquals(false, dsor.getSubDevBySc("1").isKaiState());
+		assertEquals(true, dsor.getSubDevBySc("2").isKaiState());
 		assertEquals(false, dsor.getSubDevBySc("3").isKaiState());
 	}
+	
 	
 	public void testHandler8() {
 		dsor.turnOff();

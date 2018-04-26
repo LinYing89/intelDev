@@ -97,40 +97,34 @@ public class Coordinator extends DevContainer {
 			}
 
 			String[] msgUnits = strState.split(":");
-			if (analysisDevCodings(msgUnits)) {
-				return true;
-			}
-			analysisMsgUnits(msgUnits);
-
-//			String head = strState.substring(0, 1);
-//			String value = strState.substring(1);
-//			switch (head) {
-//			case CtrlCodeHelper.DCT_XIETIAO_PANID:
-//				setPanid(value);
-//				break;
-//			case CtrlCodeHelper.DCT_NORMAL:
-//				setDevStateId(DevStateHelper.DS_YI_CHANG);
-//				break;
+//			if (analysisDevCodings(msgUnits)) {
+//				return true;
 //			}
+			analysisMsgUnits(msgUnits);
 		}
 		return super.handle(strState);
 	}
 
-	private boolean analysisDevCodings(String[] codings) {
-
-		return false;
-	}
+//	private boolean analysisDevCodings(String[] codings) {
+//
+//		return false;
+//	}
 
 	private boolean analysisMsgUnits(String[] msgUnits) {
 		for (String str : msgUnits) {
 			String head = str.substring(0, 1);
 			String value = str.substring(1);
-			switch (head) {
+			String dctId = CtrlCodeHelper.getIns().getDctId(head);
+			switch (dctId) {
 			case CtrlCodeHelper.DCT_XIETIAO_PANID:
 				setPanid(value);
 				break;
 			case CtrlCodeHelper.DCT_NORMAL:
-				setDevStateId(DevStateHelper.DS_YI_CHANG);
+//				if(value.equals("0")) {
+//					setDevStateId(DevStateHelper.DS_YI_CHANG);
+//				}else {
+//					setDevStateId(DevStateHelper.DS_ZHENG_CHANG);
+//				}
 				break;
 			}
 		}
