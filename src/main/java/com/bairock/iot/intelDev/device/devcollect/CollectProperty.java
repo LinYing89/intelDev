@@ -1,5 +1,7 @@
 package com.bairock.iot.intelDev.device.devcollect;
 
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 import javax.persistence.Column;
@@ -46,7 +48,7 @@ public class CollectProperty {
 
 	@Transient
 	@JsonIgnore
-	private OnCurrentValueChangedListener onCurrentValueChanged;
+	private Set<OnCurrentValueChangedListener> stOnCurrentValueChanged = new HashSet<>();;
 
 	@Transient
 	@JsonIgnore
@@ -84,13 +86,15 @@ public class CollectProperty {
 		this.devCollect = devCollect;
 	}
 
-	public OnCurrentValueChangedListener getOnCurrentValueChanged() {
-		return onCurrentValueChanged;
+	public void addOnCurrentValueChanged(OnCurrentValueChangedListener onCurrentValueChanged) {
+		stOnCurrentValueChanged.add(onCurrentValueChanged);
 	}
 
-	public void setOnCurrentValueChanged(OnCurrentValueChangedListener onCurrentValueChanged) {
-		this.onCurrentValueChanged = onCurrentValueChanged;
+	public boolean removeOnCurrentValueChanged(OnCurrentValueChangedListener onCurrentValueChanged) {
+		return stOnCurrentValueChanged.remove(onCurrentValueChanged);
 	}
+	
+	
 
 	public OnSignalSourceChangedListener getOnSignalSourceChangedListener() {
 		return onSignalSourceChangedListener;
@@ -185,21 +189,21 @@ public class CollectProperty {
 	public void setCurrentValue(Float currentValue) {
 		if (this.currentValue == null) {
 			this.currentValue = currentValue;
-			if (null != onCurrentValueChanged) {
-				onCurrentValueChanged.onCurrentValueChanged(devCollect, currentValue);
-			}
+			notifyCurrentValueChanged(currentValue);
 		} else {
 			if (null == currentValue) {
 				this.currentValue = currentValue;
-				if (null != onCurrentValueChanged) {
-					onCurrentValueChanged.onCurrentValueChanged(devCollect, currentValue);
-				}
+				notifyCurrentValueChanged(currentValue);
 			} else if (Math.abs(this.currentValue - currentValue) > 0.01f) {
 				this.currentValue = currentValue;
-				if (null != onCurrentValueChanged) {
-					onCurrentValueChanged.onCurrentValueChanged(devCollect, currentValue);
-				}
+				notifyCurrentValueChanged(currentValue);
 			}
+		}
+	}
+	
+	private void notifyCurrentValueChanged(Float currentValue) {
+		for(OnCurrentValueChangedListener onCurrentValueChanged : stOnCurrentValueChanged) {
+			onCurrentValueChanged.onCurrentValueChanged(devCollect, currentValue);
 		}
 	}
 

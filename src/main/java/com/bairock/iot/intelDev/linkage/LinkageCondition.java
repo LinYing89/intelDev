@@ -8,10 +8,12 @@ import javax.persistence.ForeignKey;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Transient;
 
 import com.bairock.iot.intelDev.device.CompareSymbol;
 import com.bairock.iot.intelDev.device.Device;
 import com.bairock.iot.intelDev.device.IStateDev;
+import com.bairock.iot.intelDev.device.devcollect.CollectProperty;
 import com.bairock.iot.intelDev.device.devcollect.DevCollect;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -32,7 +34,7 @@ public class LinkageCondition {
 	@ManyToOne
 	@JsonBackReference("subchain_linkagecondition")
 	private SubChain subChain;
-	
+
 	private ZLogic logic = ZLogic.OR;
 	private CompareSymbol compareSymbol = CompareSymbol.EQUAL;
 
@@ -43,6 +45,14 @@ public class LinkageCondition {
 	private float compareValue;
 	private boolean deleted;
 	private TriggerStyle triggerStyle = TriggerStyle.VALUE;
+	
+	@Transient
+	@JsonIgnore
+	private OnCompareResultChangedListener onCompareResultChangedListener;
+	
+	@Transient
+	@JsonIgnore
+	private int compareResult = -1;
 
 	public LinkageCondition() {
 		id = UUID.randomUUID().toString();
@@ -124,6 +134,39 @@ public class LinkageCondition {
 	 */
 	public void setDevice(Device device) {
 		this.device = device;
+		if (null != device) {
+			if (device instanceof DevCollect) {
+				((DevCollect) device).getCollectProperty()
+						.addOnCurrentValueChanged(new CollectProperty.OnCurrentValueChangedListener() {
+
+							@Override
+							public void onCurrentValueChanged(DevCollect dev, Float value) {
+								conclutionResult(value);
+							}
+						});
+			} else {
+				device.addOnStateChangedListener(new Device.OnStateChangedListener() {
+
+					@Override
+					public void onStateChanged(Device dev, String stateId) {
+						conclutionResult(Float.parseFloat((dev.getDevState())));
+					}
+
+					@Override
+					public void onNormalToAbnormal(Device dev) {
+						compareResult = -1;
+					}
+
+					@Override
+					public void onNoResponse(Device dev) {
+					}
+
+					@Override
+					public void onAbnormalToNormal(Device dev) {
+					}
+				});
+			}
+		}
 	}
 
 	/**
@@ -170,6 +213,48 @@ public class LinkageCondition {
 		this.triggerStyle = triggerStyle;
 	}
 
+	public OnCompareResultChangedListener getOnCompareResultChangedListener() {
+		return onCompareResultChangedListener;
+	}
+
+	public void setOnCompareResultChangedListener(OnCompareResultChangedListener onCompareResultChangedListener) {
+		this.onCompareResultChangedListener = onCompareResultChangedListener;
+	}
+
+	
+	public int getCompareResult() {
+		return compareResult;
+	}
+
+	public void setCompareResult(int compareResult) {
+		this.compareResult = compareResult;
+	}
+
+	private void conclutionResult(Float value) {
+		if(null == value) {
+			return;
+		}
+		boolean compara = false;
+		switch (compareSymbol) {
+		case GREAT:
+			compara = value > getCompareValue();
+			break;
+		case EQUAL:
+			compara = Math.abs(value - getCompareValue()) < 0.005;
+			break;
+		case LESS:
+			compara = value < getCompareValue();
+			break;
+		}
+		//1 is established, 0 is not established
+		int result = compara ? 1 : 0;
+		if(result != compareResult) {
+			if(null != onCompareResultChangedListener) {
+				onCompareResultChangedListener.onCompareResultChanged(result);
+			}
+		}
+	}
+	
 	/**
 	 * the result of condition
 	 * 
@@ -187,11 +272,11 @@ public class LinkageCondition {
 		} else if (device instanceof DevCollect) {
 			DevCollect cd = (DevCollect) device;
 			Float fValue = null;
-//			if(getTriggerStyle() == TriggerStyle.PERCENT) {
-//				fValue = cd.getCollectProperty().getPercent();
-//			}else {
-//				fValue = cd.getCollectProperty().getCurrentValue();
-//			}
+			// if(getTriggerStyle() == TriggerStyle.PERCENT) {
+			// fValue = cd.getCollectProperty().getPercent();
+			// }else {
+			// fValue = cd.getCollectProperty().getCurrentValue();
+			// }
 			fValue = cd.getCollectProperty().getCurrentValue();
 			if (fValue == null) {
 				return null;
@@ -211,22 +296,24 @@ public class LinkageCondition {
 			break;
 		}
 		result = compara ? 1 : 0;
-		//System.out.println("resulr:" + result);
+		// System.out.println("resulr:" + result);
 		return result;
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-		if(null == obj || !(obj instanceof LinkageCondition)) {
+		if (null == obj || !(obj instanceof LinkageCondition)) {
 			return false;
 		}
-		LinkageCondition lc = (LinkageCondition)obj;
-		if(lc.getCompareSymbol() == getCompareSymbol()
-                && lc.getDevice().equals(getDevice())
-                && lc.getLogic() == getLogic()
-                && lc.getCompareValue() == getCompareValue()){
+		LinkageCondition lc = (LinkageCondition) obj;
+		if (lc.getCompareSymbol() == getCompareSymbol() && lc.getDevice().equals(getDevice())
+				&& lc.getLogic() == getLogic() && lc.getCompareValue() == getCompareValue()) {
 			return true;
 		}
 		return false;
+	}
+	
+	public interface OnCompareResultChangedListener {
+		void onCompareResultChanged(int result);
 	}
 }

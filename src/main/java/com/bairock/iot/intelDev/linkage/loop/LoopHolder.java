@@ -22,6 +22,13 @@ public class LoopHolder extends LinkageHolder{
 		super();
 	}
 	
+	@Override
+	protected void unabled() {
+		for (LinkageTabRow linkageTabRow : LinkageTab.getIns().getListLinkageTabRow()) {
+			linkageTabRow.setLoop(-1);
+		}
+	}
+	
 	/**
 	 * 
 	 */

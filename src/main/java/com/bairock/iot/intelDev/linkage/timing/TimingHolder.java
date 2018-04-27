@@ -77,6 +77,13 @@ public class TimingHolder extends LinkageHolder{
 		return null;
 	}
 	
+	@Override
+	protected void unabled() {
+		for (LinkageTabRow linkageTabRow : LinkageTab.getIns().getListLinkageTabRow()) {
+			linkageTabRow.setTiming(-1);
+		}
+	}
+	
 	/**
 	 * 
 	 */

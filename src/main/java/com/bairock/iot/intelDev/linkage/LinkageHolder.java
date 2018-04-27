@@ -76,7 +76,22 @@ public class LinkageHolder {
 	 * @param enable
 	 */
 	public void setEnable(boolean enable) {
-		this.enable = enable;
+		if(this.enable != enable) {
+			this.enable = enable;
+			if(enable) {
+				enabled();
+			}else {
+				unabled();
+			}
+		}
+	}
+	
+	protected void enabled() {
+		
+	}
+	
+	protected void unabled() {
+		
 	}
 	
 	public DevGroup getDevGroup() {
@@ -105,6 +120,15 @@ public class LinkageHolder {
 		if(!listLinkage.contains(linkage)){
 			listLinkage.add(linkage);
 			linkage.setLinkageHolder(this);
+			linkage.setOnEnableChangedListener(new Linkage.OnEnableChangedListener() {
+				
+				@Override
+				public void onEnableChanged(Linkage linkage, boolean enable) {
+					for(Linkage subChain : getListLinkage()){
+						subChain.conclutionConditionsResultAndRunEffect();
+					}
+				}
+			});
 		}
 	}
 	

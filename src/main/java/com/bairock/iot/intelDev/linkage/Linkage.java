@@ -17,9 +17,11 @@ import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
@@ -50,6 +52,10 @@ public class Linkage {
 	@JoinColumn(name="linkage_id")
 	@JsonManagedReference("linkage_effect")
 	private List<Effect> listEffect;
+	
+	@Transient
+	@JsonIgnore
+	private OnEnableChangedListener onEnableChangedListener;
 	
 	public Linkage(){
 		id= UUID.randomUUID().toString();
@@ -109,7 +115,12 @@ public class Linkage {
 	 * @param enable
 	 */
 	public void setEnable(boolean enable) {
-		this.enable = enable;
+		if(this.enable != enable) {
+			this.enable = enable;
+			if(null != onEnableChangedListener) {
+				onEnableChangedListener.onEnableChanged(this, enable);
+			}
+		}
 	}
 	
 	/**
@@ -147,6 +158,14 @@ public class Linkage {
 		}
 	}
 	
+	public OnEnableChangedListener getOnEnableChangedListener() {
+		return onEnableChangedListener;
+	}
+
+	public void setOnEnableChangedListener(OnEnableChangedListener onEnableChangedListener) {
+		this.onEnableChangedListener = onEnableChangedListener;
+	}
+
 	/**
 	 * 
 	 * @param effect
@@ -209,7 +228,19 @@ public class Linkage {
 		
 	}
 	
+	public boolean conclutionConditionsResult() {
+		return false;
+	}
+	
+	public boolean conclutionConditionsResultAndRunEffect() {
+		return false;
+	}
+	
 	public boolean getConditionResult() {
 		return false;
+	}
+	
+	public interface OnEnableChangedListener {
+		void onEnableChanged(Linkage linkage, boolean enable);
 	}
 }

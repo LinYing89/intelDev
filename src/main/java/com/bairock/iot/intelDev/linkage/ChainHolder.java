@@ -22,6 +22,21 @@ public class ChainHolder extends LinkageHolder{
 		super();
 	}
 
+	
+	@Override
+	protected void enabled() {
+		// TODO Auto-generated method stub
+		super.enabled();
+	}
+
+
+	@Override
+	protected void unabled() {
+		for (LinkageTabRow linkageTabRow : LinkageTab.getIns().getListLinkageTabRow()) {
+			linkageTabRow.setChain(-1);
+		}
+	}
+
 	/**
 	 * 
 	 */

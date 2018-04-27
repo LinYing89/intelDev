@@ -18,13 +18,15 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorValue("SubCahin")
 public class SubChain extends Linkage {
-	
+
 	private boolean triggered;
-	
-	@OneToMany(mappedBy = "subChain",cascade = CascadeType.ALL, orphanRemoval = true)
+
+	@OneToMany(mappedBy = "subChain", cascade = CascadeType.ALL, orphanRemoval = true)
 	@JsonManagedReference("subchain_linkagecondition")
 	private List<LinkageCondition> listCondition;
-	
+
+	private int conditionsResult = -1;
+
 	/**
 	 * 
 	 */
@@ -33,13 +35,13 @@ public class SubChain extends Linkage {
 		listCondition = Collections.synchronizedList(new ArrayList<LinkageCondition>());
 	}
 
-//	public LinkageHolder getLinkageHolder() {
-//		return linkageHolder;
-//	}
-//
-//	public void setLinkageHolder(LinkageHolder linkageHolder) {
-//		this.linkageHolder = linkageHolder;
-//	}
+	// public LinkageHolder getLinkageHolder() {
+	// return linkageHolder;
+	// }
+	//
+	// public void setLinkageHolder(LinkageHolder linkageHolder) {
+	// this.linkageHolder = linkageHolder;
+	// }
 
 	public boolean isTriggered() {
 		return triggered;
@@ -51,6 +53,7 @@ public class SubChain extends Linkage {
 
 	/**
 	 * get condition list
+	 * 
 	 * @return
 	 */
 	public List<LinkageCondition> getListCondition() {
@@ -59,12 +62,14 @@ public class SubChain extends Linkage {
 
 	/**
 	 * set condition list
+	 * 
 	 * @param listCondition
 	 */
 	public void setListCondition(List<LinkageCondition> listCondition) {
 		this.listCondition = listCondition;
-		for(LinkageCondition lc : listCondition) {
+		for (LinkageCondition lc : listCondition) {
 			lc.setSubChain(this);
+			setConditionListener(lc);
 		}
 	}
 
@@ -72,85 +77,147 @@ public class SubChain extends Linkage {
 	 * 
 	 * @param condition
 	 */
-	public void addCondition(LinkageCondition condition){
-		if(null == condition){
+	public void addCondition(LinkageCondition condition) {
+		if (null == condition) {
 			return;
 		}
-		if(!listCondition.contains(condition)){
+		if (!listCondition.contains(condition)) {
 			listCondition.add(condition);
 			condition.setSubChain(this);
+			setConditionListener(condition);
 		}
 	}
-	
+
+	private void setConditionListener(LinkageCondition lc) {
+		lc.setOnCompareResultChangedListener(new LinkageCondition.OnCompareResultChangedListener() {
+
+			@Override
+			public void onCompareResultChanged(int result) {
+				if (!getLinkageHolder().isEnable() || isEnable()) {
+					return;
+				}
+				conclutionConditionsResultAndRunEffect();
+			}
+		});
+	}
+
 	/**
 	 * 
 	 * @param condition
 	 * @return
 	 */
-	public boolean removeCondition(LinkageCondition condition){
-		if(null == condition){
+	public boolean removeCondition(LinkageCondition condition) {
+		if (null == condition) {
 			return false;
 		}
 		condition.setSubChain(null);
+		condition.setOnCompareResultChangedListener(null);
 		return listCondition.remove(condition);
 	}
-	
+
 	/**
 	 * 
 	 * @param index
 	 * @return
 	 */
-	public LinkageCondition removeCondition(int index){
+	public LinkageCondition removeCondition(int index) {
 		LinkageCondition lc = listCondition.remove(index);
-		if(null != lc) {
+		if (null != lc) {
 			lc.setSubChain(null);
+			lc.setOnCompareResultChangedListener(null);
 		}
 		return lc;
 	}
 
+	public int getConditionsResult() {
+		return conditionsResult;
+	}
+
+	public void setConditionsResult(int conditionsResult) {
+		this.conditionsResult = conditionsResult;
+	}
+
+	@Override
+	public boolean conclutionConditionsResult() {
+		if (listCondition.isEmpty()) {
+			return true;
+		}
+		Integer result = null;
+		List<LinkageCondition> list = new ArrayList<>(listCondition);
+		for (int i = 0; i < list.size(); i++) {
+			LinkageCondition event = list.get(i);
+			// get result of every condition
+			int er = event.getCompareResult();
+			if (er == -1) {
+				continue;
+			}
+
+			if (result == null) {
+				result = er;
+			} else {
+				if (event.getLogic().equals(ZLogic.AND)) {
+					result *= er;
+				} else {
+					result += er;
+				}
+			}
+		}
+		// System.out.println("getConditionResult:" + (result != null && result > 0));
+		return result != null && result > 0;
+	}
+	
+	public boolean conclutionConditionsResultAndRunEffect() {
+		boolean res = conclutionConditionsResult();
+		if(res) {
+			effectLinkageTab(LinkageTab.CHAIN);
+		}
+		return res;
+	}
+
 	/**
 	 * get all condition result
+	 * 
 	 * @return true if all condition is pass
 	 */
 	@Override
 	@JsonIgnore
-	public boolean getConditionResult(){
-		if(listCondition.isEmpty()){
+	public boolean getConditionResult() {
+		if (listCondition.isEmpty()) {
 			return true;
 		}
 
 		Integer result = null;
 		List<LinkageCondition> list = new ArrayList<>(listCondition);
-		for(int i=0; i< list.size(); i++){
+		for (int i = 0; i < list.size(); i++) {
 			LinkageCondition event = list.get(i);
-			//get result of every condition
+			// get result of every condition
 			Integer er = event.getResult();
-			if(er == null){
+			if (er == null) {
 				continue;
 			}
-			if(result == null){
+			if (result == null) {
 				result = er;
-			}else{
-				if(event.getLogic().equals(ZLogic.AND)){
+			} else {
+				if (event.getLogic().equals(ZLogic.AND)) {
 					result *= er;
-				}else{
+				} else {
 					result += er;
 				}
 			}
 		}
-		//System.out.println("getConditionResult:" + (result != null && result > 0));
-		return  result != null && result > 0;
+		// System.out.println("getConditionResult:" + (result != null && result > 0));
+		return result != null && result > 0;
 	}
-	
+
 	/**
 	 * 
 	 */
 	@Override
-	public void run(){
-		if(!isEnable() || getListEffect().isEmpty()){
+	public void run() {
+		if (!isEnable() || getListEffect().isEmpty()) {
 			return;
 		}
-		if(getConditionResult()){
+		if (getConditionResult()) {
 			effectLinkageTab(LinkageTab.CHAIN);
 		}
 	}
