@@ -35,6 +35,11 @@ public class DevCollectSignalContainer extends DevContainer {
 	}
 	
 	@Override
+	public void removeChildDev(Device device) {
+		return;
+	}
+	
+	@Override
 	public boolean handle(String state) {
 		super.handle(state);
 		boolean result = false;

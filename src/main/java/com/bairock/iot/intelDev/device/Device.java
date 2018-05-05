@@ -100,6 +100,10 @@ public class Device implements Comparable<Device>, IDevice {
 	@JsonIgnore
 	private Set<OnAliasChangedListener> stOnAliasChangedListener = new HashSet<>();
 
+	@Transient
+	@JsonIgnore
+	private OnSortIndexChangedListener onSortIndexChangedListener;
+
 	/**
 	 * 
 	 */
@@ -415,7 +419,12 @@ public class Device implements Comparable<Device>, IDevice {
 	 * @param sortIndex
 	 */
 	public void setSortIndex(int sortIndex) {
-		this.sortIndex = sortIndex;
+		if(this.sortIndex != sortIndex) {
+			this.sortIndex = sortIndex;
+			if(onSortIndexChangedListener != null) {
+				onSortIndexChangedListener.onSortIndexChanged(this, sortIndex);
+			}
+		}
 	}
 
 	/**
@@ -653,6 +662,10 @@ public class Device implements Comparable<Device>, IDevice {
 	public void removeOnAliasChangedListener(OnAliasChangedListener listener) {
 		stOnAliasChangedListener.remove(listener);
 	}
+	
+	public void setOnSortIndexChangedListener(OnSortIndexChangedListener onSortIndexChangedListener) {
+		this.onSortIndexChangedListener = onSortIndexChangedListener;
+	}
 
 	public interface OnStateChangedListener {
 		void onStateChanged(Device dev, String stateId);
@@ -678,6 +691,10 @@ public class Device implements Comparable<Device>, IDevice {
 
 	public interface OnAliasChangedListener {
 		void onAliasChanged(Device dev, String alias);
+	}
+	
+	public interface OnSortIndexChangedListener {
+		void onSortIndexChanged(Device dev, int sortIndex);
 	}
 
 	@Override

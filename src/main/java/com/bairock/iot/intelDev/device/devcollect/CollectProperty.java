@@ -47,6 +47,10 @@ public class CollectProperty {
 	@Transient
 	@JsonIgnore
 	private OnCurrentValueChangedListener onCurrentValueChanged;
+	
+	@Transient
+	@JsonIgnore
+	private OnUnitSymbolChangedListener onUnitSymbolChangedListener;
 
 	@Transient
 	@JsonIgnore
@@ -108,6 +112,10 @@ public class CollectProperty {
 		this.onSimulatorChangedListener = onSimulatorChangedListener;
 	}
 
+	public void setOnUnitSymbolChangedListener(OnUnitSymbolChangedListener onUnitSymbolChangedListener) {
+		this.onUnitSymbolChangedListener = onUnitSymbolChangedListener;
+	}
+	
 	/**
 	 * get max value
 	 * 
@@ -248,7 +256,12 @@ public class CollectProperty {
 	 * @param unitSymbol
 	 */
 	public void setUnitSymbol(String unitSymbol) {
-		this.unitSymbol = unitSymbol;
+		if(null == this.unitSymbol || !this.unitSymbol.equals(unitSymbol)) {
+			this.unitSymbol = unitSymbol;
+			if(null != onUnitSymbolChangedListener) {
+				onUnitSymbolChangedListener.onUnitSymbolChanged(devCollect, unitSymbol);
+			}
+		}
 	}
 
 	/**
@@ -353,6 +366,10 @@ public class CollectProperty {
 
 	public interface OnCurrentValueChangedListener {
 		void onCurrentValueChanged(DevCollect dev, Float value);
+	}
+	
+	public interface OnUnitSymbolChangedListener {
+		void onUnitSymbolChanged(DevCollect dev, String unitSymbol);
 	}
 
 	public interface OnSignalSourceChangedListener {

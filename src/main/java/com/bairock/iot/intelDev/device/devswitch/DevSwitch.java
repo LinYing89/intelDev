@@ -53,6 +53,13 @@ public class DevSwitch extends DevHaveChild {
 		}
 		return null;
 	}
+	
+	
+
+	@Override
+	public void removeChildDev(Device device) {
+		return;
+	}
 
 	@Override
 	public String createQueueOrder() {
