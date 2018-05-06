@@ -484,6 +484,11 @@ public class DevGroup {
 	}
 
 	public static void findListIStateDev(List<Device> listDev, Device dev, boolean visibility) {
+		if(visibility) {
+			if(!dev.isVisibility()) {
+				return;
+			}
+		}
 		if (dev instanceof DevHaveChild) {
 			for (Device childDev : ((DevHaveChild) dev).getListDev()) {
 				findListIStateDev(listDev, childDev, visibility);
@@ -514,6 +519,12 @@ public class DevGroup {
 	}
 
 	private void findListCollectDev(List<DevCollect> listDev, Device dev, boolean visibility) {
+		if(visibility) {
+			if(!dev.isVisibility()) {
+				return;
+			}
+		}
+		
 		if (dev instanceof DevHaveChild) {
 			for (Device childDev : ((DevHaveChild) dev).getListDev()) {
 				findListCollectDev(listDev, childDev, visibility);
@@ -544,6 +555,11 @@ public class DevGroup {
 	}
 
 	private void findListGuaguaMouth(List<GuaguaMouth> listDev, Device dev, boolean visibility) {
+		if(visibility) {
+			if(!dev.isVisibility()) {
+				return;
+			}
+		}
 		if (dev instanceof DevHaveChild) {
 			for (Device childDev : ((DevHaveChild) dev).getListDev()) {
 				findListGuaguaMouth(listDev, childDev, visibility);

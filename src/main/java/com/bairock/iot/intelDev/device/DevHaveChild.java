@@ -95,14 +95,6 @@ public class DevHaveChild extends Device {
 		super.setLinkType(linkType);
 	}
 
-	@Override
-	public void setVisibility(boolean visibility) {
-		for (Device dev : listDev) {
-			dev.setVisibility(visibility);
-		}
-		super.setVisibility(visibility);
-	}
-
 	public Device findDevByCoding(String coding){
 		if(null == coding){
 			return null;
