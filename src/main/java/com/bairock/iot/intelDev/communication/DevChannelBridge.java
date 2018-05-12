@@ -119,10 +119,11 @@ public class DevChannelBridge {
 		if (null != onCommunicationListener) {
 			onCommunicationListener.onReceived(this, msg);
 		}
-		noReponse = 0;
+		//noReponse = 0;
 		if (getMessageAnalysiser() != null) {
 			Device dev = messageAnalysiser.putMsg(msg, user);
 			if (dev != null) {
+				noReponse = 0;
 				if (null == device) {
 					DevChannelBridgeHelper.getIns().cleanBrigdes(dev.findSuperParent());
 				}

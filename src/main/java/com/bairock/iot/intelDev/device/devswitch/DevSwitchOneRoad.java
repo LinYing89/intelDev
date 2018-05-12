@@ -39,9 +39,19 @@ public class DevSwitchOneRoad extends DevSwitch {
 		if(msgs.length != 3) {
 			return;
 		}
-		int iHexState = Integer.parseInt(msgs[2], 16);
+		byte iHexState = Byte.parseByte(msgs[2], 16);
 		SubDev sd1 = (SubDev) getSubDevBySc(String.valueOf("2"));
 		String strState = getEnsureState(iHexState, 1);
+		DevStateHelper.getIns().setDsId(sd1, strState);
+	}
+	
+	protected void handle8(String[] msgs) {
+		if(msgs.length < 2) {
+			return;
+		}
+		byte iHexState = Byte.parseByte(msgs[1], 16);
+		SubDev sd1 = (SubDev) getSubDevBySc(String.valueOf("2"));
+		String strState = getEnsureState(iHexState, 2);
 		DevStateHelper.getIns().setDsId(sd1, strState);
 	}
 	

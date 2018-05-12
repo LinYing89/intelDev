@@ -5,6 +5,7 @@ import java.util.List;
 import com.bairock.iot.intelDev.device.devcollect.DevCollectSignal;
 import com.bairock.iot.intelDev.device.devcollect.DevCollectSignalContainer;
 import com.bairock.iot.intelDev.device.devcollect.Pressure;
+import com.bairock.iot.intelDev.device.devswitch.DevSocket;
 import com.bairock.iot.intelDev.device.devswitch.DevSwitchOneRoad;
 import com.bairock.iot.intelDev.device.devswitch.DevSwitchThreeRoad;
 import com.bairock.iot.intelDev.device.devswitch.DevSwitchThreeState;
@@ -69,6 +70,9 @@ public class DeviceAssistent {
 			break;
 		case MainCodeHelper.KG_3TAI:
 			device = new DevSwitchThreeState(mcId, sc);
+			break;
+		case MainCodeHelper.CHA_ZUO:
+			device = new DevSocket(mcId, sc);
 			break;
 		case MainCodeHelper.YE_WEI:
 			device = new Pressure(mcId, sc);

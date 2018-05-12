@@ -160,12 +160,6 @@ public class DevHaveChild extends Device {
 			device.setParent(null);
 		}
 	}
-
-	@Override
-	public boolean handle(String state) {
-		// TODO Auto-generated method stub
-		return super.handle(state);
-	}
 	
 	public void addOnDeviceCollectionChangedListener(OnDeviceCollectionChangedListener listener) {
 		stOnDeviceCollectionChangedListener.add(listener);

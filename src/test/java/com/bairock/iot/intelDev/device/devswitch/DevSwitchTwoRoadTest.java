@@ -79,4 +79,36 @@ public class DevSwitchTwoRoadTest extends TestCase {
 		assertEquals(false, ((SubDev)(dsor.getListDev().get(1))).isKaiState());
 	}
 
+	public void testHandler8() {
+		dsor.turnOff();
+		String state = "80";
+		dsor.handle(state);
+		assertEquals(true, ((SubDev)(dsor.getListDev().get(0))).isKaiState());
+		assertEquals(true, ((SubDev)(dsor.getListDev().get(1))).isKaiState());
+		
+		dsor.turnOn();
+		state = "84";
+		dsor.handle(state);
+		assertEquals(true, ((SubDev)(dsor.getListDev().get(0))).isKaiState());
+		assertEquals(true, ((SubDev)(dsor.getListDev().get(1))).isKaiState());
+		
+		dsor.turnOn();
+		state = "8a";
+		dsor.handle(state);
+		assertEquals(false, ((SubDev)(dsor.getListDev().get(0))).isKaiState());
+		assertEquals(false, ((SubDev)(dsor.getListDev().get(1))).isKaiState());
+		
+		dsor.turnOff();
+		state = "850";
+		dsor.handle(state);
+		assertEquals(true, ((SubDev)(dsor.getListDev().get(0))).isKaiState());
+		assertEquals(true, ((SubDev)(dsor.getListDev().get(1))).isKaiState());
+		
+		dsor.turnOff();
+		state = "85f";
+		dsor.handle(state);
+		assertEquals(true, ((SubDev)(dsor.getListDev().get(0))).isKaiState());
+		assertEquals(true, ((SubDev)(dsor.getListDev().get(1))).isKaiState());
+	}
+	
 }

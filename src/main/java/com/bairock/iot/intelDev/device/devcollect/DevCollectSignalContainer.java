@@ -40,18 +40,11 @@ public class DevCollectSignalContainer extends DevContainer {
 	}
 	
 	@Override
-	public boolean handle(String state) {
-		super.handle(state);
-		boolean result = false;
+	public void handleSingleMsg(String state) {
 		if (null == state || state.isEmpty()) {
-			return true;
+			return;
 		}
-		String[] msgUnits = state.split(":");
-		for (String str : msgUnits) {
-			analysisMsgUnit(str);
-		}
-
-		return result;
+		analysisMsgUnit(state);
 	}
 	
 	/**
@@ -92,7 +85,7 @@ public class DevCollectSignalContainer extends DevContainer {
 				value = msgs[i] + msgs[i + 1] + msgs[i + 2] + msgs[i + 3];
 				Device dev = findSubDevBySc(String.valueOf(subCode));
 				if(dev != null) {
-					dev.handle("8" + value);
+					dev.handleSingleMsg("8" + value);
 				}
 			}
 			break;

@@ -22,18 +22,32 @@ public class DevSwitchTwoRoad extends DevSwitch {
 		addChildDev(new SubDev("smc_w", "1"));
 		addChildDev(new SubDev("smc_w", "3"));
 	}
-
+	@Override
 	protected void handle7(String[] msgs) {
 		if(msgs.length != 3) {
 			return;
 		}
-		int iHexState = Integer.parseInt(msgs[2], 16);
+		byte iHexState = Byte.parseByte(msgs[2], 16);
 		SubDev sd1 = (SubDev) getSubDevBySc(String.valueOf("1"));
 		String strState = getEnsureState(iHexState, 0);
 		DevStateHelper.getIns().setDsId(sd1, strState);
 		
 		SubDev sd2 = (SubDev) getSubDevBySc(String.valueOf("3"));
 		strState = getEnsureState(iHexState, 2);
+		DevStateHelper.getIns().setDsId(sd2, strState);
+	}
+	@Override
+	protected void handle8(String[] msgs) {
+		if(msgs.length < 2) {
+			return;
+		}
+		byte iHexState = Byte.parseByte(msgs[1], 16);
+		SubDev sd1 = (SubDev) getSubDevBySc(String.valueOf("1"));
+		String strState = getEnsureState(iHexState, 3);
+		DevStateHelper.getIns().setDsId(sd1, strState);
+		
+		SubDev sd2 = (SubDev) getSubDevBySc(String.valueOf("3"));
+		strState = getEnsureState(iHexState, 1);
 		DevStateHelper.getIns().setDsId(sd2, strState);
 	}
 	

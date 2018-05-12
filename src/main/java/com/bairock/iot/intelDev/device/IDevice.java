@@ -92,5 +92,12 @@ public interface IDevice {
 	 * @return
 	 */
 	boolean handle(String state);
+	
+	/**
+	 * handle singleMsg
+	 * @param singleMsg
+	 * @return
+	 */
+	void handleSingleMsg(String singleMsg);
 }
 

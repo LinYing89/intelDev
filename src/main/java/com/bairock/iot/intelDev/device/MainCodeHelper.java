@@ -41,6 +41,8 @@ public class MainCodeHelper {
 	public static final String KG_3TAI = "mmc_kgx3";
 	//yao kong qi
 	public static final String YAO_KONG = "mmc_ykq";
+	//cha zuo
+	public static final String CHA_ZUO = "mmc_cz";
 	//bao jing she bei lei xing 1
 	public static final String BAO_JING1 = "mmc_bjq1";
 	//bao jing she bei lei xing 2
@@ -103,6 +105,7 @@ public class MainCodeHelper {
 		listMainCode.add(new MainCode(KG_XLU_2TAI, "Bx", "xlu2taikaiguan"));
 		listMainCode.add(new MainCode(KG_3TAI, "C1", "3taikaiguan"));
 		listMainCode.add(new MainCode(YAO_KONG, "D1", "xuexiyaokongqi"));
+		listMainCode.add(new MainCode(CHA_ZUO, "E1", "chazuo"));
 		listMainCode.add(new MainCode(BAO_JING1, "a1", "duogongnengbaojing1"));
 		listMainCode.add(new MainCode(BAO_JING2, "a2", "duogongnengbaojing2"));
 		

@@ -8,9 +8,7 @@ import javax.persistence.InheritanceType;
 import com.bairock.iot.intelDev.device.DevHaveChild;
 import com.bairock.iot.intelDev.device.DevStateHelper;
 import com.bairock.iot.intelDev.device.Device;
-import com.bairock.iot.intelDev.device.DeviceAssistent;
 import com.bairock.iot.intelDev.device.Gear;
-import com.bairock.iot.intelDev.device.MainCodeHelper;
 import com.bairock.iot.intelDev.device.OrderHelper;
 
 /**
@@ -89,32 +87,43 @@ public class DevSwitch extends DevHaveChild {
 	}
 
 	@Override
-	public boolean handle(String state) {
-		super.handle(state);
-		boolean result = false;
+	public void handleSingleMsg(String state) {
 		if (null == state || state.isEmpty()) {
-			return true;
+			return;
 		}
-		String[] msgUnits = state.split(":");
-		for (String str : msgUnits) {
-			analysisMsgUnit(str);
-		}
-
-		return result;
+		analysisMsgUnit(state);
 	}
 	
 	protected void handle7(String[] msgs) {
 		if(msgs.length != 3) {
 			return;
 		}
-		int iHexState = Integer.parseInt(msgs[2], 16);
+		byte bHexState = Byte.parseByte(msgs[2], 16);
 		for(int i = 0; i < 8; i++) {
 //			if(i >= getListDev().size()) {
 //				break;
 //			}
 			SubDev sd1 = (SubDev) getSubDevBySc(String.valueOf(i + 1));
-			String strState = getEnsureState(iHexState, i);
+			String strState = getEnsureState(bHexState, i);
 			DevStateHelper.getIns().setDsId(sd1, strState);
+		}
+	}
+	
+	protected void handle8(String[] msgs) {
+		if(msgs.length < 2) {
+			return;
+		}
+		for(int i = 0; i < getListDev().size(); i++) {
+			int moduleNum = i / 4;
+			int roadNum = i % 4;
+			if(moduleNum + 1 >= msgs.length) {
+				return;
+			}
+			String strHex = msgs[moduleNum + 1];
+			byte bHex = Byte.parseByte(strHex, 16);
+			String strState = getEnsureState(bHex, 3 - roadNum);
+			Device dev = (SubDev) getSubDevBySc(String.valueOf(i + 1));
+			DevStateHelper.getIns().setDsId(dev, strState);
 		}
 	}
 
@@ -162,31 +171,32 @@ public class DevSwitch extends DevHaveChild {
 			break;
 		case DevSwitchMsgSign.ORDER_QUERY_FEEDBACK:
 			//8, feedback because of order query
-			if(msgs.length < 2) {
-				return;
-			}
-			
-			//msgs[1] is the module state begin
-			for (int i = 1; i < msgs.length; i+=2) {
-				String strHex = "";
-				
-				int step = 8;
-				if(i + 1 == msgs.length) {
-					strHex = msgs[i];
-					iHexState = Integer.parseInt(strHex, 16);
-					step = 4;
-				}else {
-					strHex = msgs[i] + msgs[i+1];
-				}
-				//module number = i - 1;, module begin with 0
-				moduleNum = i - 1;
-				
-				//first SubDev subCode number = module number * 4 + 1, subCode begin with 1
-				firstSubDevSc = moduleNum * 4 + 1;
-				
-				iHexState = Integer.parseInt(strHex, 16);
-				setDevStateFromFirstSubCode(firstSubDevSc, iHexState, step);
-			}
+			handle8(msgs);
+//			if(msgs.length < 2) {
+//				return;
+//			}
+//			
+//			//msgs[1] is the module state begin
+//			for (int i = 1; i < msgs.length; i+=2) {
+//				String strHex = "";
+//				
+//				int step = 8;
+//				if(i + 1 == msgs.length) {
+//					strHex = msgs[i];
+//					iHexState = Integer.parseInt(strHex, 16);
+//					step = 4;
+//				}else {
+//					strHex = msgs[i] + msgs[i+1];
+//				}
+//				//module number = i - 1;, module begin with 0
+//				moduleNum = i - 1;
+//				
+//				//first SubDev subCode number = module number * 4 + 1, subCode begin with 1
+//				firstSubDevSc = moduleNum * 4 + 1;
+//				
+//				iHexState = Integer.parseInt(strHex, 16);
+//				setDevStateFromFirstSubCode(firstSubDevSc, iHexState, step);
+//			}
 			break;
 		case DevSwitchMsgSign.MSG_DEV_PUSHED:
 			//9
@@ -218,12 +228,12 @@ public class DevSwitch extends DevHaveChild {
 	 * @param firstSubDevSc first device subCode
 	 * @param iHexState a hex number 
 	 */
-	private void setDevStateFromFirstSubCode(int firstSubDevSc, int iHexState, int step) {
+	private void setDevStateFromFirstSubCode(int firstSubDevSc, byte bHexState, int step) {
 		for(int j = 0; j < step; j++) {
 			int subCode = firstSubDevSc + j;
 			SubDev sd = (SubDev) getSubDevBySc(String.valueOf(subCode));
 			if(null != sd) {
-				String strState = getEnsureState(iHexState, j);
+				String strState = getEnsureState(bHexState, j);
 				DevStateHelper.getIns().setDsId(sd, strState);
 			}
 		}
@@ -235,9 +245,9 @@ public class DevSwitch extends DevHaveChild {
 	 * @param offset begin with 0
 	 * @return
 	 */
-	protected String getEnsureState(int iHexState, int offset) {
+	protected String getEnsureState(byte bHexState, int offset) {
 		//int iHexState = Integer.parseInt(strHex);
-		int iState = (iHexState >> offset) & 1;
+		int iState = (bHexState >> offset) & 1;
 		return iState == 0 ? "1" : "0";
 	}
 
@@ -285,107 +295,6 @@ public class DevSwitch extends DevHaveChild {
 	}
 
 	public static void main(String[] args) {
-		DevSwitch ds1 = (DevSwitch) DeviceAssistent.createDeviceByMcId(MainCodeHelper.KG_1LU_2TAI, "1");
-		for (int i = 0; i < 8; i++) {
-			ds1.handle("8" + i);
-			System.out.println(ds1.createStateOrder());
-		}
-
-		System.out.println("8-------");
-		DevSwitch ds2 = (DevSwitch) DeviceAssistent.createDeviceByMcId(MainCodeHelper.KG_2LU_2TAI, "1");
-		for (int i = 0; i < 8; i++) {
-			ds2.handle("8" + i);
-			System.out.println(ds2.createStateOrder());
-		}
-
-		System.out.println("8-------");
-		DevSwitch ds3 = (DevSwitch) DeviceAssistent.createDeviceByMcId(MainCodeHelper.KG_3LU_2TAI, "1");
-		for (int i = 0; i < 8; i++) {
-			ds3.handle("8" + i);
-			System.out.println(ds3.createStateOrder());
-		}
-		
-		String[] states = new String[] {"0000", "1111", "2222", "4444", "8888", "ffff"};
-		System.out.println("8-------");
-		DevSwitch dsx = (DevSwitch) DeviceAssistent.createDeviceByMcId(MainCodeHelper.KG_XLU_2TAI, "1");
-		for (int i = 0; i < states.length; i++) {
-			dsx.handle("8" + states[i]);
-			System.out.println(dsx.createStateOrder());
-		}
-		
-		System.out.println("7-------");
-		for (int i = 0; i < 8; i++) {
-			ds1.handle("70" + i);
-			System.out.println(ds1.createStateOrder());
-		}
-		
-		System.out.println("7-------");
-		for (int i = 0; i < 8; i++) {
-			ds2.handle("70" + i);
-			System.out.println(ds2.createStateOrder());
-		}
-		
-		System.out.println("7-------");
-		for (int i = 0; i < 8; i++) {
-			ds3.handle("70" + i);
-			System.out.println(ds3.createStateOrder());
-		}
-		
-		states = new String[] {"00", "11", "22", "33","01","02","03","04","05","06","07"};
-		System.out.println("8-------");
-		dsx = (DevSwitch) DeviceAssistent.createDeviceByMcId(MainCodeHelper.KG_XLU_2TAI, "1");
-		for (int i = 0; i < states.length; i++) {
-			dsx.handle("7" + states[i]);
-			System.out.println(dsx.createStateOrder());
-		}
-		
-		states = new String[] {"04", "05"};
-		System.out.println("9-------");
-		for (int i = 0; i < states.length; i++) {
-			ds1.handle("9" + states[i]);
-			System.out.println(ds1.createStateOrder());
-		}
-		
-		states = new String[] {"00", "01", "08", "09"};
-		System.out.println("9-------");
-		for (int i = 0; i < states.length; i++) {
-			ds2.handle("9" + states[i]);
-			System.out.println(ds2.createStateOrder());
-		}
-		
-		states = new String[] {"00", "05", "08"};
-		System.out.println("9-------");
-		for (int i = 0; i < states.length; i++) {
-			ds3.handle("9" + states[i]);
-			System.out.println(ds3.createStateOrder());
-		}
-		
-		states = new String[] {"10", "25", "38", "3d"};
-		System.out.println("9-------");
-		for (int i = 0; i < states.length; i++) {
-			dsx.handle("9" + states[i]);
-			System.out.println(dsx.createStateOrder());
-		}
-		
-		System.out.println("order-------");
-		SubDev sd = (SubDev)(ds1.getSubDevBySc("2"));
-		System.out.println(sd.getTurnOnOrder());
-		System.out.println(sd.getTurnOffOrder());
-		
-		sd = (SubDev)(ds2.getSubDevBySc("3"));
-		System.out.println(sd.getTurnOnOrder());
-		System.out.println(sd.getTurnOffOrder());
-		
-		sd = (SubDev)(ds3.getSubDevBySc("1"));
-		System.out.println(sd.getTurnOnOrder());
-		System.out.println(sd.getTurnOffOrder());
-		
-		System.out.println("order-------");
-		sd = (SubDev)(dsx.getSubDevBySc("10"));
-		System.out.println(sd.getTurnOnOrder());
-		System.out.println(sd.getTurnOffOrder());
-		sd = (SubDev)(dsx.getSubDevBySc("16"));
-		System.out.println(sd.getTurnOnOrder());
-		System.out.println(sd.getTurnOffOrder());
+		System.out.println(String.valueOf(3%4));
 	}
 }

@@ -35,10 +35,10 @@ public class Pressure extends DevCollectSignal {
 	}
 
 	@Override
-	public boolean handle(String state) {
+	public void handleSingleMsg(String state) {
 		if (null != state) {
 			if (state.length() < 2) {
-				return false;
+				return;
 			}
 
 			if (state.startsWith(CtrlCodeHelper.getIns().getDct(CtrlCodeHelper.DCT_PRESSURE_PER_VALUE))) {
@@ -47,7 +47,6 @@ public class Pressure extends DevCollectSignal {
 				setRatio();
 			}
 		}
-		return super.handle(state);
 	}
 
 }

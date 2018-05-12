@@ -35,11 +35,10 @@ public class DevCollectSignal extends DevCollect {
 	}
 
 	@Override
-	public boolean handle(String state) {
-		super.handle(state);
+	public void handleSingleMsg(String state) {
 		if (null != state) {
 			if (state.length() < 2) {
-				return false;
+				return;
 			}
 
 			String msgId = state.substring(0, 1);
@@ -52,7 +51,7 @@ public class DevCollectSignal extends DevCollect {
 				// srcValue = srcValue * 0.01f;
 				// }
 			} catch (Exception e) {
-				return false;
+				return;
 			}
 
 			CollectProperty cp = getCollectProperty();
@@ -79,7 +78,6 @@ public class DevCollectSignal extends DevCollect {
 				e.printStackTrace();
 			}
 		}
-		return true;
 	}
 
 	private void simulatorHandler(float srcValue, CollectProperty cp, String msgId, float simulator) {

@@ -99,13 +99,10 @@ public abstract class MessageAnalysiser{
 			if(codingState[1].contains("+")) {
 				device = DeviceAssistent.createDeviceByCoding(codingState[0]);
 				if(null != device) {
-					if(codingState[1].equals("+")) {
-						device.setDevStateId(DevStateHelper.CONFIGING);
-					}else if(codingState[1].equals("+ok")) {
-						device.setDevStateId(DevStateHelper.CONFIG_OK);
-					}
+					device.setDevStateId(DevStateHelper.CONFIG_OK);
+					configDevice(device, msg);
 				}
-				configDevice(device, msg);
+				
 				return device;
 			}else if(codingState[1].startsWith("a")) {
 				device = DeviceAssistent.createDeviceByCoding(codingState[0]);
@@ -128,17 +125,7 @@ public abstract class MessageAnalysiser{
 		}
 
 		if(codingState[1] != null) {
-			String[] states = codingState[1].split(":");
-			for(String str : states) {
-				if(str.equals("u")) {
-					
-				}else if(str.equals("g")) {
-					
-				}else {
-					device.handle(str);
-				}
-			}
-			//device.handle(codingState[1]);
+			device.handle(codingState[1]);
 		}else {
 			device.handle("21");
 		}

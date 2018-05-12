@@ -4,6 +4,7 @@ import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -19,6 +20,10 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class Coordinator extends DevContainer {
 
 	private String panid;
+	
+	@Transient
+	@JsonIgnore
+	private boolean isConfigingChildDevice = false;
 
 	/**
 	 * 
@@ -50,6 +55,14 @@ public class Coordinator extends DevContainer {
 	 */
 	public void setPanid(String panid) {
 		this.panid = panid;
+	}
+
+	public boolean isConfigingChildDevice() {
+		return isConfigingChildDevice;
+	}
+
+	public void setConfigingChildDevice(boolean isConfigingChildDevice) {
+		this.isConfigingChildDevice = isConfigingChildDevice;
 	}
 
 	/**
@@ -90,44 +103,22 @@ public class Coordinator extends DevContainer {
 	}
 
 	@Override
-	public boolean handle(String strState) {
+	public void handleSingleMsg(String strState) {
 		if (null != strState) {
 			if (strState.length() < 2) {
-				return false;
+				return;
 			}
 
-			String[] msgUnits = strState.split(":");
-//			if (analysisDevCodings(msgUnits)) {
-//				return true;
-//			}
-			analysisMsgUnits(msgUnits);
-		}
-		return super.handle(strState);
-	}
-
-//	private boolean analysisDevCodings(String[] codings) {
-//
-//		return false;
-//	}
-
-	private boolean analysisMsgUnits(String[] msgUnits) {
-		for (String str : msgUnits) {
-			String head = str.substring(0, 1);
-			String value = str.substring(1);
+			String head = strState.substring(0, 1);
+			String value = strState.substring(1);
 			String dctId = CtrlCodeHelper.getIns().getDctId(head);
 			switch (dctId) {
 			case CtrlCodeHelper.DCT_XIETIAO_PANID:
 				setPanid(value);
 				break;
 			case CtrlCodeHelper.DCT_NORMAL:
-//				if(value.equals("0")) {
-//					setDevStateId(DevStateHelper.DS_YI_CHANG);
-//				}else {
-//					setDevStateId(DevStateHelper.DS_ZHENG_CHANG);
-//				}
 				break;
 			}
 		}
-		return false;
 	}
 }

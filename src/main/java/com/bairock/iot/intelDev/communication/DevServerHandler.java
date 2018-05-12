@@ -24,6 +24,8 @@ public class DevServerHandler extends ChannelInboundHandlerAdapter {
 //			ctx.channel().writeAndFlush(Unpooled.copiedBuffer(req));
 			//System.out.println(str);
 			DevChannelBridgeHelper.getIns().channelReceived(ctx.channel().id().asShortText(), str);
+		}catch(Exception e) {
+			e.printStackTrace();
 		}finally{
 			m.release();
 //			ReferenceCountUtil.release(msg);

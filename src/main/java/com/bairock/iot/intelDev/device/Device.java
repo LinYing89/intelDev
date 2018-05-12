@@ -53,7 +53,7 @@ public class Device implements Comparable<Device>, IDevice {
 	private String place = "";
 	private String name = "";
 	private String alias = "";
-	private Gear gear = Gear.UNKNOW;
+	private Gear gear = Gear.ZIDONG;
 	private String devStateId = DevStateHelper.DS_YI_CHANG;
 	private CtrlModel ctrlModel = CtrlModel.UNKNOW;
 	private int sortIndex;
@@ -591,7 +591,24 @@ public class Device implements Comparable<Device>, IDevice {
 		// resetLastCommunicationTime();
 		lastResponseTime = System.currentTimeMillis();
 		setDevStateId(DevStateHelper.DS_ZHENG_CHANG);
+		if(null == state || state.isEmpty()) {
+			return true;
+		}
+		
+		String[] msgs = state.split(":");
+		for(String str : msgs) {
+			if(str.startsWith("2") || str.startsWith("u") || str.startsWith("g")) {
+				continue;
+			}else {
+				handleSingleMsg(str);
+			}
+		}
 		return true;
+	}
+	
+	@Override
+	public void handleSingleMsg(String singleMsg) {
+
 	}
 
 	@Override
