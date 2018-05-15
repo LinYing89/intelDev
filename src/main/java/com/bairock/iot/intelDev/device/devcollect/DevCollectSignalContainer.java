@@ -6,6 +6,7 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 
 import com.bairock.iot.intelDev.device.DevContainer;
+import com.bairock.iot.intelDev.device.DevStateHelper;
 import com.bairock.iot.intelDev.device.Device;
 import com.bairock.iot.intelDev.device.DeviceAssistent;
 import com.bairock.iot.intelDev.device.MainCodeHelper;
@@ -84,6 +85,7 @@ public class DevCollectSignalContainer extends DevContainer {
 				subCode++;
 				value = msgs[i] + msgs[i + 1] + msgs[i + 2] + msgs[i + 3];
 				Device dev = findSubDevBySc(String.valueOf(subCode));
+				dev.setDevStateId(DevStateHelper.DS_ZHENG_CHANG);
 				if(dev != null) {
 					dev.handleSingleMsg("8" + value);
 				}

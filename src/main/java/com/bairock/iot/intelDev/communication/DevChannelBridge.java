@@ -1,7 +1,9 @@
 package com.bairock.iot.intelDev.communication;
 
 import java.io.UnsupportedEncodingException;
+import java.util.List;
 
+import com.bairock.iot.intelDev.device.Coordinator;
 import com.bairock.iot.intelDev.device.DevContainer;
 import com.bairock.iot.intelDev.device.DevHaveChild;
 import com.bairock.iot.intelDev.device.DevStateHelper;
@@ -121,19 +123,30 @@ public class DevChannelBridge {
 		}
 		//noReponse = 0;
 		if (getMessageAnalysiser() != null) {
-			Device dev = messageAnalysiser.putMsg(msg, user);
-			if (dev != null) {
-				noReponse = 0;
-				if (null == device) {
-					DevChannelBridgeHelper.getIns().cleanBrigdes(dev.findSuperParent());
+			List<Device> listDev = messageAnalysiser.putMsg(msg, user);
+			if(listDev.isEmpty()) {
+				return;
+			}
+			noReponse = 0;
+			Device rootDev = listDev.get(0);
+			for(Device dev : listDev) {
+				if(dev instanceof Coordinator) {
+					rootDev = dev;
+					break;
 				}
-				if (dev.findSuperParent() != device) {
-					device = dev.findSuperParent();
-					device.setNoResponse(0);
-					if(needInit) {
-						sendOrder(device.createInitOrder(), device, true);
-						needInit = false;
-					}
+			}
+			if (null == device) {
+				DevChannelBridgeHelper.getIns().cleanBrigdes(rootDev.findSuperParent());
+			}
+			if (rootDev.findSuperParent() != device) {
+				if(null != device  && device instanceof Coordinator) {
+					return;
+				}
+				device = rootDev.findSuperParent();
+				device.setNoResponse(0);
+				if(needInit) {
+					sendOrder(device.createInitOrder(), device, true);
+					needInit = false;
 				}
 			}
 		}

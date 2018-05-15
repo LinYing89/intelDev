@@ -388,7 +388,7 @@ public class DevChannelBridgeHelper {
 					// dev.setDevStateId(DevStateHelper.DS_YI_CHANG);
 					// }
 				} catch (InterruptedException e) {
-					e.printStackTrace();
+					//e.printStackTrace();
 					break;
 				}
 			}

@@ -1,6 +1,7 @@
 package com.bairock.iot.intelDev.communication;
 
 import io.netty.bootstrap.ServerBootstrap;
+import io.netty.channel.Channel;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelOption;
@@ -10,14 +11,14 @@ import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 
 public class DevServer {
-	
+
 	public static int PORT = 8000;
 
 	private ServerBootstrap b;
 	private ChannelFuture f;
 	private EventLoopGroup bossGroup;
 	private EventLoopGroup workerGroup;
-	
+
 	public void run() throws Exception {
 		bossGroup = new NioEventLoopGroup(); // (1)
 		workerGroup = new NioEventLoopGroup();
@@ -33,36 +34,39 @@ public class DevServer {
 					.childOption(ChannelOption.SO_KEEPALIVE, true); // (6)
 
 			// Bind and start to accept incoming connections.
-//			ChannelFuture f = b.bind(port).sync(); // (7)
+			// ChannelFuture f = b.bind(port).sync(); // (7)
 			f = b.bind(PORT); // (7)
 
 			// Wait until the server socket is closed.
 			// In this example, this does not happen, but you can do that to
 			// gracefully
 			// shut down your server.
-//			f.channel().closeFuture().sync();
+			// f.channel().closeFuture().sync();
 			f.channel().closeFuture();
 		} finally {
-//			workerGroup.shutdownGracefully();
-//			bossGroup.shutdownGracefully();
+			// workerGroup.shutdownGracefully();
+			// bossGroup.shutdownGracefully();
 		}
 	}
-	
+
 	public void close() {
-		if(null != bossGroup) {
-			bossGroup.shutdownGracefully();
+		for(Channel cg : DevChannelBridge.channelGroup) {
+			cg.close().syncUninterruptibly();
 		}
-		if(null != workerGroup) {
-			workerGroup.shutdownGracefully();
+		if (null != bossGroup) {
+			bossGroup.shutdownGracefully().syncUninterruptibly();
+		}
+		if (null != workerGroup) {
+			workerGroup.shutdownGracefully().syncUninterruptibly();
 		}
 	}
-	
-//	public static void main(String[] args) {
-//		try {
-//			new DevServer().run();
-//		} catch (Exception e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//	}
+
+	// public static void main(String[] args) {
+	// try {
+	// new DevServer().run();
+	// } catch (Exception e) {
+	// // TODO Auto-generated catch block
+	// e.printStackTrace();
+	// }
+	// }
 }

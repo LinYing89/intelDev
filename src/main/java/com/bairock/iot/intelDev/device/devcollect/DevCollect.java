@@ -12,6 +12,7 @@ import com.bairock.iot.intelDev.device.DevStateHelper;
 import com.bairock.iot.intelDev.device.Device;
 import com.bairock.iot.intelDev.device.MainCodeHelper;
 import com.bairock.iot.intelDev.device.OrderHelper;
+import com.bairock.iot.intelDev.user.IntelDevHelper;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 /**
@@ -75,7 +76,7 @@ public class DevCollect extends Device{
 		}
 		float ratio = cp.getPercent() / 100;
 		ratio = ratio * (cp.getCrestReferValue() - cp.getLeastReferValue()) + cp.getLeastValue();
-		cp.setCurrentValue(ratio);
+		cp.setCurrentValue(IntelDevHelper.scale(ratio));
 	}
 	
 	@Override
