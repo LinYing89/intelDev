@@ -18,8 +18,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorValue("SubDev")
-public class SubDev extends Device implements IStateDev{
-	
+public class SubDev extends Device implements IStateDev {
+
 	public SubDev() {
 		super();
 	}
@@ -31,9 +31,9 @@ public class SubDev extends Device implements IStateDev{
 
 	@Override
 	public String getCoding() {
-		return getParent().getCoding() + "_" + MainCodeHelper.getIns().getMc(getMainCodeId()) + "_" + getSubCode();
+		return MainCodeHelper.getIns().getMc(getMainCodeId()) + "_" + getSubCode();
 	}
-	
+
 	@Override
 	public DevGroup getDevGroup() {
 		return getParent().getDevGroup();
@@ -74,12 +74,12 @@ public class SubDev extends Device implements IStateDev{
 	@Override
 	@JsonIgnore
 	public String getDevOrder(String orderHead, String dctId) {
-		if(null == orderHead) {
+		if (null == orderHead) {
 			orderHead = "";
 		}
 		int road = Integer.parseInt(getSubCode());
-		String order = orderHead + getParent().getCoding() + ":" 
-				+ CtrlCodeHelper.getIns().getDct(dctId) + Integer.toHexString(road);
+		String order = orderHead + getParent().getCoding() + ":" + CtrlCodeHelper.getIns().getDct(dctId)
+				+ Integer.toHexString(road);
 		return OrderHelper.getOrderMsg(order);
 	}
 }
