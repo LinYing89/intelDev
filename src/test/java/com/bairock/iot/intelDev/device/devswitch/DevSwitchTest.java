@@ -7,6 +7,7 @@ import org.junit.Test;
 
 import com.bairock.iot.intelDev.device.Device;
 import com.bairock.iot.intelDev.device.DeviceAssistent;
+import com.bairock.iot.intelDev.device.Gear;
 import com.bairock.iot.intelDev.device.MainCodeHelper;
 import com.bairock.iot.intelDev.device.OrderHelper;
 
@@ -189,4 +190,29 @@ public class DevSwitchTest {
 		assertEquals(true, ds.getSubDevBySc("16").isKaiState());
 	}
 
+	public void testHandler9() {
+		ds.turnOff();
+		String state = "9010";
+		ds.handle(state);
+		assertEquals(true, ((SubDev)(ds.getListDev().get(0))).isKaiState());
+		assertEquals(Gear.KAI, ((SubDev)(ds.getListDev().get(0))).getGear());
+		
+		ds.turnOn();
+		state = "9021";
+		ds.handle(state);
+		assertEquals(false, ((SubDev)(ds.getListDev().get(1))).isKaiState());
+		assertEquals(Gear.GUAN, ((SubDev)(ds.getListDev().get(1))).getGear());
+		
+		ds.turnOff();
+		state = "9101";
+		ds.handle(state);
+		assertEquals(false, ((SubDev)(ds.getListDev().get(15))).isKaiState());
+		assertEquals(Gear.GUAN, ((SubDev)(ds.getListDev().get(15))).getGear());
+		
+		//ds.turnOff();
+		state = "9100";
+		ds.handle(state);
+		assertEquals(true, ((SubDev)(ds.getListDev().get(15))).isKaiState());
+		assertEquals(Gear.KAI, ((SubDev)(ds.getListDev().get(15))).getGear());
+	}
 }

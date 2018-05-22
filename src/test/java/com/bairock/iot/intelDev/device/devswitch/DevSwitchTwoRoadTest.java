@@ -1,5 +1,6 @@
 package com.bairock.iot.intelDev.device.devswitch;
 
+import com.bairock.iot.intelDev.device.Gear;
 import com.bairock.iot.intelDev.device.MainCodeHelper;
 import com.bairock.iot.intelDev.device.OrderHelper;
 import com.bairock.iot.intelDev.device.devswitch.DevSwitchTwoRoad;
@@ -49,34 +50,29 @@ public class DevSwitchTwoRoadTest extends TestCase {
 	
 	public void testHandler7() {
 		dsor.turnOff();
-		String state = "700";
+		String state = "7010";
 		dsor.handle(state);
 		assertEquals(true, ((SubDev)(dsor.getListDev().get(0))).isKaiState());
+		
+		dsor.turnOff();
+		state = "7030";
+		dsor.handle(state);
 		assertEquals(true, ((SubDev)(dsor.getListDev().get(1))).isKaiState());
 		
 		dsor.turnOn();
-		state = "70f";
+		state = "7011";
 		dsor.handle(state);
 		assertEquals(false, ((SubDev)(dsor.getListDev().get(0))).isKaiState());
+		
+		dsor.turnOn();
+		state = "7031";
+		dsor.handle(state);
 		assertEquals(false, ((SubDev)(dsor.getListDev().get(1))).isKaiState());
 		
 		dsor.turnOn();
-		state = "703";
-		dsor.handle(state);
-		assertEquals(false, ((SubDev)(dsor.getListDev().get(0))).isKaiState());
-		assertEquals(true, ((SubDev)(dsor.getListDev().get(1))).isKaiState());
-		
-		dsor.turnOn();
-		state = "705";
-		dsor.handle(state);
-		assertEquals(false, ((SubDev)(dsor.getListDev().get(0))).isKaiState());
-		assertEquals(false, ((SubDev)(dsor.getListDev().get(1))).isKaiState());
-		
-		dsor.turnOn();
-		state = "706";
+		state = "7010";
 		dsor.handle(state);
 		assertEquals(true, ((SubDev)(dsor.getListDev().get(0))).isKaiState());
-		assertEquals(false, ((SubDev)(dsor.getListDev().get(1))).isKaiState());
 	}
 
 	public void testHandler8() {
@@ -109,6 +105,34 @@ public class DevSwitchTwoRoadTest extends TestCase {
 		dsor.handle(state);
 		assertEquals(true, ((SubDev)(dsor.getListDev().get(0))).isKaiState());
 		assertEquals(true, ((SubDev)(dsor.getListDev().get(1))).isKaiState());
+	}
+	
+	public void testHandler9() {
+		dsor.turnOff();
+		String state = "9010";
+		dsor.handle(state);
+		assertEquals(true, ((SubDev)(dsor.getListDev().get(0))).isKaiState());
+		assertEquals(Gear.KAI, ((SubDev)(dsor.getListDev().get(0))).getGear());
+		
+		dsor.turnOn();
+		state = "9011";
+		dsor.handle(state);
+		assertEquals(false, ((SubDev)(dsor.getListDev().get(0))).isKaiState());
+		assertEquals(Gear.GUAN, ((SubDev)(dsor.getListDev().get(0))).getGear());
+		
+		dsor.turnOff();
+		state = "9030";
+		dsor.handle(state);
+		assertEquals(false, ((SubDev)(dsor.getListDev().get(0))).isKaiState());
+		assertEquals(true, ((SubDev)(dsor.getListDev().get(1))).isKaiState());
+		assertEquals(Gear.KAI, ((SubDev)(dsor.getListDev().get(1))).getGear());
+		
+		dsor.turnOn();
+		state = "9031";
+		dsor.handle(state);
+		assertEquals(true, ((SubDev)(dsor.getListDev().get(0))).isKaiState());
+		assertEquals(false, ((SubDev)(dsor.getListDev().get(1))).isKaiState());
+		assertEquals(Gear.GUAN, ((SubDev)(dsor.getListDev().get(1))).getGear());
 	}
 	
 }

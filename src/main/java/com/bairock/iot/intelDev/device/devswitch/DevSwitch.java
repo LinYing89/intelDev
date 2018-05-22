@@ -94,19 +94,34 @@ public class DevSwitch extends DevHaveChild {
 		analysisMsgUnit(state);
 	}
 	
-	protected void handle7(String[] msgs) {
-		if(msgs.length != 3) {
-			return;
+//	protected void handle7(String[] msgs) {
+//		if(msgs.length != 3) {
+//			return;
+//		}
+//		byte bHexState = Byte.parseByte(msgs[2], 16);
+//		for(int i = 0; i < 8; i++) {
+////			if(i >= getListDev().size()) {
+////				break;
+////			}
+//			SubDev sd1 = (SubDev) getSubDevBySc(String.valueOf(i + 1));
+//			String strState = getEnsureState(bHexState, i);
+//			DevStateHelper.getIns().setDsId(sd1, strState);
+//		}
+//	}
+	
+	protected Device handle7(String[] msgs) {
+		if(msgs.length != 4) {
+			return null;
 		}
-		byte bHexState = Byte.parseByte(msgs[2], 16);
-		for(int i = 0; i < 8; i++) {
-//			if(i >= getListDev().size()) {
-//				break;
-//			}
-			SubDev sd1 = (SubDev) getSubDevBySc(String.valueOf(i + 1));
-			String strState = getEnsureState(bHexState, i);
-			DevStateHelper.getIns().setDsId(sd1, strState);
+		
+		int subCode = Integer.parseInt(msgs[1] + msgs[2], 16);
+		String strState = msgs[3].equals("0") ? "1" : "0";
+		SubDev sd1 = (SubDev) getSubDevBySc(String.valueOf(subCode));
+		if(null == sd1) {
+			return null;
 		}
+		DevStateHelper.getIns().setDsId(sd1, strState);
+		return sd1;
 	}
 	
 	protected void handle8(String[] msgs) {
@@ -124,6 +139,13 @@ public class DevSwitch extends DevHaveChild {
 			String strState = getEnsureState(bHex, 3 - roadNum);
 			Device dev = (SubDev) getSubDevBySc(String.valueOf(i + 1));
 			DevStateHelper.getIns().setDsId(dev, strState);
+		}
+	}
+	
+	protected void handle9(String[] msgs) {
+		Device dev = handle7(msgs);
+		if(null != dev) {
+			Gear.setGearModel(dev, Integer.parseInt(dev.getDevState()));
 		}
 	}
 
@@ -200,25 +222,7 @@ public class DevSwitch extends DevHaveChild {
 			break;
 		case DevSwitchMsgSign.MSG_DEV_PUSHED:
 			//9
-			if(msgs.length != 3) {
-				return;
-			}
-			moduleNum = Integer.parseInt(msgs[1], 16);
-			int roadAndState = Integer.parseInt(msgs[2], 16);
-			subCode = ((roadAndState >> 2) & 3) + moduleNum * 4;
-			int iState = roadAndState & 3;
-			strState = iState == 0 ? "1" : "0";
-			SubDev sd = (SubDev) getSubDevBySc(String.valueOf(subCode));
-			if(null == sd) {
-				return;
-			}
-			DevStateHelper.getIns().setDsId(sd, strState);
-			
-			if(iState == 0) {
-				sd.setGear(Gear.KAI);
-			}else {
-				sd.setGear(Gear.GUAN);
-			}
+			handle9(msgs);
 			break;
 		}
 	}

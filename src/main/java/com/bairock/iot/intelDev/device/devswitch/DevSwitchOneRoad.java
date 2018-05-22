@@ -35,15 +35,15 @@ public class DevSwitchOneRoad extends DevSwitch {
 		addChildDev(new SubDev("smc_w", "2"));
 	}
 	
-	protected void handle7(String[] msgs) {
-		if(msgs.length != 3) {
-			return;
-		}
-		byte iHexState = Byte.parseByte(msgs[2], 16);
-		SubDev sd1 = (SubDev) getSubDevBySc(String.valueOf("2"));
-		String strState = getEnsureState(iHexState, 1);
-		DevStateHelper.getIns().setDsId(sd1, strState);
-	}
+//	protected void handle7(String[] msgs) {
+//		if(msgs.length != 3) {
+//			return;
+//		}
+//		byte iHexState = Byte.parseByte(msgs[2], 16);
+//		SubDev sd1 = (SubDev) getSubDevBySc(String.valueOf("2"));
+//		String strState = getEnsureState(iHexState, 1);
+//		DevStateHelper.getIns().setDsId(sd1, strState);
+//	}
 	
 	protected void handle8(String[] msgs) {
 		if(msgs.length < 2) {
