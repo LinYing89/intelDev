@@ -24,7 +24,8 @@ public class DevCollectSignalContainer extends DevContainer {
 	public DevCollectSignalContainer(String mcId, String sc) {
 		super(mcId, sc);
 		for (int i = 1; i <= 16; i++) {
-			DevCollectSignal sd = (DevCollectSignal)DeviceAssistent.createDeviceByMcId(MainCodeHelper.COLLECTOR_SIGNAL, String.valueOf(i));
+			DevCollectSignal sd = (DevCollectSignal) DeviceAssistent.createDeviceByMcId(MainCodeHelper.COLLECTOR_SIGNAL,
+					String.valueOf(i));
 			sd.setName(this.getCoding() + "_" + sd.getCoding());
 			addChildDev(sd);
 		}
@@ -34,12 +35,12 @@ public class DevCollectSignalContainer extends DevContainer {
 	public String createQueueOrder() {
 		return OrderHelper.getOrderMsg(OrderHelper.QUERY_HEAD + getCoding() + OrderHelper.SEPARATOR + "8");
 	}
-	
+
 	@Override
 	public void removeChildDev(Device device) {
 		return;
 	}
-	
+
 	@Override
 	public void handleSingleMsg(String state) {
 		if (null == state || state.isEmpty()) {
@@ -47,7 +48,7 @@ public class DevCollectSignalContainer extends DevContainer {
 		}
 		analysisMsgUnit(state);
 	}
-	
+
 	/**
 	 * 
 	 * @param sc
@@ -68,6 +69,26 @@ public class DevCollectSignalContainer extends DevContainer {
 			return;
 		}
 
+		if (msgUnit.startsWith("8")) {
+			String msgNoHead = msgUnit.substring(1);
+			String[] msgs = msgNoHead.split(",");
+			int subCode = 0;
+			String value = "";
+			for (int i = 0; i < msgs.length; i++) {
+				subCode++;
+				value = msgs[i];
+				Device dev = findSubDevBySc(String.valueOf(subCode));
+				if (dev != null) {
+					dev.setDevStateId(DevStateHelper.DS_ZHENG_CHANG);
+					dev.handleSingleMsg("8" + value);
+				}
+			}
+		}
+
+	}
+
+	@SuppressWarnings("unused")
+	private void analysisMonitorValue(String msgUnit) {
 		// msgs[0] is message sign
 		char[] cMsgs = msgUnit.toCharArray();
 		String[] msgs = new String[cMsgs.length];
@@ -76,17 +97,17 @@ public class DevCollectSignalContainer extends DevContainer {
 		}
 		switch (msgs[0]) {
 		case "8":
-			if(msgs.length < 5) {
+			if (msgs.length < 5) {
 				return;
 			}
 			int subCode = 0;
 			String value = "";
-			for(int i=1; i< msgs.length; i+=4) {
+			for (int i = 1; i < msgs.length; i += 4) {
 				subCode++;
 				value = msgs[i] + msgs[i + 1] + msgs[i + 2] + msgs[i + 3];
 				Device dev = findSubDevBySc(String.valueOf(subCode));
-				dev.setDevStateId(DevStateHelper.DS_ZHENG_CHANG);
-				if(dev != null) {
+				if (dev != null) {
+					dev.setDevStateId(DevStateHelper.DS_ZHENG_CHANG);
 					dev.handleSingleMsg("8" + value);
 				}
 			}
