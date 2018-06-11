@@ -46,7 +46,7 @@ public class DevCollectSignal extends DevCollect {
 			float srcValue = 0;
 			try {
 				String strState = state.substring(1);
-				iValue = Integer.parseInt(strState);
+				iValue = Integer.parseInt(strState, 16);
 				// srcValue = iValue / 100f;
 				// int iHexValue = Integer.parseInt(strState, 16);
 				// srcValue = (float) iHexValue;
@@ -105,9 +105,6 @@ public class DevCollectSignal extends DevCollect {
 		float currentValue = cp.getLeastReferValue() + (simulator - cp.getLeastValue())
 				/ (cp.getCrestValue() - cp.getLeastValue()) * (cp.getCrestReferValue() - cp.getLeastReferValue());
 
-		if (cp.getCollectSrc() == CollectSignalSource.VOLTAGE) {
-			currentValue += 1;
-		}
 		currentValue = IntelDevHelper.scale(currentValue);
 
 		// float percent = computePercentByCurrentValue(currentValue, cp);

@@ -18,7 +18,7 @@ public class AppVersion {
 	private long id;
 	
 	private String appV;
-	private String appPath;
+	private String appName;
 	private String appInfo;
 	private int appVc;
 	
@@ -55,19 +55,19 @@ public class AppVersion {
 	}
 	
 	/**
-	 * get application path
+	 * get application name
 	 * @return
 	 */
-	public String getAppPath() {
-		return appPath;
+	public String getAppName() {
+		return appName;
 	}
 	
 	/**
-	 * set application path
-	 * @param appPath
+	 * set application name
+	 * @param appName
 	 */
-	public void setAppPath(String appPath) {
-		this.appPath = appPath;
+	public void setAppName(String appName) {
+		this.appName = appName;
 	}
 	
 	/**
