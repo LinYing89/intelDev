@@ -79,6 +79,10 @@ public class Device implements Comparable<Device>, IDevice {
 	@Transient
 	@JsonIgnore
 	private LinkType linkType = LinkType.NET;
+	
+	@Transient
+	@JsonIgnore
+	private boolean gearNeedToAuto = false;
 
 	@Transient
 	@JsonIgnore
@@ -103,6 +107,10 @@ public class Device implements Comparable<Device>, IDevice {
 	@Transient
 	@JsonIgnore
 	private OnSortIndexChangedListener onSortIndexChangedListener;
+	
+	@Transient
+	@JsonIgnore
+	private OnGearNeedToAutoListener onGearNeedToAutoListener;
 
 	/**
 	 * 
@@ -499,6 +507,19 @@ public class Device implements Comparable<Device>, IDevice {
 		this.linkType = linkType;
 	}
 
+	public boolean isGearNeedToAuto() {
+		return gearNeedToAuto;
+	}
+
+	public void setGearNeedToAuto(boolean gearNeedToAuto) {
+		if(this.gearNeedToAuto != gearNeedToAuto) {
+			this.gearNeedToAuto = gearNeedToAuto;
+			if(null != onGearNeedToAutoListener) {
+				onGearNeedToAutoListener.onGearNeedToAuto(this, gearNeedToAuto);
+			}
+		}
+	}
+	
 	@JsonIgnore
 	public long getCommunicationInterval() {
 		return System.currentTimeMillis() - lastCommunicationTime;
@@ -625,7 +646,7 @@ public class Device implements Comparable<Device>, IDevice {
 			return false;
 		}
 		Device encoding = (Device) obj;
-		if (getCoding().equals(encoding.getCoding())) {
+		if (getLongCoding().equals(encoding.getLongCoding())) {
 			return true;
 		} else {
 			return false;
@@ -684,6 +705,10 @@ public class Device implements Comparable<Device>, IDevice {
 		this.onSortIndexChangedListener = onSortIndexChangedListener;
 	}
 
+	public void setOnGearNeedToAutoListener(OnGearNeedToAutoListener onGearNeedToAutoListener) {
+		this.onGearNeedToAutoListener = onGearNeedToAutoListener;
+	}
+	
 	public interface OnStateChangedListener {
 		void onStateChanged(Device dev, String stateId);
 
@@ -712,6 +737,10 @@ public class Device implements Comparable<Device>, IDevice {
 	
 	public interface OnSortIndexChangedListener {
 		void onSortIndexChanged(Device dev, int sortIndex);
+	}
+	
+	public interface OnGearNeedToAutoListener {
+		void onGearNeedToAuto(Device dev, boolean gearNeedToAuto);
 	}
 
 	@Override

@@ -45,7 +45,7 @@ public class DevCollectSignalContainerTest {
 		dcsc.handle("80,190,0,0");
 		DevCollectSignal d1 = (DevCollectSignal)dcsc.findSubDevBySc("1");
 		assertEquals(0f, d1.getCollectProperty().getSimulatorValue(), 0.01);
-		assertEquals(1f, d1.getCollectProperty().getCurrentValue(), 0.01);
+		assertEquals(0f, d1.getCollectProperty().getCurrentValue(), 0.01);
 		
 		DevCollectSignal d2 = (DevCollectSignal)dcsc.findSubDevBySc("2");
 		assertEquals(4f, d2.getCollectProperty().getSimulatorValue(), 0.01);
@@ -66,7 +66,7 @@ public class DevCollectSignalContainerTest {
 		dcsc.handle("81f4,7d0,2710,64");
 		DevCollectSignal d1 = (DevCollectSignal)dcsc.findSubDevBySc("1");
 		assertEquals(5f, d1.getCollectProperty().getSimulatorValue(), 0.01);
-		assertEquals(101f, d1.getCollectProperty().getCurrentValue(), 0.01);
+		assertEquals(100f, d1.getCollectProperty().getCurrentValue(), 0.01);
 		
 		DevCollectSignal d2 = (DevCollectSignal)dcsc.findSubDevBySc("2");
 		assertEquals(20f, d2.getCollectProperty().getSimulatorValue(), 0.01);
@@ -89,7 +89,7 @@ public class DevCollectSignalContainerTest {
 		dcsc.handle("8178,1dd,8b10,0");
 		DevCollectSignal d1 = (DevCollectSignal)dcsc.findSubDevBySc("1");
 		assertEquals(3.76f, d1.getCollectProperty().getSimulatorValue(), 0.02);
-		assertEquals(76.2f, d1.getCollectProperty().getCurrentValue(), 0.02);
+		assertEquals(75.2f, d1.getCollectProperty().getCurrentValue(), 0.02);
 		
 		DevCollectSignal d2 = (DevCollectSignal)dcsc.findSubDevBySc("2");
 		assertEquals(4.77f, d2.getCollectProperty().getSimulatorValue(), 0.02);

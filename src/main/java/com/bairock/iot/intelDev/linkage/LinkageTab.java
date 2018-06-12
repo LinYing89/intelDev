@@ -158,6 +158,17 @@ public class LinkageTab {
 			if(!device.isNormal()) {
 				continue;
 			}
+			//check if device's gear is consistent with linkage  
+			if(tabRow.haveLinkage()) {
+				if(device.getGear() != Gear.ZIDONG && device.getGear() != Gear.UNKNOW){
+					device.setGearNeedToAuto(true);
+				}else {
+					device.setGearNeedToAuto(false);
+				}
+			}else {
+				device.setGearNeedToAuto(false);
+			}
+			
 			if(device.getGear() == Gear.ZIDONG || device.getGear() == Gear.UNKNOW){
 				//zi dong
 				String order = tabRow.createOrder();

@@ -200,6 +200,10 @@ public class LinkageTabRow {
 			return device.getDevOrder(OrderHelper.CTRL_HEAD, dctId);
 		}
 	}
+	
+	public boolean haveLinkage() {
+		return chain != -1 || timing != -1 || loop != -1;
+	}
 
 	@Override
 	public String toString() {

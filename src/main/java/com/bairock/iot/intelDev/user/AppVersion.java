@@ -1,9 +1,13 @@
 package com.bairock.iot.intelDev.user;
 
+import java.util.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  * application version
@@ -21,6 +25,9 @@ public class AppVersion {
 	private String appName;
 	private String appInfo;
 	private int appVc;
+	
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date releaseTime;
 	
 	/**
 	 * 
@@ -100,6 +107,14 @@ public class AppVersion {
 	 */
 	public void setAppVc(int appVc) {
 		this.appVc = appVc;
+	}
+
+	public Date getReleaseTime() {
+		return releaseTime;
+	}
+
+	public void setReleaseTime(Date releaseTime) {
+		this.releaseTime = releaseTime;
 	}
 	
 }
