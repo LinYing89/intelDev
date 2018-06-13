@@ -25,6 +25,7 @@ public class AppVersion {
 	private String appName;
 	private String appInfo;
 	private int appVc;
+	private boolean debugVersion;
 	
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date releaseTime;
@@ -107,6 +108,14 @@ public class AppVersion {
 	 */
 	public void setAppVc(int appVc) {
 		this.appVc = appVc;
+	}
+
+	public boolean isDebugVersion() {
+		return debugVersion;
+	}
+
+	public void setDebugVersion(boolean debugVersion) {
+		this.debugVersion = debugVersion;
 	}
 
 	public Date getReleaseTime() {
