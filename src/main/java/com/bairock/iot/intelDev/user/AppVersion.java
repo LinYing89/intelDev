@@ -15,7 +15,7 @@ import javax.persistence.TemporalType;
  *
  */
 @Entity
-public class AppVersion {
+public class AppVersion implements Comparable<AppVersion>{
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -124,6 +124,14 @@ public class AppVersion {
 
 	public void setReleaseTime(Date releaseTime) {
 		this.releaseTime = releaseTime;
+	}
+
+	@Override
+	public int compareTo(AppVersion o) {
+		if(null == o) {
+			return -1;
+		}
+		return this.appVc - o.appVc;
 	}
 	
 }
