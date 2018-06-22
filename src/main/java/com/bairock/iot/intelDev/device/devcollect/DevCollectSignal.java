@@ -70,8 +70,8 @@ public class DevCollectSignal extends DevCollect {
 					simulatorHandler(cp, srcValue);
 					break;
 				case DIGIT:
-					srcValue = iValue / 100f;
-					digitHandler(srcValue, cp);
+					//srcValue = iValue / 100f;
+					digitHandler(iValue, cp);
 					break;
 				case SWITCH:
 					srcValue = iValue;
@@ -117,14 +117,9 @@ public class DevCollectSignal extends DevCollect {
 		cp.setCurrentValue(currentValue);
 	}
 
-	private void digitHandler(float srcValue, CollectProperty cp) {
+	protected void digitHandler(int iValue, CollectProperty cp) {
+		float srcValue = digitIValueToSrcValue(iValue);
 		cp.setSimulatorValue(srcValue);
-		if (cp.getCrestValue() - cp.getLeastValue() == 0) {
-			return;
-		}
-		// percent = (A - Aa) * 100 / (Ab - Aa)
-//		float percent = computePercentByCurrentValue(srcValue, cp);
-//		cp.setPercent(IntelDevHelper.scale(percent));
 		cp.setCurrentValue(IntelDevHelper.scale(srcValue));
 	}
 
@@ -135,6 +130,10 @@ public class DevCollectSignal extends DevCollect {
 		} else {
 			cp.setCurrentValue(0f);
 		}
+	}
+	
+	protected float digitIValueToSrcValue(int iValue) {
+		return iValue / 100f;
 	}
 
 	// percent = (A - Aa) * 100 / (Ab - Aa)

@@ -248,6 +248,9 @@ public class CollectProperty {
 	 * @return
 	 */
 	public String getUnitSymbol() {
+		if(null == unitSymbol) {
+			unitSymbol = "";
+		}
 		return unitSymbol;
 	}
 

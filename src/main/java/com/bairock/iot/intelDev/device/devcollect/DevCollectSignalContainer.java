@@ -23,6 +23,10 @@ public class DevCollectSignalContainer extends DevContainer {
 
 	public DevCollectSignalContainer(String mcId, String sc) {
 		super(mcId, sc);
+		initChildDevices();
+	}
+	
+	protected void initChildDevices() {
 		for (int i = 1; i <= 16; i++) {
 			DevCollectSignal sd = (DevCollectSignal) DeviceAssistent.createDeviceByMcId(MainCodeHelper.COLLECTOR_SIGNAL,
 					String.valueOf(i));
@@ -64,7 +68,7 @@ public class DevCollectSignalContainer extends DevContainer {
 		return null;
 	}
 
-	private void analysisMsgUnit(String msgUnit) {
+	protected void analysisMsgUnit(String msgUnit) {
 		if (null == msgUnit || msgUnit.isEmpty()) {
 			return;
 		}

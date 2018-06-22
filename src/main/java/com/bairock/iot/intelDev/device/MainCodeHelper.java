@@ -25,10 +25,16 @@ public class MainCodeHelper {
 	public static final String COLLECTOR_SIGNAL_CONTAINER = "signal_collector_container";
 	//xin hao cai ji qi
 	public static final String COLLECTOR_SIGNAL = "signal_collector";
+	//duo gong neng xin hao chuan gan qi
+	public static final String COLLECTOR_CLIMATE_CONTAINER = "signal_climate_container";
 	//yan wu tan ci qi
 	public static final String YAN_WU = "omc_yw";
 	//wen du ji
 	public static final String WEN_DU = "omc_wd";
+	//shi du ji
+	public static final String SHI_DU = "omc_sd";
+	//jian quan
+	public static final String JIA_QUAN = "omc_jq";
 	//kai guan 1 lu 2 tai
 	public static final String KG_1LU_2TAI = "mmc_kg12";
 	//kai guan 2 lu 2 tai
@@ -97,8 +103,11 @@ public class MainCodeHelper {
 		listMainCode.add(new MainCode(YE_WEI, "y1", "qiyachuanganyeweiji"));
 		listMainCode.add(new MainCode(COLLECTOR_SIGNAL, "b1", "xinhaocaijiqi"));
 		listMainCode.add(new MainCode(COLLECTOR_SIGNAL_CONTAINER, "bx", "xinhaocaijikongzhiqi"));
+		listMainCode.add(new MainCode(COLLECTOR_CLIMATE_CONTAINER, "x1", "duogongnengqihouchuanganqi"));
 		listMainCode.add(new MainCode(YAN_WU, "z1", "yanwutanciqi"));
-		listMainCode.add(new MainCode(WEN_DU, "E1", "wendu"));
+		listMainCode.add(new MainCode(WEN_DU, "e1", "wendu"));
+		listMainCode.add(new MainCode(SHI_DU, "e2", "shidu"));
+		listMainCode.add(new MainCode(JIA_QUAN, "e3", "jiaquan"));
 		listMainCode.add(new MainCode(KG_1LU_2TAI, "B1", "1lu2taikaiguan"));
 		listMainCode.add(new MainCode(KG_2LU_2TAI, "B2", "2lu2taikaiguan"));
 		listMainCode.add(new MainCode(KG_3LU_2TAI, "B3", "3lu2taikaiguan"));

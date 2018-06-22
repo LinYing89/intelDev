@@ -2,6 +2,7 @@ package com.bairock.iot.intelDev.device;
 
 import java.util.List;
 
+import com.bairock.iot.intelDev.device.devcollect.DevCollectClimateContainer;
 import com.bairock.iot.intelDev.device.devcollect.DevCollectSignal;
 import com.bairock.iot.intelDev.device.devcollect.DevCollectSignalContainer;
 import com.bairock.iot.intelDev.device.devcollect.Pressure;
@@ -79,6 +80,9 @@ public class DeviceAssistent {
 			break;
 		case MainCodeHelper.COLLECTOR_SIGNAL_CONTAINER:
 			device = new DevCollectSignalContainer(mcId, sc);
+			break;
+		case MainCodeHelper.COLLECTOR_CLIMATE_CONTAINER:
+			device = new DevCollectClimateContainer(mcId, sc);
 			break;
 		case MainCodeHelper.COLLECTOR_SIGNAL:
 			device = new DevCollectSignal(mcId, sc);
