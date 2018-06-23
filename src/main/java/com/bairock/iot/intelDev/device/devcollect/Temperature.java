@@ -1,5 +1,13 @@
 package com.bairock.iot.intelDev.device.devcollect;
 
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+
+@Entity
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorValue("Temperature")
 public class Temperature extends DevCollectSignal {
 
 	public Temperature() {

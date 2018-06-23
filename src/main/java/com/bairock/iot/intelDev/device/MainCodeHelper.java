@@ -54,22 +54,22 @@ public class MainCodeHelper {
 	//bao jing she bei lei xing 2
 	public static final String BAO_JING2 = "mmc_bjq2";
 	//yi xia duo wei zi she bei
-	//wu lei xing she bei
+	//wu lei xing she bei(sub device main code)
 	public static final String SMC_WU = "smc_w";
 	//chuang lian
-	public static final String SMC_CHUANG_LIAN = "smc_cl";
+	public static final String SMC_REMOTER_CHUANG_LIAN = "smc_remoter_cl";
 	//dian shi
-	public static final String SMC_DIAN_SHI = "smc_ds";
+	public static final String SMC_REMOTER_DIAN_SHI = "smc_remoter_ds";
 	//kong tiao
-	public static final String SMC_KONG_TIAO = "smc_kt";
+	public static final String SMC_REMOTER_KONG_TIAO = "smc_remoter_kt";
 	//tou ying yi
-	public static final String SMC_TOU_YING = "smc_tyy";
+	public static final String SMC_REMOTER_TOU_YING = "smc_remoter_tyy";
 	//mu bu
-	public static final String SMC_MU_BU = "smc_mb";
+	public static final String SMC_REMOTER_MU_BU = "smc_remoter_mb";
 	//sheng jiang jia
-	public static final String SMC_SHENG_JIANG_JIA = "smc_sjj";
+	public static final String SMC_REMOTER_SHENG_JIANG_JIA = "smc_remoter_sjj";
 	//zi ding yi she bei
-	public static final String SMC_ZI_DING_YI = "smc_zdy";
+	public static final String SMC_REMOTER_ZI_DING_YI = "smc_remoter_zdy";
 	//deng
 	public static final String SMC_DENG = "smc_d";
 	//chuang hu
@@ -119,13 +119,13 @@ public class MainCodeHelper {
 		listMainCode.add(new MainCode(BAO_JING2, "a2", "duogongnengbaojing2"));
 		
 		listMainCode.add(new MainCode(SMC_WU, "0", "wu"));
-		listMainCode.add(new MainCode(SMC_CHUANG_LIAN, "1", "chuanglian"));
-		listMainCode.add(new MainCode(SMC_DIAN_SHI, "2", "dianshi"));
-		listMainCode.add(new MainCode(SMC_KONG_TIAO, "3", "kongtiao"));
-		listMainCode.add(new MainCode(SMC_TOU_YING, "4", "touyingyi"));
-		listMainCode.add(new MainCode(SMC_MU_BU, "5", "mubu"));
-		listMainCode.add(new MainCode(SMC_SHENG_JIANG_JIA, "6", "shenjiangjia"));
-		listMainCode.add(new MainCode(SMC_ZI_DING_YI, "7", "zidingyi"));
+		listMainCode.add(new MainCode(SMC_REMOTER_CHUANG_LIAN, "1", "chuanglian"));
+		listMainCode.add(new MainCode(SMC_REMOTER_DIAN_SHI, "2", "dianshi"));
+		listMainCode.add(new MainCode(SMC_REMOTER_KONG_TIAO, "3", "kongtiao"));
+		listMainCode.add(new MainCode(SMC_REMOTER_TOU_YING, "4", "touyingyi"));
+		listMainCode.add(new MainCode(SMC_REMOTER_MU_BU, "5", "mubu"));
+		listMainCode.add(new MainCode(SMC_REMOTER_SHENG_JIANG_JIA, "6", "shenjiangjia"));
+		listMainCode.add(new MainCode(SMC_REMOTER_ZI_DING_YI, "7", "zidingyi"));
 		listMainCode.add(new MainCode(SMC_DENG, "10", "deng"));
 		listMainCode.add(new MainCode(SMC_CHUANG_HU, "11", "chuanghu"));
 		listMainCode.add(new MainCode(SMC_FA_MEN, "12", "famen"));

@@ -13,6 +13,8 @@ import com.bairock.iot.intelDev.device.devswitch.DevSwitchThreeState;
 import com.bairock.iot.intelDev.device.devswitch.DevSwitchTwoRoad;
 import com.bairock.iot.intelDev.device.devswitch.DevSwitchXRoad;
 import com.bairock.iot.intelDev.device.devswitch.SubDev;
+import com.bairock.iot.intelDev.device.remoter.Remoter;
+import com.bairock.iot.intelDev.device.remoter.RemoterContainer;
 
 /**
  * 
@@ -33,7 +35,7 @@ public class DeviceAssistent {
 		}
 		String mcId = MainCodeHelper.getIns().getMcId(mc);
 		if(null == mcId){
-			return null;
+			mcId = mc;
 		}
 		Device device = createDeviceByMcId(mcId, sc);
 		if(null != device) {
@@ -75,6 +77,9 @@ public class DeviceAssistent {
 		case MainCodeHelper.CHA_ZUO:
 			device = new DevSocket(mcId, sc);
 			break;
+		case MainCodeHelper.YAO_KONG:
+			device = new RemoterContainer(mcId, sc);
+			break;
 		case MainCodeHelper.YE_WEI:
 			device = new Pressure(mcId, sc);
 			break;
@@ -92,8 +97,12 @@ public class DeviceAssistent {
 			break;
 		}
 		if(null == device) {
-			if(mcId.startsWith("smc")) {
+			if(mcId.startsWith("smc_remoter")) {
+				device = new Remoter(mcId, sc);
+			}else if(mcId.startsWith("smc")) {
 				device = new SubDev(mcId, sc);
+			}else {
+				
 			}
 		}
 		return device;

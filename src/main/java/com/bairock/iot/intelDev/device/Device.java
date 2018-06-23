@@ -537,10 +537,17 @@ public class Device implements Comparable<Device>, IDevice {
 		}
 		String mc = MainCodeHelper.getIns().getMc(mainCodeId);
 		if (null == mc) {
-			return null;
+			mc = mainCodeId;
 		}
 
 		return mc + getSubCode();
+	}
+	
+	public String createVirtualDeviceCoding() {
+		if (null == mainCodeId || null == subCode) {
+			return null;
+		}
+		return mainCodeId + subCode;
 	}
 
 	@Override
@@ -794,6 +801,9 @@ public class Device implements Comparable<Device>, IDevice {
 	 *            source device
 	 */
 	public static void copyDevice(Device dev1, Device dev2) {
+		if(null == dev1) {
+			dev1 = new Device();
+		}
 		dev1.setId(dev2.getId());
 		copyDeviceExceptId(dev1, dev2);
 		if (dev1 instanceof DevHaveChild) {

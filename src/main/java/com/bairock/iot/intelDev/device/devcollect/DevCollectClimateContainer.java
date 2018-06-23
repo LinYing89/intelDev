@@ -1,9 +1,17 @@
 package com.bairock.iot.intelDev.device.devcollect;
 
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+
 import com.bairock.iot.intelDev.device.Device;
 import com.bairock.iot.intelDev.device.MainCodeHelper;
 import com.bairock.iot.intelDev.device.OrderHelper;
 
+@Entity
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorValue("DevCollectClimateContainer")
 public class DevCollectClimateContainer extends DevCollectSignalContainer {
 
 	public DevCollectClimateContainer() {
