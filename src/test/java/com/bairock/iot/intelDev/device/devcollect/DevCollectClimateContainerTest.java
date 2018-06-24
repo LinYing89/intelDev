@@ -28,6 +28,7 @@ public class DevCollectClimateContainerTest {
 		assertEquals("x10001_e11", container.findTemperatureDev().getLongCoding());
 		assertEquals("x10001_e21", container.findHumidityDev().getLongCoding());
 		assertEquals("x10001_e31", container.findFormaldehydeDev().getLongCoding());
+		assertEquals(false, container.isNormal());
 	}
 	
 	@Test
@@ -37,7 +38,14 @@ public class DevCollectClimateContainerTest {
 	
 	@Test
 	public void testHandler() {
+		assertEquals(false, container.findTemperatureDev().isNormal());
+		assertEquals(false, container.findHumidityDev().isNormal());
+		assertEquals(false, container.findFormaldehydeDev().isNormal());
 		container.handle("30CE7:4130F:50019");
+		assertEquals(true, container.isNormal());
+		assertEquals(true, container.findTemperatureDev().isNormal());
+		assertEquals(true, container.findHumidityDev().isNormal());
+		assertEquals(true, container.findFormaldehydeDev().isNormal());
 		assertEquals(33.03f, container.findTemperatureDev().getCollectProperty().getCurrentValue(), 0.01);
 		assertEquals(48.79f, container.findHumidityDev().getCollectProperty().getCurrentValue(), 0.01);
 		assertEquals(0.03f, container.findFormaldehydeDev().getCollectProperty().getCurrentValue(), 0.01);

@@ -5,7 +5,10 @@ import java.util.List;
 import com.bairock.iot.intelDev.device.devcollect.DevCollectClimateContainer;
 import com.bairock.iot.intelDev.device.devcollect.DevCollectSignal;
 import com.bairock.iot.intelDev.device.devcollect.DevCollectSignalContainer;
+import com.bairock.iot.intelDev.device.devcollect.Formaldehyde;
+import com.bairock.iot.intelDev.device.devcollect.Humidity;
 import com.bairock.iot.intelDev.device.devcollect.Pressure;
+import com.bairock.iot.intelDev.device.devcollect.Temperature;
 import com.bairock.iot.intelDev.device.devswitch.DevSocket;
 import com.bairock.iot.intelDev.device.devswitch.DevSwitchOneRoad;
 import com.bairock.iot.intelDev.device.devswitch.DevSwitchThreeRoad;
@@ -94,6 +97,15 @@ public class DeviceAssistent {
 			break;
 		case MainCodeHelper.GUAGUA_MOUTH:
 			device = new GuaguaMouth(mcId, sc);
+			break;
+		case MainCodeHelper.WEN_DU:
+			device = new Temperature(mcId, sc);
+			break;
+		case MainCodeHelper.SHI_DU:
+			device = new Humidity(mcId, sc);
+			break;
+		case MainCodeHelper.JIA_QUAN:
+			device = new Formaldehyde(mcId, sc);
 			break;
 		}
 		if(null == device) {

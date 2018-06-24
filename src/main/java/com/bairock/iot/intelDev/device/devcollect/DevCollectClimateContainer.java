@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 
+import com.bairock.iot.intelDev.device.DevStateHelper;
 import com.bairock.iot.intelDev.device.Device;
 import com.bairock.iot.intelDev.device.MainCodeHelper;
 import com.bairock.iot.intelDev.device.OrderHelper;
@@ -70,11 +71,17 @@ public class DevCollectClimateContainer extends DevCollectSignalContainer {
 
 		String msgNoHead = msgUnit.substring(1);
 		if (msgUnit.startsWith("3")) {
-			findTemperatureDev().handleSingleMsg("8" + msgNoHead);
+			Temperature t = findTemperatureDev();
+			t.setDevStateId(DevStateHelper.DS_ZHENG_CHANG);
+			t.handleSingleMsg("8" + msgNoHead);
 		} else if (msgUnit.startsWith("4")) {
+			Humidity h = findHumidityDev();
+			h.setDevStateId(DevStateHelper.DS_ZHENG_CHANG);
 			findHumidityDev().handleSingleMsg("8" + msgNoHead);
 		} else if (msgUnit.startsWith("5")) {
-			findFormaldehydeDev().handleSingleMsg("8" + msgNoHead);
+			Formaldehyde f = findFormaldehydeDev();
+			f.setDevStateId(DevStateHelper.DS_ZHENG_CHANG);
+			f.handleSingleMsg("8" + msgNoHead);
 		}
 	}
 }

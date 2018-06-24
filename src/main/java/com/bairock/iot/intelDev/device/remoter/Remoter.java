@@ -11,12 +11,13 @@ import javax.persistence.InheritanceType;
 import javax.persistence.OneToMany;
 
 import com.bairock.iot.intelDev.device.Device;
+import com.bairock.iot.intelDev.device.IStateDev;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorValue("Remoter")
-public class Remoter extends Device {
+public class Remoter extends Device implements IStateDev{
 
 	@OneToMany(mappedBy = "remoter", cascade = CascadeType.ALL, orphanRemoval = true)
 	@JsonManagedReference("remoter_remoterkey")
@@ -72,6 +73,46 @@ public class Remoter extends Device {
 				return rk;
 			}
 		}
+		return null;
+	}
+	
+	public String nextNumber() {
+		String num = "0";
+		for(int i = 0; i < 100; i++) {
+			boolean haved = false;
+			num = i > 9 ? String.valueOf(i) : "0" + i;
+			for(RemoterKey rk : listRemoterKey) {
+				if(rk.getNumber().equals(num)) {
+					haved = true;
+					break;
+				}
+			}
+			if(!haved) {
+				return num;
+			}
+		}
+		return null;
+	}
+	
+	public boolean keyNameIsExists(String name) {
+		if(null == name) {
+			return false;
+		}
+		for(RemoterKey rk : listRemoterKey) {
+			if(rk.getName().equals(name)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	@Override
+	public String getTurnOnOrder() {
+		return null;
+	}
+
+	@Override
+	public String getTurnOffOrder() {
 		return null;
 	}
 	

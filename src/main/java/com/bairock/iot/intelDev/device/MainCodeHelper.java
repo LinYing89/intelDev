@@ -99,7 +99,7 @@ public class MainCodeHelper {
 		listMainCode.add(new MainCode(XIE_TIAO_QI, "A1", "xietiaoqi"));
 		listMainCode.add(new MainCode(GUAGUA_MOUTH, "R1", "guaguazui"));
 		listMainCode.add(new MainCode(MEN_JIN, "c1", "menjin"));
-		listMainCode.add(new MainCode(DGN_CAI_JI, "x1", "duogongnengcaijiqi"));
+		//listMainCode.add(new MainCode(DGN_CAI_JI, "x1", "duogongnengcaijiqi"));
 		listMainCode.add(new MainCode(YE_WEI, "y1", "qiyachuanganyeweiji"));
 		listMainCode.add(new MainCode(COLLECTOR_SIGNAL, "b1", "xinhaocaijiqi"));
 		listMainCode.add(new MainCode(COLLECTOR_SIGNAL_CONTAINER, "bx", "xinhaocaijikongzhiqi"));
