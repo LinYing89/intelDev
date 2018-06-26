@@ -1,5 +1,7 @@
 package com.bairock.iot.intelDev.device.devcollect;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 import javax.persistence.Column;
@@ -43,6 +45,8 @@ public class CollectProperty {
 	private String formula;
 	private String unitSymbol;
 	private CollectSignalSource collectSrc = CollectSignalSource.DIGIT;
+	
+	private List<ValueTrigger> listValueTrigger = new ArrayList<>();
 
 	@Transient
 	@JsonIgnore
@@ -59,7 +63,11 @@ public class CollectProperty {
 	@Transient
 	@JsonIgnore
 	private OnSimulatorChangedListener onSimulatorChangedListener;
-
+	
+	@Transient
+	@JsonIgnore
+	private OnValueTriggedListener onValueTriggedListener;
+	
 	public CollectProperty() {
 		id = UUID.randomUUID().toString();
 	}
@@ -116,6 +124,10 @@ public class CollectProperty {
 		this.onUnitSymbolChangedListener = onUnitSymbolChangedListener;
 	}
 	
+	public void setOnValueTriggedListener(OnValueTriggedListener onValueTriggedListener) {
+		this.onValueTriggedListener = onValueTriggedListener;
+	}
+
 	/**
 	 * get max value
 	 * 
@@ -196,21 +208,38 @@ public class CollectProperty {
 			if (null != onCurrentValueChanged) {
 				onCurrentValueChanged.onCurrentValueChanged(devCollect, currentValue);
 			}
+			trigging(this.currentValue);
 		} else {
 			if (null == currentValue) {
 				this.currentValue = currentValue;
 				if (null != onCurrentValueChanged) {
 					onCurrentValueChanged.onCurrentValueChanged(devCollect, currentValue);
 				}
+				trigging(this.currentValue);
 			} else if (Math.abs(this.currentValue - currentValue) > 0.01f) {
 				this.currentValue = currentValue;
 				if (null != onCurrentValueChanged) {
 					onCurrentValueChanged.onCurrentValueChanged(devCollect, currentValue);
 				}
+				trigging(this.currentValue);
 			}
 		}
 	}
 
+	private void trigging(Float currentValue) {
+		if(null != currentValue) {
+			for(ValueTrigger trigger : listValueTrigger) {
+				if(trigger.isEnable()) {
+					if(trigger.triggering(this.currentValue)) {
+						if(null != onValueTriggedListener) {
+							onValueTriggedListener.onValueTrigged(trigger, currentValue);
+						}
+					}
+				}
+			}
+		}
+	}
+	
 	/**
 	 * 
 	 * @param currentValue
@@ -339,6 +368,41 @@ public class CollectProperty {
 		}
 	}
 
+	public List<ValueTrigger> getListValueTrigger() {
+		return listValueTrigger;
+	}
+
+	public void setListValueTrigger(List<ValueTrigger> listValueTrigger) {
+		if(null == listValueTrigger) {
+			return;
+		}
+		this.listValueTrigger.clear();
+		for(ValueTrigger trigger : listValueTrigger) {
+			addValueTrigger(trigger);
+		}
+	}
+
+	public void addValueTrigger(ValueTrigger trigger) {
+		if(null != trigger) {
+			trigger.setDevice(devCollect);
+			listValueTrigger.add(trigger);
+		}
+	}
+	
+	public void removeValueTrigger(ValueTrigger trigger) {
+		if(null != trigger) {
+			trigger.setDevice(null);
+			listValueTrigger.remove(trigger);
+		}
+	}
+	
+	public void removeValueTriggerAt(int index) {
+		if(index >= 0 && index < listValueTrigger.size()) {
+			ValueTrigger trigger = listValueTrigger.get(index);
+			removeValueTrigger(trigger);
+		}
+	}
+	
 	/**
 	 * 
 	 * @return
@@ -381,6 +445,10 @@ public class CollectProperty {
 
 	public interface OnSimulatorChangedListener {
 		void onSimulatorChanged(DevCollect dev, Float simulator);
+	}
+	
+	public interface OnValueTriggedListener {
+		void onValueTrigged(ValueTrigger trigger, float value);
 	}
 
 }
