@@ -42,7 +42,6 @@ public class TemperatureTest {
 		
 		ValueTrigger trigger2 = new ValueTrigger();
 		trigger2.setCompareSymbol(CompareSymbol.GREAT);
-		trigger2.setDevice(temperature);
 		trigger2.setEnable(true);
 		trigger2.setMessage("大于");
 		trigger2.setTriggerValue(34f);

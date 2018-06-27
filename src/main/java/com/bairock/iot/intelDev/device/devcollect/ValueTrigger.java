@@ -27,8 +27,8 @@ public class ValueTrigger {
 	private boolean trigged;
 	
 	@ManyToOne
-	@JsonBackReference("device_trigger")
-	private DevCollect device;
+	@JsonBackReference("collector_trigger")
+	private CollectProperty collectProperty;
 	private float triggerValue;
 	private CompareSymbol compareSymbol = CompareSymbol.LESS;
 	private String message = "";
@@ -60,13 +60,15 @@ public class ValueTrigger {
 	public void setTrigged(boolean trigged) {
 		this.trigged = trigged;
 	}
+	
+	public CollectProperty getCollectProperty() {
+		return collectProperty;
+	}
 
-	public DevCollect getDevice() {
-		return device;
+	public void setCollectProperty(CollectProperty collectProperty) {
+		this.collectProperty = collectProperty;
 	}
-	public void setDevice(DevCollect device) {
-		this.device = device;
-	}
+
 	public float getTriggerValue() {
 		return triggerValue;
 	}
@@ -122,7 +124,7 @@ public class ValueTrigger {
 	
 	@Override
 	public String toString() {
-		return "ValueTrigger [device=" + device.getLongCoding() + ", triggerValue=" + triggerValue + ", compareSymbol=" + compareSymbol
+		return "ValueTrigger [device=" + collectProperty.getDevCollect().getLongCoding() + ", triggerValue=" + triggerValue + ", compareSymbol=" + compareSymbol
 				+ ", message=" + message + "]";
 	}
 	

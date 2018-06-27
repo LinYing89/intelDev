@@ -7,6 +7,7 @@
 		<class>com.bairock.iot.intelDev.device.devcollect.CollectProperty</class>
 		<class>com.bairock.iot.intelDev.device.devcollect.DevCollect</class>
 		<class>com.bairock.iot.intelDev.device.devcollect.Pressure</class>
+		<class>com.bairock.iot.intelDev.device.devcollect.ValueTrigger</class>
 		<class>com.bairock.iot.intelDev.device.DevHaveChild</class>
 		<class>com.bairock.iot.intelDev.device.Device</class>
 		<class>com.bairock.iot.intelDev.device.devswitch.DevSwitch</class>

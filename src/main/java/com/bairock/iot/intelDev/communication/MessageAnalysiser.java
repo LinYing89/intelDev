@@ -139,7 +139,7 @@ public abstract class MessageAnalysiser {
 	 * @param msg
 	 * @return String array,index 0 is coding, index 1 is state, or null
 	 */
-	public String[] findCodingState(String msg) {
+	public static String[] findCodingState(String msg) {
 		String[] codingState = new String[2];
 		String cutMsg = "";
 		if (msg.contains(OrderHelper.PREFIX)) {

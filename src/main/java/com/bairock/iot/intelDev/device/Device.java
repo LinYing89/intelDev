@@ -18,6 +18,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Transient;
 
 import com.bairock.iot.intelDev.device.devcollect.DevCollect;
+import com.bairock.iot.intelDev.device.devcollect.ValueTrigger;
 import com.bairock.iot.intelDev.user.DevGroup;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
@@ -806,9 +807,9 @@ public class Device implements Comparable<Device>, IDevice {
 		}
 		dev1.setId(dev2.getId());
 		copyDeviceExceptId(dev1, dev2);
-		if (dev1 instanceof DevHaveChild) {
-			copyChildDevices((DevHaveChild) dev1, (DevHaveChild) dev2, true);
-		}
+//		if (dev1 instanceof DevHaveChild) {
+//			copyChildDevices((DevHaveChild) dev1, (DevHaveChild) dev2, true);
+//		}
 	}
 
 	/**
@@ -845,6 +846,15 @@ public class Device implements Comparable<Device>, IDevice {
 			dc1.getCollectProperty().setLeastValue(dc2.getCollectProperty().getLeastValue());
 			dc1.getCollectProperty().setPercent(dc2.getCollectProperty().getPercent());
 			dc1.getCollectProperty().setUnitSymbol(dc2.getCollectProperty().getUnitSymbol());
+			for(ValueTrigger vt : dc2.getCollectProperty().getListValueTrigger()) {
+				ValueTrigger vt1 = new ValueTrigger();
+				vt1.setCompareSymbol(vt.getCompareSymbol());
+				vt1.setEnable(vt.isEnable());
+				vt1.setMessage(vt.getMessage());
+				vt1.setName(vt.getName());
+				vt1.setTriggerValue(vt.getTriggerValue());
+				dc1.getCollectProperty().addValueTrigger(vt1);
+			}
 		}
 	}
 	// public static void main(String[] args) {

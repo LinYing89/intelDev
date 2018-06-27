@@ -4,14 +4,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 public class CollectProperty {
@@ -46,6 +49,8 @@ public class CollectProperty {
 	private String unitSymbol;
 	private CollectSignalSource collectSrc = CollectSignalSource.DIGIT;
 	
+	@OneToMany(mappedBy = "collectProperty", cascade = CascadeType.ALL, orphanRemoval = true)
+	@JsonManagedReference("collector_trigger")
 	private List<ValueTrigger> listValueTrigger = new ArrayList<>();
 
 	@Transient
@@ -384,14 +389,14 @@ public class CollectProperty {
 
 	public void addValueTrigger(ValueTrigger trigger) {
 		if(null != trigger) {
-			trigger.setDevice(devCollect);
+			trigger.setCollectProperty(this);
 			listValueTrigger.add(trigger);
 		}
 	}
 	
 	public void removeValueTrigger(ValueTrigger trigger) {
 		if(null != trigger) {
-			trigger.setDevice(null);
+			trigger.setCollectProperty(null);
 			listValueTrigger.remove(trigger);
 		}
 	}
