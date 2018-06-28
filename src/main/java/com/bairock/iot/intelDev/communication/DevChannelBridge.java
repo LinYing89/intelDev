@@ -259,7 +259,7 @@ public class DevChannelBridge {
 		if (null == device) {
 			if (noReponse > 2) {
 				ch.close();
-				DevChannelBridgeHelper.getIns().removeBridge(this);
+				//DevChannelBridgeHelper.getIns().removeBridge(this);
 				// System.out.println("sendOrder remove channel");
 				return NO_REPONSE;
 			} else {
@@ -271,9 +271,9 @@ public class DevChannelBridge {
 
 		noReponse = dev.getNoResponse();
 		// System.out.println("sendOrder dev noresponse " + noReponse);
-		if (noReponse > 3 && dev.getLastResponseInterval() > 20000) {
+		if (noReponse > 3 && dev.getLastResponseInterval() > 35000) {
 			// if device no response great than 3 and device's last response interval great
-			// than 20000ms, prevent communication fast
+			// than 35000ms, prevent communication fast
 			// don't close the channel while this device is coordinator and the parameter
 			// device is child device of coordinator
 			// only the parameter device is this device,example wifi switch, there should

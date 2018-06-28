@@ -165,7 +165,8 @@ public class DevChannelBridgeHelper {
 			case DevChannelBridge.NO_CHANNEL:
 			case DevChannelBridge.NO_REPONSE:
 				// setDeviceState(db.getDevice(), DevStateHelper.DS_YI_CHANG);
-				listDevChannelBridge.remove(db);
+				removeBridge(db);
+				//listDevChannelBridge.remove(db);
 				break;
 			case DevChannelBridge.OK:
 				break;
