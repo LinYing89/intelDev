@@ -54,7 +54,8 @@ public class RefreshCollectorValueHelper {
 		public void run() {
 			while (!isInterrupted() && stMsg.size() > 0) {
 				try {
-					for (Device dev : stMsg) {
+					Set<Device> set = new HashSet<>(stMsg);
+					for (Device dev : set) {
 						String order = dev.createQueueOrder();
 						DevChannelBridgeHelper.getIns().sendDevOrder(dev, order, true);
 					}

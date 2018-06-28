@@ -42,15 +42,30 @@ public class DevCollectClimateContainer extends DevCollectSignalContainer {
 	}
 
 	public Temperature findTemperatureDev() {
-		return (Temperature) getListDev().get(0);
+		for(Device dev : getListDev()) {
+			if(dev instanceof Temperature) {
+				return (Temperature)dev;
+			}
+		}
+		return null;
 	}
 
 	public Humidity findHumidityDev() {
-		return (Humidity) getListDev().get(1);
+		for(Device dev : getListDev()) {
+			if(dev instanceof Humidity) {
+				return (Humidity)dev;
+			}
+		}
+		return null;
 	}
 
 	public Formaldehyde findFormaldehydeDev() {
-		return (Formaldehyde) getListDev().get(2);
+		for(Device dev : getListDev()) {
+			if(dev instanceof Formaldehyde) {
+				return (Formaldehyde)dev;
+			}
+		}
+		return null;
 	}
 
 	@Override

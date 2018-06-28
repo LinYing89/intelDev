@@ -89,6 +89,9 @@ public class ValueTrigger {
 		this.id = id;
 	}
 	public String getMessage() {
+		if(message == null || message.isEmpty()) {
+			message = getName();
+		}
 		return message;
 	}
 	public void setMessage(String message) {
