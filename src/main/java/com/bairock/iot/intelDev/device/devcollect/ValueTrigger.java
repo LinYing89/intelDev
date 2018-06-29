@@ -29,6 +29,7 @@ public class ValueTrigger {
 	@ManyToOne
 	@JsonBackReference("collector_trigger")
 	private CollectProperty collectProperty;
+	
 	private float triggerValue;
 	private CompareSymbol compareSymbol = CompareSymbol.LESS;
 	private String message = "";

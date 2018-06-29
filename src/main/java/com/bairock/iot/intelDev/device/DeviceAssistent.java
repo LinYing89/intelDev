@@ -2,6 +2,7 @@ package com.bairock.iot.intelDev.device;
 
 import java.util.List;
 
+import com.bairock.iot.intelDev.device.alarm.DevGas;
 import com.bairock.iot.intelDev.device.devcollect.DevCollectClimateContainer;
 import com.bairock.iot.intelDev.device.devcollect.DevCollectSignal;
 import com.bairock.iot.intelDev.device.devcollect.DevCollectSignalContainer;
@@ -106,6 +107,9 @@ public class DeviceAssistent {
 			break;
 		case MainCodeHelper.JIA_QUAN:
 			device = new Formaldehyde(mcId, sc);
+			break;
+		case MainCodeHelper.YAN_WU:
+			device = new DevGas(mcId, sc);
 			break;
 		}
 		if(null == device) {
