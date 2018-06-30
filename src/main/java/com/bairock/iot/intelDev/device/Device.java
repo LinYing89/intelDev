@@ -17,6 +17,7 @@ import javax.persistence.InheritanceType;
 import javax.persistence.ManyToOne;
 import javax.persistence.Transient;
 
+import com.bairock.iot.intelDev.device.alarm.DevAlarm;
 import com.bairock.iot.intelDev.device.devcollect.DevCollect;
 import com.bairock.iot.intelDev.device.devcollect.ValueTrigger;
 import com.bairock.iot.intelDev.user.DevGroup;
@@ -855,6 +856,11 @@ public class Device implements Comparable<Device>, IDevice {
 				vt1.setTriggerValue(vt.getTriggerValue());
 				dc1.getCollectProperty().addValueTrigger(vt1);
 			}
+		}else if(dev1 instanceof DevAlarm && dev2 instanceof DevAlarm) {
+			DevAlarm da1 = (DevAlarm) dev1;
+			DevAlarm da2 = (DevAlarm) dev2;
+			da1.getTrigger().setEnable(da2.getTrigger().isEnable());
+			da1.getTrigger().setMessage(da2.getTrigger().getMessage());
 		}
 	}
 	// public static void main(String[] args) {

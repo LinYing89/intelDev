@@ -164,8 +164,9 @@ public class DevChannelBridgeHelper {
 			switch (result) {
 			case DevChannelBridge.NO_CHANNEL:
 			case DevChannelBridge.NO_REPONSE:
+				//不要断开连接，这里的无回复可能是子设备的，父设备可能还是正常的
 				// setDeviceState(db.getDevice(), DevStateHelper.DS_YI_CHANG);
-				removeBridge(db);
+//				removeBridge(db);
 				//listDevChannelBridge.remove(db);
 				break;
 			case DevChannelBridge.OK:

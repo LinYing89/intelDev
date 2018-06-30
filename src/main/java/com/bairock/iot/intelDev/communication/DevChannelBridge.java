@@ -315,7 +315,6 @@ public class DevChannelBridge {
 			try {
 				getChannel().writeAndFlush(Unpooled.copiedBuffer(msg.getBytes("GBK")));
 			} catch (UnsupportedEncodingException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			if (null != onCommunicationListener) {

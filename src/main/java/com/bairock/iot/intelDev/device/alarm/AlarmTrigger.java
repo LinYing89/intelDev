@@ -25,7 +25,7 @@ public class AlarmTrigger {
 	@JsonBackReference("devalarm_trigger")
 	private DevAlarm devAlarm;
 	
-	private boolean enable;
+	private boolean enable = true;
 	
 	private String message = "";
 
