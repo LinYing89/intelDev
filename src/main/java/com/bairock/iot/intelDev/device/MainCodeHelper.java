@@ -2,6 +2,7 @@ package com.bairock.iot.intelDev.device;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * main code helper
@@ -11,82 +12,151 @@ import java.util.List;
 public class MainCodeHelper {
 
 	private static MainCodeHelper ins;
-	//xie tiao qi
+	/**
+	 * 协调器
+	 */
 	public static final String XIE_TIAO_QI = "omc_xtq";
-	//guagua mouth
+	/**
+	 * 呱呱嘴
+	 */
 	public static final String GUAGUA_MOUTH = "omc_ggz";
-	//men jin
+	/**
+	 * 门禁
+	 */
 	public static final String MEN_JIN = "omc_mj";
-	//
+	/**
+	 * 多功能采集器
+	 */
 	public static final String DGN_CAI_JI = "omc_dcj";
-	//ye wei ji
+	/**
+	 * 液位计
+	 */
 	public static final String YE_WEI = "omc_ywj";
-	//xin hao cai ji kong zhi qi
+	/**
+	 * 信号采集控制器，采集电压电流等信号
+	 */
 	public static final String COLLECTOR_SIGNAL_CONTAINER = "signal_collector_container";
-	//xin hao cai ji qi
+	/**
+	 * 信号采集器，单个设备，一次只能采集一直信号，目前作为虚拟设备挂在信号采集控制器下使用
+	 */
 	public static final String COLLECTOR_SIGNAL = "signal_collector";
-	//duo gong neng xin hao chuan gan qi
+	/**
+	 * 多功能信号传感器，采集温度、湿度和甲醛等
+	 */
 	public static final String COLLECTOR_CLIMATE_CONTAINER = "signal_climate_container";
-	//yan wu tan ci qi
+	/**
+	 * 烟雾、可燃气体探测器
+	 */
 	public static final String YAN_WU = "omc_yw";
-	//wen du ji
+	/**
+	 * 温度，目前作为虚拟设备挂在多功能信号传感器下使用
+	 */
 	public static final String WEN_DU = "omc_wd";
-	//shi du ji
+	/**
+	 * 湿度，目前作为虚拟设备挂在多功能信号传感器下使用
+	 */
 	public static final String SHI_DU = "omc_sd";
-	//jian quan
+	/**
+	 * 甲醛，目前作为虚拟设备挂在多功能信号传感器下使用
+	 */
 	public static final String JIA_QUAN = "omc_jq";
-	//kai guan 1 lu 2 tai
+	/**
+	 * 一路两态开关
+	 */
 	public static final String KG_1LU_2TAI = "mmc_kg12";
-	//kai guan 2 lu 2 tai
+	/**
+	 * 两路两态开关
+	 */
 	public static final String KG_2LU_2TAI = "mmc_kg22";
-	//kai guan 3 lu 2 tai
+	/**
+	 * 三路两态开关
+	 */
 	public static final String KG_3LU_2TAI = "mmc_kg32";
-	//kai guan x lu 2 tai
+	/**
+	 * 多路两态开关
+	 */
 	public static final String KG_XLU_2TAI = "mmc_kgx2";
-	//kai guan 3 tai
+	/**
+	 * 三态开关
+	 */
 	public static final String KG_3TAI = "mmc_kgx3";
-	//yao kong qi
+	/**
+	 * 遥控器
+	 */
 	public static final String YAO_KONG = "mmc_ykq";
-	//cha zuo
+	/**
+	 * 插座
+	 */
 	public static final String CHA_ZUO = "mmc_cz";
 	//bao jing she bei lei xing 1
 	public static final String BAO_JING1 = "mmc_bjq1";
 	//bao jing she bei lei xing 2
 	public static final String BAO_JING2 = "mmc_bjq2";
-	//yi xia duo wei zi she bei
-	//wu lei xing she bei(sub device main code)
+	
+	//以下多为子设备
+	/**
+	 * 无类型设备
+	 */
 	public static final String SMC_WU = "smc_w";
-	//chuang lian
+	/**
+	 * 窗帘
+	 */
 	public static final String SMC_REMOTER_CHUANG_LIAN = "smc_remoter_cl";
-	//dian shi
+	/**
+	 * 电视
+	 */
 	public static final String SMC_REMOTER_DIAN_SHI = "smc_remoter_ds";
-	//kong tiao
+	/**
+	 * 空调
+	 */
 	public static final String SMC_REMOTER_KONG_TIAO = "smc_remoter_kt";
-	//tou ying yi
+	/**
+	 * 投影仪
+	 */
 	public static final String SMC_REMOTER_TOU_YING = "smc_remoter_tyy";
-	//mu bu
+	/**
+	 * 投影幕布
+	 */
 	public static final String SMC_REMOTER_MU_BU = "smc_remoter_mb";
-	//sheng jiang jia
+	/**
+	 * 升降架
+	 */
 	public static final String SMC_REMOTER_SHENG_JIANG_JIA = "smc_remoter_sjj";
-	//zi ding yi she bei
+	/**
+	 * 自定义设备
+	 */
 	public static final String SMC_REMOTER_ZI_DING_YI = "smc_remoter_zdy";
-	//deng
+	/**
+	 * 灯
+	 */
 	public static final String SMC_DENG = "smc_d";
-	//chuang hu
+	/**
+	 * 窗户
+	 */
 	public static final String SMC_CHUANG_HU = "smc_ch";
-	//fa men
+	/**
+	 * 阀门
+	 */
 	public static final String SMC_FA_MEN = "smc_fm";
-	//cha zuo
-	public static final String SMC_CHA_ZUO = "smc_cz";
-	//bing xiang
+	/**
+	 * 冰箱
+	 */
 	public static final String SMC_BING_XIANG = "smc_bx";
-	//xi yi ji
+	/**
+	 * 洗衣机
+	 */
 	public static final String SMC_XI_YI_JI = "smc_xyj";
-	//wei bo lu
+	/**
+	 * 微波炉
+	 */
 	public static final String SMC_WEI_BO_LU = "smc_wbl";
-	//yin xiang
+	/**
+	 * 音箱
+	 */
 	public static final String SMC_YIN_XIANG = "smc_yx";
-	//shui long tou
+	/**
+	 * 水龙头
+	 */
 	public static final String SMC_SHUI_LONG_TOU = "smc_slt";
 	
 	private List<MainCode> listMainCode;
@@ -98,8 +168,7 @@ public class MainCodeHelper {
 		listMainCode = new ArrayList<MainCode>();
 		listMainCode.add(new MainCode(XIE_TIAO_QI, "A1", "xietiaoqi"));
 		listMainCode.add(new MainCode(GUAGUA_MOUTH, "R1", "guaguazui"));
-		listMainCode.add(new MainCode(MEN_JIN, "c1", "menjin"));
-		//listMainCode.add(new MainCode(DGN_CAI_JI, "x1", "duogongnengcaijiqi"));
+		listMainCode.add(new MainCode(MEN_JIN, "w1", "menjin"));
 		listMainCode.add(new MainCode(YE_WEI, "y1", "qiyachuanganyeweiji"));
 		listMainCode.add(new MainCode(COLLECTOR_SIGNAL, "b1", "xinhaocaijiqi"));
 		listMainCode.add(new MainCode(COLLECTOR_SIGNAL_CONTAINER, "bx", "xinhaocaijikongzhiqi"));
@@ -129,7 +198,6 @@ public class MainCodeHelper {
 		listMainCode.add(new MainCode(SMC_DENG, "10", "deng"));
 		listMainCode.add(new MainCode(SMC_CHUANG_HU, "11", "chuanghu"));
 		listMainCode.add(new MainCode(SMC_FA_MEN, "12", "famen"));
-		listMainCode.add(new MainCode(SMC_CHA_ZUO, "13", "chazuo"));
 		listMainCode.add(new MainCode(SMC_BING_XIANG, "14", "bingxiang"));
 		listMainCode.add(new MainCode(SMC_XI_YI_JI, "15", "xiyiji"));
 		listMainCode.add(new MainCode(SMC_WEI_BO_LU, "16", "weibolu"));
@@ -240,6 +308,41 @@ public class MainCodeHelper {
 			}
 		}
 		return null;
+	}
+	
+	/**
+	 * 获取主编码描述
+	 * @param mcId 主编吗id
+	 * @return
+	 */
+	public String getMainCodeInfo(String mcId) {
+		if(null == mcId){
+			return null;
+		}
+		if(mcId.equals(SMC_WU)) {
+			return getMc(mcId);
+		}
+		for (MainCode mc : listMainCode) {
+			if (mc.getMcId().equals(mcId)) {
+				return mc.getInfo();
+			}
+		}
+		return null;
+	}
+	
+	/**
+	 * 设置设备主编码对应的主编码描述信息，一般需要在程序初始化时设置为中文描述信息
+	 * map的key为主编码id，map的value为主编码描述信息
+	 * @param map key为主编码id，value为主编码描述信息
+	 */
+	public void setManCodeInfo(Map<String, String> map) {
+		for(String key : map.keySet()) {
+			for(MainCode mc : listMainCode) {
+				if(mc.getMcId().equals(key)) {
+					mc.setInfo(map.get(key));
+				}
+			}
+		}
 	}
 	
 }

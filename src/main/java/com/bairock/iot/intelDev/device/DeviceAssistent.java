@@ -2,7 +2,7 @@ package com.bairock.iot.intelDev.device;
 
 import java.util.List;
 
-import com.bairock.iot.intelDev.device.alarm.DevGas;
+import com.bairock.iot.intelDev.device.alarm.DevAlarm;
 import com.bairock.iot.intelDev.device.devcollect.DevCollectClimateContainer;
 import com.bairock.iot.intelDev.device.devcollect.DevCollectSignal;
 import com.bairock.iot.intelDev.device.devcollect.DevCollectSignalContainer;
@@ -19,6 +19,7 @@ import com.bairock.iot.intelDev.device.devswitch.DevSwitchXRoad;
 import com.bairock.iot.intelDev.device.devswitch.SubDev;
 import com.bairock.iot.intelDev.device.remoter.Remoter;
 import com.bairock.iot.intelDev.device.remoter.RemoterContainer;
+import com.bairock.iot.intelDev.user.DevGroup;
 
 /**
  * 
@@ -27,6 +28,19 @@ import com.bairock.iot.intelDev.device.remoter.RemoterContainer;
  */
 public class DeviceAssistent {
 
+	/**
+	 * 创建设备，并根据主编码描述创建默认名
+	 * @param mc
+	 * @param sc
+	 * @param devGroup
+	 * @return
+	 */
+	public static Device createDeviceByMc(String mc, String sc, DevGroup devGroup){
+		Device device = createDeviceByMc(mc, sc);
+		devGroup.createDefaultDeviceName(device);
+		return device;
+	}
+	
 	/**
 	 * create device by main code
 	 * @param mc device main code
@@ -45,6 +59,19 @@ public class DeviceAssistent {
 		if(null != device) {
 			device.setAlias(mc + sc);
 		}
+		return device;
+	}
+	
+	/**
+	 * 创建设备，并根据主编码描述创建默认名
+	 * @param mcId
+	 * @param sc
+	 * @param devGroup
+	 * @return
+	 */
+	public static Device createDeviceByMcId(String mcId, String sc, DevGroup devGroup){
+		Device device = createDeviceByMcId(mcId, sc);
+		devGroup.createDefaultDeviceName(device);
 		return device;
 	}
 	
@@ -109,7 +136,8 @@ public class DeviceAssistent {
 			device = new Formaldehyde(mcId, sc);
 			break;
 		case MainCodeHelper.YAN_WU:
-			device = new DevGas(mcId, sc);
+		case MainCodeHelper.MEN_JIN:
+			device = new DevAlarm(mcId, sc);
 			break;
 		}
 		if(null == device) {

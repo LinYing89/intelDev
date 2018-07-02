@@ -651,6 +651,30 @@ public class DevGroup {
 		}
 		return false;
 	}
+	
+	/**
+	 * 创建默认名称，组内所有设备不允许重名，第一个设备名为主编码描述，
+	 * 其后相同设备的默认名为主编吗描述+序号，序号从1开始到99
+	 * @param device
+	 */
+	public void createDefaultDeviceName(Device device) {
+		if(device.getMainCodeId().equals(MainCodeHelper.SMC_WU)) {
+			return;
+		}
+		String name = MainCodeHelper.getIns().getMainCodeInfo(device.getMainCodeId());
+		if(!deviceNameIsHaved(name)) {
+			device.setName(name);
+			return;
+		}
+		for(int i = 1; i < 100; i++) {
+			name += i;
+			if(!deviceNameIsHaved(name)) {
+				device.setName(name);
+				return;
+			}
+		}
+		
+	}
 
 	public void addOnDeviceCollectionChangedListener(OnDeviceCollectionChangedListener listener) {
 		stOnDeviceCollectionChangedListener.add(listener);
