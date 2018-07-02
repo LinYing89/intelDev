@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorType;
@@ -15,15 +16,18 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Transient;
 
 import com.bairock.iot.intelDev.device.alarm.DevAlarm;
 import com.bairock.iot.intelDev.device.devcollect.DevCollect;
 import com.bairock.iot.intelDev.device.devcollect.ValueTrigger;
+import com.bairock.iot.intelDev.linkage.device.DeviceLinkage;
 import com.bairock.iot.intelDev.user.DevGroup;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonTypeInfo.As;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
@@ -62,6 +66,10 @@ public class Device implements Comparable<Device>, IDevice {
 	private boolean visibility = true;
 	private boolean deleted;
 
+	@OneToMany(mappedBy = "sourceDevice", cascade = CascadeType.ALL, orphanRemoval = true)
+	@JsonManagedReference("device_linkage")
+	private List<DeviceLinkage> listDeviceLinkage = new ArrayList<>();
+	
 	@Transient
 	@JsonIgnore
 	private int noResponse = 1;
@@ -472,6 +480,21 @@ public class Device implements Comparable<Device>, IDevice {
 		this.deleted = deleted;
 	}
 
+	public List<DeviceLinkage> getListDeviceLinkage() {
+		return listDeviceLinkage;
+	}
+
+	public void setListDeviceLinkage(List<DeviceLinkage> listDeviceLinkage) {
+		if(null != listDeviceLinkage) {
+			for(DeviceLinkage dl : listDeviceLinkage) {
+				removeDeviceLinkage(dl);
+			}
+			for(DeviceLinkage dl : listDeviceLinkage) {
+				addDeviceLinkage(dl);
+			}
+		}
+	}
+
 	public int getNoResponse() {
 		return noResponse;
 	}
@@ -501,6 +524,24 @@ public class Device implements Comparable<Device>, IDevice {
 		lastCommunicationTime = System.currentTimeMillis();
 	}
 
+	public void addDeviceLinkage(DeviceLinkage deviceLinkage) {
+		if(null != deviceLinkage) {
+			deviceLinkage.setSourceDevice(this);
+			listDeviceLinkage.add(deviceLinkage);
+		}
+	}
+	
+	public void removeDeviceLinkage(DeviceLinkage deviceLinkage) {
+		deviceLinkage.setSourceDevice(null);
+		listDeviceLinkage.remove(deviceLinkage);
+	}
+	
+	public void removeDeviceLinkage(int index) {
+		if(index >=0 && index < listDeviceLinkage.size()) {
+			removeDeviceLinkage(listDeviceLinkage.get(index));
+		}
+	}
+	
 	public LinkType getLinkType() {
 		return linkType;
 	}

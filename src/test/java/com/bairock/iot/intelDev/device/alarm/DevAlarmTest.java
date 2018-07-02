@@ -17,7 +17,7 @@ public class DevAlarmTest {
 		devAlarm = (DevAlarm) DeviceAssistent.createDeviceByMcId(MainCodeHelper.YAN_WU, "0001");
 		AlarmTrigger trigger = new AlarmTrigger(true, "报警");
 		devAlarm.setTrigger(trigger);
-		devAlarm.setOnAlarmTriggedListener(new DevAlarm.OnAlarmTriggedListener() {
+		devAlarm.addOnAlarmTriggedListener(new DevAlarm.OnAlarmTriggedListener() {
 			
 			@Override
 			public void onAlarmTrigged(AlarmTrigger trigger) {

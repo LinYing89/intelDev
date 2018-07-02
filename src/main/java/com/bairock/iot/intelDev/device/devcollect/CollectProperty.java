@@ -1,7 +1,9 @@
 package com.bairock.iot.intelDev.device.devcollect;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 import javax.persistence.CascadeType;
@@ -55,7 +57,7 @@ public class CollectProperty {
 
 	@Transient
 	@JsonIgnore
-	private OnCurrentValueChangedListener onCurrentValueChanged;
+	private Set<OnCurrentValueChangedListener> setOnCurrentValueChanged = new HashSet<>();
 	
 	@Transient
 	@JsonIgnore
@@ -101,12 +103,26 @@ public class CollectProperty {
 		this.devCollect = devCollect;
 	}
 
-	public OnCurrentValueChangedListener getOnCurrentValueChanged() {
-		return onCurrentValueChanged;
+	public Set<OnCurrentValueChangedListener> getSetOnCurrentValueChanged() {
+		return setOnCurrentValueChanged;
 	}
 
-	public void setOnCurrentValueChanged(OnCurrentValueChangedListener onCurrentValueChanged) {
-		this.onCurrentValueChanged = onCurrentValueChanged;
+	public void setSetOnCurrentValueChanged(Set<OnCurrentValueChangedListener> setOnCurrentValueChanged) {
+		if(null != setOnCurrentValueChanged) {
+			this.setOnCurrentValueChanged = setOnCurrentValueChanged;
+		}
+	}
+	
+	public void addOnCurrentValueChangedListener(OnCurrentValueChangedListener listener) {
+		if(null != listener) {
+			setOnCurrentValueChanged.add(listener);
+		}
+	}
+	
+	public void removeOnCurrentValueChangedListener(OnCurrentValueChangedListener listener) {
+		if(null != listener) {
+			setOnCurrentValueChanged.remove(listener);
+		}
 	}
 
 	public OnSignalSourceChangedListener getOnSignalSourceChangedListener() {
@@ -210,20 +226,20 @@ public class CollectProperty {
 	public void setCurrentValue(Float currentValue) {
 		if (this.currentValue == null) {
 			this.currentValue = currentValue;
-			if (null != onCurrentValueChanged) {
+			for(OnCurrentValueChangedListener onCurrentValueChanged : setOnCurrentValueChanged) {
 				onCurrentValueChanged.onCurrentValueChanged(devCollect, currentValue);
 			}
 			trigging(this.currentValue);
 		} else {
 			if (null == currentValue) {
 				this.currentValue = currentValue;
-				if (null != onCurrentValueChanged) {
+				for(OnCurrentValueChangedListener onCurrentValueChanged : setOnCurrentValueChanged) {
 					onCurrentValueChanged.onCurrentValueChanged(devCollect, currentValue);
 				}
 				trigging(this.currentValue);
 			} else if (Math.abs(this.currentValue - currentValue) > 0.01f) {
 				this.currentValue = currentValue;
-				if (null != onCurrentValueChanged) {
+				for(OnCurrentValueChangedListener onCurrentValueChanged : setOnCurrentValueChanged) {
 					onCurrentValueChanged.onCurrentValueChanged(devCollect, currentValue);
 				}
 				trigging(this.currentValue);

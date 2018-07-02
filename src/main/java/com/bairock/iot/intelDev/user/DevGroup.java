@@ -582,7 +582,7 @@ public class DevGroup {
 		return findDeviceByDevId(listDevice, devId);
 	}
 
-	private Device findDeviceByDevId(List<Device> listDev, String devId) {
+	public static Device findDeviceByDevId(List<Device> listDev, String devId) {
 		Device device = null;
 		for (Device dev : listDev) {
 			if (dev instanceof DevHaveChild) {

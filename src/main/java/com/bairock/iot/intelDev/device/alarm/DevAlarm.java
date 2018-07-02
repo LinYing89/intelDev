@@ -1,5 +1,8 @@
 package com.bairock.iot.intelDev.device.alarm;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.persistence.CascadeType;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
@@ -32,7 +35,7 @@ public class DevAlarm extends Device {
 	
 	@Transient
 	@JsonIgnore
-	private OnAlarmTriggedListener onAlarmTriggedListener;
+	private Set<OnAlarmTriggedListener> setOnAlarmTriggedListener = new HashSet<>();
 	
 	public DevAlarm() {
 	}
@@ -59,10 +62,24 @@ public class DevAlarm extends Device {
 	 * 设置报警触发监听事件
 	 * @param onAlarmTriggedListener
 	 */
-	public void setOnAlarmTriggedListener(OnAlarmTriggedListener onAlarmTriggedListener) {
-		this.onAlarmTriggedListener = onAlarmTriggedListener;
+	public void setSetOnAlarmTriggedListener(Set<OnAlarmTriggedListener> setOnAlarmTriggedListener) {
+		if(null != setOnAlarmTriggedListener) {
+			this.setOnAlarmTriggedListener = setOnAlarmTriggedListener;
+		}
 	}
 
+	public void addOnAlarmTriggedListener(OnAlarmTriggedListener listener) {
+		if(null != listener) {
+			setOnAlarmTriggedListener.add(listener);
+		}
+	}
+	
+	public void removeOnAlarmTriggedListener(OnAlarmTriggedListener listener) {
+		if(null != listener) {
+			setOnAlarmTriggedListener.remove(listener);
+		}
+	}
+	
 	/**
 	 * 最后一次触发到这次触发的时间间隔
 	 * @return
@@ -76,8 +93,8 @@ public class DevAlarm extends Device {
 		if(singleMsg.startsWith("3")) {
 			long interval = lastTriggedInterval();
 			lastTriggedTime = System.currentTimeMillis();
-			if(trigger.isEnable() && interval > 5000) {
-				if(null != onAlarmTriggedListener) {
+			if(interval > 5000) {
+				for(OnAlarmTriggedListener onAlarmTriggedListener : setOnAlarmTriggedListener) {
 					onAlarmTriggedListener.onAlarmTrigged(getTrigger());
 				}
 			}
