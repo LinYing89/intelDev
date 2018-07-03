@@ -475,33 +475,51 @@ public class DevGroup {
 	 * @return
 	 */
 	public List<Device> findListIStateDev(boolean visibility) {
+		return findListIStateDev(getListDevice(), visibility);
+	}
+	
+	/**
+	 * 从给定集合中获取所有可控设备
+	 * @param listSourceDev 源设备集合
+	 * @param visibility 获取的设备是否可见，为true表示只获取可见的设备
+	 * @return
+	 */
+	public static List<Device> findListIStateDev(List<Device> listSourceDev, boolean visibility) {
 		List<Device> listDev = new ArrayList<>();
-		for (Device dev : getListDevice()) {
-			findListIStateDev(listDev, dev, visibility);
+		for (Device dev : listSourceDev) {
+			listDev.addAll(findListIStateDev(dev, visibility));
 		}
 		Collections.sort(listDev);
 		return listDev;
 	}
 
-	public static void findListIStateDev(List<Device> listDev, Device dev, boolean visibility) {
+	/**
+	 * 从给定设备中获取该设备及其子设备集合中的所有可控设备
+	 * @param dev 源设备
+	 * @param visibility 获取的设备是否可见，为true表示只获取可见的设备
+	 * @return
+	 */
+	public static List<Device> findListIStateDev(Device dev, boolean visibility) {
+		List<Device> list = new ArrayList<>();
 		if(visibility) {
 			if(!dev.isVisibility()) {
-				return;
+				return list;
 			}
 		}
 		if (dev instanceof DevHaveChild) {
 			for (Device childDev : ((DevHaveChild) dev).getListDev()) {
-				findListIStateDev(listDev, childDev, visibility);
+				list.addAll(findListIStateDev(childDev, visibility));
 			}
 		} else if (dev instanceof IStateDev) {
 			if (visibility) {
 				if (dev.isVisibility()) {
-					listDev.add(dev);
+					list.add(dev);
 				}
 			} else {
-				listDev.add(dev);
+				list.add(dev);
 			}
 		}
+		return list;
 	}
 
 	/**

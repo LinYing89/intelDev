@@ -37,6 +37,10 @@ public class DevAlarm extends Device {
 	@JsonIgnore
 	private Set<OnAlarmTriggedListener> setOnAlarmTriggedListener = new HashSet<>();
 	
+	@Transient
+	@JsonIgnore
+	private boolean trigging;
+	
 	public DevAlarm() {
 	}
 
@@ -89,8 +93,27 @@ public class DevAlarm extends Device {
 	}
 	
 	@Override
+	public void handleNormalState(String singleMsg) {
+		super.handleNormalState(singleMsg);
+		//如果一次心跳和最后一次收到报警信息的间隔大于5秒，表示最少5秒内没有报警信息了，则解除报警
+		if(trigging) {
+			long interval = lastTriggedInterval();
+			if(interval > 5000) {
+				trigging = false;
+				for(OnAlarmTriggedListener onAlarmTriggedListener : setOnAlarmTriggedListener) {
+					onAlarmTriggedListener.onAlarmTriggedRelieve(getTrigger());
+				}
+			}
+		}
+	}
+	
+	@Override
 	public void handleSingleMsg(String singleMsg) {
 		if(singleMsg.startsWith("3")) {
+			trigging = true;
+			for(OnAlarmTriggedListener onAlarmTriggedListener : setOnAlarmTriggedListener) {
+				onAlarmTriggedListener.onAlarmTrigging(getTrigger());
+			}
 			long interval = lastTriggedInterval();
 			lastTriggedTime = System.currentTimeMillis();
 			if(interval > 5000) {
@@ -101,8 +124,27 @@ public class DevAlarm extends Device {
 		}
 	}
 	
+	/**
+	 * 报警监听器
+	 * @author 44489
+	 *
+	 */
 	public interface OnAlarmTriggedListener {
+		/**
+		 * 报警中
+		 * @param trigger
+		 */
+		void onAlarmTrigging(AlarmTrigger trigger);
+		/**
+		 * 触发报警，5秒内连续触发，只触发此函数一次
+		 * @param trigger
+		 */
 		void onAlarmTrigged(AlarmTrigger trigger);
+		/**
+		 * 解除报警
+		 * @param trigger
+		 */
+		void onAlarmTriggedRelieve(AlarmTrigger trigger);
 	}
 	
 }

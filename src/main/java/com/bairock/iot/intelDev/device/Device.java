@@ -668,13 +668,20 @@ public class Device implements Comparable<Device>, IDevice {
 		
 		String[] msgs = state.split(":");
 		for(String str : msgs) {
-			if(str.startsWith("2") || str.startsWith("u") || str.startsWith("g")) {
+			if(str.startsWith("u") || str.startsWith("g")) {
 				continue;
-			}else {
+			}else if(str.startsWith("2")) {
+				handleNormalState(str);
+			}
+			else {
 				handleSingleMsg(str);
 			}
 		}
 		return true;
+	}
+	
+	public void handleNormalState(String singleMsg) {
+
 	}
 	
 	@Override

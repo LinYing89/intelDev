@@ -21,7 +21,17 @@ public class DevAlarmTest {
 			
 			@Override
 			public void onAlarmTrigged(AlarmTrigger trigger) {
-				System.out.println(trigger.getDevAlarm().getCoding() + " " + trigger.getMessage());
+				System.out.println("Trigged" + trigger.getDevAlarm().getCoding() + " " + trigger.getMessage());
+			}
+
+			@Override
+			public void onAlarmTrigging(AlarmTrigger trigger) {
+				System.out.println("Trigging" + trigger.getDevAlarm().getCoding() + " " + trigger.getMessage());
+			}
+
+			@Override
+			public void onAlarmTriggedRelieve(AlarmTrigger trigger) {
+				System.out.println("TriggedRelieve" + trigger.getDevAlarm().getCoding() + " " + trigger.getMessage());
 			}
 		});
 	}
