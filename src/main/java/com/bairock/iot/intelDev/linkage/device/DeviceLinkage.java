@@ -8,6 +8,7 @@ import javax.persistence.ForeignKey;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Transient;
 
 import com.bairock.iot.intelDev.device.Coordinator;
 import com.bairock.iot.intelDev.device.Device;
@@ -17,6 +18,7 @@ import com.bairock.iot.intelDev.device.devcollect.Formaldehyde;
 import com.bairock.iot.intelDev.device.devcollect.Humidity;
 import com.bairock.iot.intelDev.device.devcollect.Temperature;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * 协调器内部设备连锁
@@ -56,6 +58,8 @@ public class DeviceLinkage {
 	//是否激活，协调器内有此连锁表示激活
 	//协调器内无此连锁表示未激活
 	//每次开机都要查询协调器内的连锁，防止pad显示和协调器设备不对应
+	@Transient
+	@JsonIgnore
 	private boolean active;
 	
 	public DeviceLinkage() {

@@ -417,6 +417,33 @@ public class DevGroup {
 		return null;
 	}
 
+	public Device findDeviceWithLongCoding(String longCoding) {
+		if (null == longCoding) {
+			return null;
+		}
+		for (Device dev : listDevice) {
+			Device dd = findDevice(dev, longCoding);
+			if (null != dd) {
+				return dd;
+			}
+		}
+		return null;
+	}
+
+	private Device findDevice(Device dev, String longCoding) {
+		if (dev.getLongCoding().equals(longCoding)) {
+			return dev;
+		} else if (dev instanceof DevHaveChild) {
+			for (Device dd : ((DevHaveChild) dev).getListDev()) {
+				Device d1 = findDevice(dd, longCoding);
+				if (d1 != null) {
+					return d1;
+				}
+			}
+		}
+		return null;
+	}
+	
 	/**
 	 * 
 	 * @param mc
@@ -448,15 +475,16 @@ public class DevGroup {
 		Device dev = null;
 		if (coding.contains("_")) {
 			// it maybe sub device of the device that have child, coding like B10001_10_1
-			String[] codes = coding.split("_");
-			if (codes.length != 3) {
-				return null;
-			}
-			DevHaveChild parentDev = (DevHaveChild) findDeviceWithCoding(codes[0]);
-			if (null == parentDev) {
-				return null;
-			}
-			dev = parentDev.findDeviceByMainCodeAndSubCode(codes[1], codes[2]);
+			dev = findDeviceWithLongCoding(coding);
+//			String[] codes = coding.split("_");
+//			if (codes.length != 3) {
+//				return null;
+//			}
+//			DevHaveChild parentDev = (DevHaveChild) findDeviceWithCoding(codes[0]);
+//			if (null == parentDev) {
+//				return null;
+//			}
+//			dev = parentDev.findDeviceByMainCodeAndSubCode(codes[1], codes[2]);
 		} else {
 			// it maybe not the sub device
 			if (coding.length() < 6) {
