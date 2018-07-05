@@ -149,6 +149,7 @@ public class DeviceAssistent {
 				
 			}
 		}
+		DevGroup.createDefaultDeviceNameAddSubCode(device);
 		return device;
 	}
 	

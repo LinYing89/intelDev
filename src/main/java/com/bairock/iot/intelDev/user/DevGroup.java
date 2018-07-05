@@ -721,6 +721,19 @@ public class DevGroup {
 		}
 		
 	}
+	
+	/**
+	 * 为设备创建默认名称，根据MainCodeHelper中的主编码描述创建，名称加上设备此编码
+	 * @param device
+	 */
+	public static void createDefaultDeviceNameAddSubCode(Device device) {
+		if(device.getMainCodeId().equals(MainCodeHelper.SMC_WU)) {
+			return;
+		}
+		String name = MainCodeHelper.getIns().getMainCodeInfo(device.getMainCodeId());
+		device.setName(name + device.getSubCode());
+		
+	}
 
 	public void addOnDeviceCollectionChangedListener(OnDeviceCollectionChangedListener listener) {
 		stOnDeviceCollectionChangedListener.add(listener);

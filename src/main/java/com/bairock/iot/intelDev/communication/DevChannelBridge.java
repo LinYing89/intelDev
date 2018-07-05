@@ -213,7 +213,6 @@ public class DevChannelBridge {
 		if (null == device) {
 			result = sendOrder(getHeart(), null, false);
 		} else {
-			System.out.println("DevChannelBridge sendHeart " + device + ":" + device.getCommunicationInterval());
 			result = sendHeart(device);
 		}
 		return result;

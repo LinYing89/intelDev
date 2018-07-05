@@ -7,6 +7,7 @@ import javax.persistence.InheritanceType;
 
 import com.bairock.iot.intelDev.device.DevStateHelper;
 import com.bairock.iot.intelDev.device.Device;
+import com.bairock.iot.intelDev.device.DeviceAssistent;
 import com.bairock.iot.intelDev.device.MainCodeHelper;
 import com.bairock.iot.intelDev.device.OrderHelper;
 
@@ -26,18 +27,18 @@ public class DevCollectClimateContainer extends DevCollectSignalContainer {
 	@Override
 	protected void initChildDevices() {
 		// temperature
-		Temperature temperature = new Temperature(MainCodeHelper.WEN_DU, "1");
-		temperature.setName(this.getCoding() + "_" + temperature.getCoding());
+		Temperature temperature = (Temperature) DeviceAssistent.createDeviceByMcId(MainCodeHelper.WEN_DU, "1");
+		//temperature.setName(this.getCoding() + "_" + temperature.getCoding());
 		addChildDev(temperature);
 
 		// humidity
-		Humidity humidity = new Humidity(MainCodeHelper.SHI_DU, "1");
-		humidity.setName(this.getCoding() + "_" + humidity.getCoding());
+		Humidity humidity = (Humidity) DeviceAssistent.createDeviceByMcId(MainCodeHelper.SHI_DU, "1");
+		//humidity.setName(this.getCoding() + "_" + humidity.getCoding());
 		addChildDev(humidity);
 
 		// formaldehyde
-		Formaldehyde formaldehyde = new Formaldehyde(MainCodeHelper.JIA_QUAN, "1");
-		formaldehyde.setName(this.getCoding() + "_" + formaldehyde.getCoding());
+		Formaldehyde formaldehyde = (Formaldehyde) DeviceAssistent.createDeviceByMcId(MainCodeHelper.JIA_QUAN, "1");
+		//formaldehyde.setName(this.getCoding() + "_" + formaldehyde.getCoding());
 		addChildDev(formaldehyde);
 	}
 

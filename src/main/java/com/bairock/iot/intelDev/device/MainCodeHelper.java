@@ -279,7 +279,7 @@ public class MainCodeHelper {
 	 */
 	public String getMc(String mcId){
 		if(null == mcId){
-			return null;
+			return "";
 		}
 		if(!getListMainCode().isEmpty()){
 			for(MainCode mc : listMainCode){
@@ -288,7 +288,7 @@ public class MainCodeHelper {
 				}
 			}
 		}
-		return null;
+		return mcId;
 	}
 	
 	/**
@@ -298,7 +298,7 @@ public class MainCodeHelper {
 	 */
 	public String getMcId(String mc){
 		if(null == mc){
-			return null;
+			return "";
 		}
 		if(!getListMainCode().isEmpty()){
 			for(MainCode mainCode : listMainCode){
@@ -307,7 +307,7 @@ public class MainCodeHelper {
 				}
 			}
 		}
-		return null;
+		return mc;
 	}
 	
 	/**
@@ -317,7 +317,7 @@ public class MainCodeHelper {
 	 */
 	public String getMainCodeInfo(String mcId) {
 		if(null == mcId){
-			return null;
+			return "";
 		}
 		if(mcId.equals(SMC_WU)) {
 			return getMc(mcId);
@@ -327,7 +327,7 @@ public class MainCodeHelper {
 				return mc.getInfo();
 			}
 		}
-		return null;
+		return mcId;
 	}
 	
 	/**
