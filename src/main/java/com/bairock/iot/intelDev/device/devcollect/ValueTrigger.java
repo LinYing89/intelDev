@@ -24,7 +24,7 @@ public class ValueTrigger {
 	
 	@Transient
 	@JsonIgnore
-	private boolean trigged;
+	private boolean trigged = false;
 	
 	@ManyToOne
 	@JsonBackReference("collector_trigger")
@@ -33,6 +33,10 @@ public class ValueTrigger {
 	private float triggerValue;
 	private CompareSymbol compareSymbol = CompareSymbol.LESS;
 	private String message = "";
+	
+	@Transient
+	@JsonIgnore
+	private OnTriggedChangedListener onTriggedChangedListener;
 	
 	public ValueTrigger() {
 		setId(UUID.randomUUID().toString());
@@ -59,7 +63,12 @@ public class ValueTrigger {
 	}
 
 	public void setTrigged(boolean trigged) {
-		this.trigged = trigged;
+		if(this.trigged != trigged) {
+			this.trigged = trigged;
+			if(null != onTriggedChangedListener) {
+				onTriggedChangedListener.onTriggedChanged(this, trigged);
+			}
+		}
 	}
 	
 	public CollectProperty getCollectProperty() {
@@ -98,7 +107,11 @@ public class ValueTrigger {
 	public void setMessage(String message) {
 		this.message = message;
 	}
-	
+
+	public void setOnTriggedChangedListener(OnTriggedChangedListener onTriggedChangedListener) {
+		this.onTriggedChangedListener = onTriggedChangedListener;
+	}
+
 	public boolean triggering(float value) {
 		boolean trigging = false;
 		switch(compareSymbol) {
@@ -118,10 +131,10 @@ public class ValueTrigger {
 			if(trigging) {
 				trigging = false;
 			}else {
-				trigged = false;
+				setTrigged(false);
 			}
 		}else {
-			trigged = trigging;
+			setTrigged(trigging);
 		}
 		return trigging;
 	}
@@ -147,6 +160,22 @@ public class ValueTrigger {
 			break;
 		}
 		return symbol + " " + triggerValue;
+	}
+	
+	/**
+	 * 已触发标志改变事件
+	 * 由未触发到触发，或由已触发到未触发
+	 * @author 44489
+	 *
+	 */
+	public interface OnTriggedChangedListener {
+		/**
+		 * 已触发标志改变事件
+		 * 由未触发到触发，或由已触发到未触发
+		 * @param trigger
+		 * @param trigged true为由未触发变为触发，false为由触发变为未触发
+		 */
+		void onTriggedChanged(ValueTrigger trigger, boolean trigged);
 	}
 	
 }

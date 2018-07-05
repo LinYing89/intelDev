@@ -834,7 +834,11 @@ public class Device implements Comparable<Device>, IDevice {
 				}
 			}
 			if (!haved) {
-				listNewDevice.add(device2);
+				Device device = DeviceAssistent.createDeviceByCoding(device2.getCoding());
+				if(null != device) {
+					copyDeviceExceptId(device, device2);
+					listNewDevice.add(device2);
+				}
 			}
 		}
 		for (Device device : listNewDevice) {

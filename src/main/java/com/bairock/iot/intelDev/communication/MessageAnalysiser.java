@@ -162,6 +162,8 @@ public abstract class MessageAnalysiser {
 			codingState[1] = cutMsg.substring(iSeparator + 1);
 		} else {
 			codingState[0] = cutMsg;
+			//如果只包含编码，不包含消息部分，将消息部分设为21，21表示设备正常，方便统一处理
+			codingState[1] = "21";
 		}
 		return codingState;
 	}
@@ -180,8 +182,17 @@ public abstract class MessageAnalysiser {
 	 */
 	public abstract void deviceFeedback(Device device, String msg);
 
+	/**
+	 * 系统认识该设备编码，但用户未添加该种设备
+	 * @param device
+	 * @param msg
+	 */
 	public abstract void unKnowDev(Device device, String msg);
 
+	/**
+	 * 系统不认识该设备编码，无法创建该设备
+	 * @param msg
+	 */
 	public abstract void unKnowMsg(String msg);
 
 	/**

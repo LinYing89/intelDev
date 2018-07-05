@@ -21,8 +21,13 @@ public class TemperatureTest {
 			
 			@Override
 			public void onValueTrigged(ValueTrigger trigger, float value) {
-				System.out.println(trigger + " value - " + value);
+				System.out.println("触发事件" + trigger + " value - " + value);
 				
+			}
+
+			@Override
+			public void onValueTriggedRelieve(ValueTrigger trigger, float value) {
+				System.out.println("解除事件" + trigger + " value - " + value);
 			}
 		});
 		
@@ -65,6 +70,7 @@ public class TemperatureTest {
 		temperature.handle("80ff7");
 		temperature.handle("80ce8");
 		temperature.handle("80ff7");
+		temperature.handle("8007");
 	}
 
 }

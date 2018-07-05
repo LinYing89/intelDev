@@ -250,13 +250,7 @@ public class CollectProperty {
 	private void trigging(Float currentValue) {
 		if(null != currentValue) {
 			for(ValueTrigger trigger : listValueTrigger) {
-				if(trigger.isEnable()) {
-					if(trigger.triggering(this.currentValue)) {
-						if(null != onValueTriggedListener) {
-							onValueTriggedListener.onValueTrigged(trigger, currentValue);
-						}
-					}
-				}
+				trigger.triggering(this.currentValue);
 			}
 		}
 	}
@@ -406,6 +400,27 @@ public class CollectProperty {
 	public void addValueTrigger(ValueTrigger trigger) {
 		if(null != trigger) {
 			trigger.setCollectProperty(this);
+			//添加值变化触发监听器
+			trigger.setOnTriggedChangedListener(new ValueTrigger.OnTriggedChangedListener() {
+				
+				@Override
+				public void onTriggedChanged(ValueTrigger trigger, boolean trigged) {
+					if(trigged) {
+						//触发事件
+						if(trigger.isEnable()) {
+							if(null != onValueTriggedListener) {
+								onValueTriggedListener.onValueTrigged(trigger, currentValue);
+							}
+						}
+					}else {
+						//触发事件解除
+						if(null != onValueTriggedListener) {
+							onValueTriggedListener.onValueTriggedRelieve(trigger, currentValue);
+						}
+					}
+					
+				}
+			});
 			listValueTrigger.add(trigger);
 		}
 	}
@@ -469,7 +484,46 @@ public class CollectProperty {
 	}
 	
 	public interface OnValueTriggedListener {
+		/**
+		 * 触发事件
+		 * @param trigger
+		 * @param value
+		 */
 		void onValueTrigged(ValueTrigger trigger, float value);
+		/**
+		 * 触发事件解除
+		 * @param trigger
+		 * @param value
+		 */
+		void onValueTriggedRelieve(ValueTrigger trigger, float value);
 	}
 
+	public void initTriggerListener() {
+		for(ValueTrigger vt : getListValueTrigger()) {
+			vt.setOnTriggedChangedListener(onTriggedChangedListener);
+		}
+	}
+	
+	@Transient
+	@JsonIgnore
+	public ValueTrigger.OnTriggedChangedListener onTriggedChangedListener = new ValueTrigger.OnTriggedChangedListener() {
+		
+		@Override
+		public void onTriggedChanged(ValueTrigger trigger, boolean trigged) {
+			if(trigged) {
+				//触发事件
+				if(trigger.isEnable()) {
+					if(null != onValueTriggedListener) {
+						onValueTriggedListener.onValueTrigged(trigger, currentValue);
+					}
+				}
+			}else {
+				//触发事件解除
+				if(null != onValueTriggedListener) {
+					onValueTriggedListener.onValueTriggedRelieve(trigger, currentValue);
+				}
+			}
+			
+		}
+	};
 }
