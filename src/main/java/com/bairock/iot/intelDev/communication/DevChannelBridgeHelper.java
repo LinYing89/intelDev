@@ -97,7 +97,7 @@ public class DevChannelBridgeHelper {
 		return null;
 	}
 	
-	private DevChannelBridge getDevChannelBridge(String devCoding, String userName, String groupName) {
+	public DevChannelBridge getDevChannelBridge(String devCoding, String userName, String groupName) {
 		for (DevChannelBridge db : listDevChannelBridge) {
 			if(db.getDevice() != null){
 				if(db.getDevice().getDevGroup().getUser().getName().equals(userName)
@@ -124,7 +124,9 @@ public class DevChannelBridgeHelper {
 	}
 
 	public void setListDevChannelBridge(List<DevChannelBridge> listDevChannelBridge) {
-		this.listDevChannelBridge = listDevChannelBridge;
+		if(null != listDevChannelBridge) {
+			this.listDevChannelBridge = listDevChannelBridge;
+		}
 	}
 
 	public void setOnBridgesChangedListener(OnBridgesChangedListener onBridgesChangedListener) {
@@ -293,15 +295,22 @@ public class DevChannelBridgeHelper {
 	}
 
 	public void removeBridge(DevChannelBridge db) {
-		if(null != db && db.getChannel() != null) {
-			db.getChannel().close();
-		}
 		listDevChannelBridge.remove(db);
+		if(null != db && null != db.getChannel() && db.getChannel().isActive()) {
+			db.close();
+		}
 		if(null != onBridgesChangedListener) {
 			onBridgesChangedListener.onRemove(db);
 		}
 	}
 
+	public void closeAllBridge() {
+		List<DevChannelBridge> list = new ArrayList<>(listDevChannelBridge);
+		for(DevChannelBridge db : list) {
+			removeBridge(db);
+		}
+	}
+	
 	/**
 	 * 
 	 */

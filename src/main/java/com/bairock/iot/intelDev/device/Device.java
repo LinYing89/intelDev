@@ -7,12 +7,10 @@ import java.util.Set;
 import java.util.UUID;
 
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorType;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.ManyToOne;
@@ -24,6 +22,7 @@ import com.bairock.iot.intelDev.device.devcollect.DevCollect;
 import com.bairock.iot.intelDev.device.devcollect.ValueTrigger;
 import com.bairock.iot.intelDev.linkage.device.DeviceLinkage;
 import com.bairock.iot.intelDev.user.DevGroup;
+import com.bairock.iot.intelDev.user.MyHome;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -34,15 +33,11 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name = "device_type", discriminatorType = DiscriminatorType.STRING)
 @DiscriminatorValue("Device")
+@DiscriminatorColumn(name = "myhome_type", discriminatorType = DiscriminatorType.STRING)
 @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "@id")
 @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, include = As.PROPERTY, property = "class")
-public class Device implements Comparable<Device>, IDevice {
-
-	@Id
-	@Column(nullable = false)
-	private String id;
+public class Device extends MyHome implements Comparable<Device>, IDevice {
 
 	@ManyToOne
 	@JsonBackReference("group_dev")
@@ -140,22 +135,6 @@ public class Device implements Comparable<Device>, IDevice {
 		setMainCodeId(mcId);
 		setSubCode(sc);
 		setId(UUID.randomUUID().toString());
-	}
-
-	/**
-	 * 
-	 * @return
-	 */
-	public String getId() {
-		return id;
-	}
-
-	/**
-	 * 
-	 * @param id
-	 */
-	public void setId(String id) {
-		this.id = id;
 	}
 
 	/**

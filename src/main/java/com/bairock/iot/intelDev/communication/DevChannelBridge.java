@@ -322,6 +322,12 @@ public class DevChannelBridge {
 		}
 	}
 
+	public void close() {
+		if(null != channel) {
+			channel.close();
+		}
+	}
+	
 	public interface OnCommunicationListener {
 		void onSend(DevChannelBridge bridge, String msg);
 

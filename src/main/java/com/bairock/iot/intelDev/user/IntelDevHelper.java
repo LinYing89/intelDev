@@ -5,11 +5,13 @@ import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
+import java.util.Date;
 import java.util.Enumeration;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import com.bairock.iot.intelDev.device.Device;
+import com.bairock.iot.intelDev.device.alarm.AlarmInfo;
 
 public class IntelDevHelper {
 
@@ -65,6 +67,13 @@ public class IntelDevHelper {
 		return b.setScale(2, BigDecimal.ROUND_HALF_UP).floatValue();
 	}
 	
+	
+	public static AlarmInfo createAlarmInfo(String info) {
+		AlarmInfo ai = new AlarmInfo();
+		ai.setInfo(info);
+		ai.setAlarmTime(new Date());
+		return ai;
+	}
 //	public static void main(String[] args) {
 //		System.out.println(getLocalIp());
 //	}

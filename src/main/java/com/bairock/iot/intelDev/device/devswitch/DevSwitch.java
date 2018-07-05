@@ -161,12 +161,6 @@ public class DevSwitch extends DevHaveChild {
 			msgs[i] = String.valueOf(cMsgs[i]);
 		}
 		
-		int moduleNum;
-		int firstSubDevSc;
-		int iHexState;
-		int subCode;
-		String strState;
-		
 		switch (msgs[0]) {
 		case DevSwitchMsgSign.ORDER_CTRL_FEEDBACK:
 			// 7, feedback because of order control
@@ -224,22 +218,6 @@ public class DevSwitch extends DevHaveChild {
 			//9
 			handle9(msgs);
 			break;
-		}
-	}
-	
-	/**
-	 * set four device state from first device subCode
-	 * @param firstSubDevSc first device subCode
-	 * @param iHexState a hex number 
-	 */
-	private void setDevStateFromFirstSubCode(int firstSubDevSc, byte bHexState, int step) {
-		for(int j = 0; j < step; j++) {
-			int subCode = firstSubDevSc + j;
-			SubDev sd = (SubDev) getSubDevBySc(String.valueOf(subCode));
-			if(null != sd) {
-				String strState = getEnsureState(bHexState, j);
-				DevStateHelper.getIns().setDsId(sd, strState);
-			}
 		}
 	}
 	

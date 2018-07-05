@@ -17,6 +17,7 @@ public class RefreshCollectorValueHelper {
 	private Set<Device> stMsg;
 	private TSender tSender;
 	private boolean isFinding;
+	public boolean isStoped = false;
 
 	/**
 	 * 
@@ -37,8 +38,10 @@ public class RefreshCollectorValueHelper {
 		stMsg.add(dc);
 		if (!isFinding) {
 			isFinding = true;
-			tSender = new TSender();
-			IntelDevHelper.executeThread(tSender);
+			if(!isStoped){
+				tSender = new TSender();
+				IntelDevHelper.executeThread(tSender);
+			}
 		}
 	}
 
@@ -52,7 +55,7 @@ public class RefreshCollectorValueHelper {
 
 		@Override
 		public void run() {
-			while (!isInterrupted() && stMsg.size() > 0) {
+			while (!isInterrupted() && stMsg.size() > 0 && !isStoped) {
 				try {
 					Set<Device> set = new HashSet<>(stMsg);
 					for (Device dev : set) {
