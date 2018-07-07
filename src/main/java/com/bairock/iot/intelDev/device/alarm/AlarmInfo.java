@@ -26,6 +26,11 @@ public class AlarmInfo {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date alarmTime;
 
+	/**
+	 * 报警对象的名称
+	 */
+	private String sourceName = "";
+	
 	public Long getId() {
 		return id;
 	}
@@ -48,6 +53,16 @@ public class AlarmInfo {
 
 	public void setAlarmTime(Date alarmTime) {
 		this.alarmTime = alarmTime;
+	}
+
+	public String getSourceName() {
+		return sourceName;
+	}
+
+	public void setSourceName(String sourceName) {
+		if(null != sourceName) {
+			this.sourceName = sourceName;
+		}
 	}
 	
 }

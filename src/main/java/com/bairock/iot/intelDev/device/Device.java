@@ -52,7 +52,6 @@ public class Device extends MyHome implements Comparable<Device>, IDevice {
 	private String sn = "";
 	private DevCategory devCategory = DevCategory.WU;
 	private String place = "";
-	private String name = "";
 	private String alias = "";
 	private Gear gear = Gear.ZIDONG;
 	private String devStateId = DevStateHelper.DS_YI_CHANG;
@@ -100,10 +99,6 @@ public class Device extends MyHome implements Comparable<Device>, IDevice {
 	@Transient
 	@JsonIgnore
 	private OnCtrlModelChangedListener onCtrlModelChanged;
-
-	@Transient
-	@JsonIgnore
-	private Set<OnNameChangedListener> stOnNameChangedListener = new HashSet<>();
 
 	@Transient
 	@JsonIgnore
@@ -265,25 +260,12 @@ public class Device extends MyHome implements Comparable<Device>, IDevice {
 	 * 
 	 * @return
 	 */
+	@Override
 	public String getName() {
 		if (null == name || name.isEmpty()) {
 			name = getCoding();
 		}
 		return name;
-	}
-
-	/**
-	 * set name
-	 * 
-	 * @param name
-	 */
-	public void setName(String name) {
-		if (null != name && !this.name.equals(name)) {
-			this.name = name;
-			for (OnNameChangedListener listener : stOnNameChangedListener) {
-				listener.onNameChanged(this, name);
-			}
-		}
 	}
 
 	/**
@@ -721,14 +703,6 @@ public class Device extends MyHome implements Comparable<Device>, IDevice {
 		this.onCtrlModelChanged = onCtrlModelChanged;
 	}
 
-	public void addOnNameChangedListener(OnNameChangedListener listener) {
-		stOnNameChangedListener.add(listener);
-	}
-
-	public void removeOnNameChangedListener(OnNameChangedListener listener) {
-		stOnNameChangedListener.remove(listener);
-	}
-
 	public void addOnAliasChangedListener(OnAliasChangedListener listener) {
 		stOnAliasChangedListener.add(listener);
 	}
@@ -761,10 +735,6 @@ public class Device extends MyHome implements Comparable<Device>, IDevice {
 
 	public interface OnCtrlModelChangedListener {
 		void onCtrlModelChanged(Device dev, CtrlModel ctrlModel);
-	}
-
-	public interface OnNameChangedListener {
-		void onNameChanged(Device dev, String name);
 	}
 
 	public interface OnAliasChangedListener {

@@ -67,9 +67,15 @@ public class IntelDevHelper {
 		return b.setScale(2, BigDecimal.ROUND_HALF_UP).floatValue();
 	}
 	
-	
-	public static AlarmInfo createAlarmInfo(String info) {
+	/**
+	 * 创建一个报警信息类对象
+	 * @param sourceName 报警源
+	 * @param info 报警信息
+	 * @return
+	 */
+	public static AlarmInfo createAlarmInfo(String sourceName, String info) {
 		AlarmInfo ai = new AlarmInfo();
+		ai.setSourceName(sourceName);
 		ai.setInfo(info);
 		ai.setAlarmTime(new Date());
 		return ai;
