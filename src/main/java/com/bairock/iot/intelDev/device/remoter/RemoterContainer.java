@@ -7,6 +7,7 @@ import javax.persistence.InheritanceType;
 import javax.persistence.Transient;
 
 import com.bairock.iot.intelDev.device.DevHaveChild;
+import com.bairock.iot.intelDev.device.DevStateHelper;
 import com.bairock.iot.intelDev.device.Device;
 import com.bairock.iot.intelDev.device.DeviceAssistent;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -67,6 +68,16 @@ public class RemoterContainer extends DevHaveChild {
 		return r;
 	}
 	
+	@Override
+	public void setDevStateId(String dsId) {
+		super.setDevStateId(dsId);
+		if (dsId.equals(DevStateHelper.DS_ZHENG_CHANG)) {
+			for (Device dev : getListDev()) {
+				dev.setDevStateId(dsId);
+			}
+		}
+	}
+
 	@Override
 	public void handleSingleMsg(String singleMsg) {
 		if(null == singleMsg || singleMsg.length() < 2) {
