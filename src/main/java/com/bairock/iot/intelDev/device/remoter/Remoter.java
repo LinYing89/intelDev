@@ -12,6 +12,7 @@ import javax.persistence.OneToMany;
 
 import com.bairock.iot.intelDev.device.Device;
 import com.bairock.iot.intelDev.device.IStateDev;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
@@ -107,11 +108,13 @@ public class Remoter extends Device implements IStateDev{
 	}
 
 	@Override
+	@JsonIgnore
 	public String getTurnOnOrder() {
 		return null;
 	}
 
 	@Override
+	@JsonIgnore
 	public String getTurnOffOrder() {
 		return null;
 	}

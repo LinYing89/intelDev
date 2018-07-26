@@ -4,12 +4,10 @@ import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 import com.bairock.iot.intelDev.device.Coordinator;
-import com.bairock.iot.intelDev.device.DevContainer;
 import com.bairock.iot.intelDev.device.DevHaveChild;
 import com.bairock.iot.intelDev.device.DevStateHelper;
 import com.bairock.iot.intelDev.device.Device;
 import com.bairock.iot.intelDev.device.OrderHelper;
-import com.bairock.iot.intelDev.device.devcollect.DevCollectSignalContainer;
 import com.bairock.iot.intelDev.user.User;
 
 import io.netty.buffer.Unpooled;
@@ -237,11 +235,12 @@ public class DevChannelBridge {
 		}else {
 			res = HAVE_COMMUNICATION_RECENTLY;
 		}
-		if(dev instanceof DevContainer && !(dev instanceof DevCollectSignalContainer)) {
-			for (Device dev1 : ((DevContainer) dev).getListDev()) {
-				res = sendHeart(dev1);
-			}
-		}
+		//所有子设备都不发送心跳, 只有根节点,即wifi设备发送心跳
+//		if(dev instanceof DevContainer && !(dev instanceof DevCollectSignalContainer)) {
+//			for (Device dev1 : ((DevContainer) dev).getListDev()) {
+//				res = sendHeart(dev1);
+//			}
+//		}
 		return res;
 	}
 
