@@ -4,7 +4,6 @@ import java.util.UUID;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.ForeignKey;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -37,7 +36,7 @@ public class LinkageCondition {
 	private CompareSymbol compareSymbol = CompareSymbol.EQUAL;
 
 	@ManyToOne
-	@JoinColumn(name = "dev_id", foreignKey = @ForeignKey(name = "DEV_ID_FK"))
+	@JoinColumn(name = "dev_id")
 	private Device device;
 
 	private float compareValue;

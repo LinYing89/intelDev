@@ -3,7 +3,6 @@ package com.bairock.iot.intelDev.linkage;
 import java.util.UUID;
 
 import javax.persistence.Entity;
-import javax.persistence.ForeignKey;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -28,7 +27,7 @@ public class Effect {
 	private Linkage linkage;
 
 	@ManyToOne
-	@JoinColumn(name = "dev_id", foreignKey = @ForeignKey(name = "DEV_ID_FK"))
+	@JoinColumn(name = "dev_id")
 	private Device device;
 
 	private String dsId;
