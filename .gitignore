@@ -1,1 +1,13 @@
 /target/
+/.settings/
+
+# Java class files
+*.class
+*.jar
+ 
+# generated files
+bin/
+ 
+# Eclipse project files
+.classpath
+.project
