@@ -20,7 +20,7 @@ public class DevCollectSignalTest {
 
 	@Test
 	public void test() {
-		dev.handle("85000");
+		dev.handle("81388");
 		assertEquals(50f, dev.getCollectProperty().getCurrentValue(), 0.01f);
 	}
 

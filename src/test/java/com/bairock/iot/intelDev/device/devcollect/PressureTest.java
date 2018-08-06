@@ -13,6 +13,8 @@ public class PressureTest extends TestCase {
 		super.setUp();
 		pressure.getCollectProperty().setCrestValue(500f);
 		pressure.getCollectProperty().setLeastValue(0f);
+		pressure.getCollectProperty().setCrestReferValue(500f);
+		pressure.getCollectProperty().setLeastReferValue(0f);
 		pressure.handle("p36.5");
 	}
 

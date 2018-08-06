@@ -1,5 +1,7 @@
 package com.bairock.iot.intelDev.linkage;
 
+import org.junit.Ignore;
+
 import com.bairock.iot.intelDev.device.CompareSymbol;
 import com.bairock.iot.intelDev.device.DevStateHelper;
 import com.bairock.iot.intelDev.device.MainCodeHelper;
@@ -11,6 +13,7 @@ import com.bairock.iot.intelDev.linkage.loop.ZLoop;
 
 import junit.framework.TestCase;
 
+@Ignore
 public class LoopTest extends TestCase {
 
 	LoopHolder loop = new LoopHolder();

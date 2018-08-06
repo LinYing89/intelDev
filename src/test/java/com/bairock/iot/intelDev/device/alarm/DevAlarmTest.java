@@ -3,11 +3,13 @@ package com.bairock.iot.intelDev.device.alarm;
 import static org.junit.Assert.*;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import com.bairock.iot.intelDev.device.DeviceAssistent;
 import com.bairock.iot.intelDev.device.MainCodeHelper;
 
+@Ignore
 public class DevAlarmTest {
 
 	private DevAlarm devAlarm;

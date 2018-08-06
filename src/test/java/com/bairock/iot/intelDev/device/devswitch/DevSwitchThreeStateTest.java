@@ -18,20 +18,20 @@ public class DevSwitchThreeStateTest extends TestCase {
 	
 	public void testGetTurnOnOrder(){
 		String order = ((SubDevThreeState)(device.getListDev().get(0))).getTurnOnOrder();
-		String o = OrderHelper.getOrderMsg("C10001:31");
+		String o = OrderHelper.getOrderMsg("CC10001:31");
 		assertEquals(o, order);
 	}
 	
 	public void testGetTurnOffOrder(){
 		String order = ((SubDevThreeState)(device.getListDev().get(0))).getTurnOffOrder();
-		String o = OrderHelper.getOrderMsg("C10001:41");
+		String o = OrderHelper.getOrderMsg("CC10001:41");
 		assertEquals(o, order);
 	}
 	
 	public void testGetTurnStopOrder(){
 		SubDevThreeState dev = (SubDevThreeState) device.getListDev().get(0);
 		String order = dev.getStopOrder();
-		String o = OrderHelper.getOrderMsg("C10001:51");
+		String o = OrderHelper.getOrderMsg("CC10001:51");
 		assertEquals(o, order);
 	}
 

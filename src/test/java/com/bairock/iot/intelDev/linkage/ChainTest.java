@@ -21,6 +21,11 @@ public class ChainTest extends TestCase {
 	DevSwitchOneRoad devSwitch = new DevSwitchOneRoad(MainCodeHelper.KG_1LU_2TAI, "0001");
 	
 	protected void setUp() throws Exception {
+		pressure.getCollectProperty().setCrestValue(100f);
+		pressure.getCollectProperty().setLeastValue(0f);
+		pressure.getCollectProperty().setCrestReferValue(100f);
+		pressure.getCollectProperty().setLeastReferValue(0f);
+		
 		SubChain subChain = new SubChain();
 		LinkageCondition condition = new LinkageCondition();
 		condition.setLogic(ZLogic.OR);
@@ -41,7 +46,7 @@ public class ChainTest extends TestCase {
 
 	public void testRun() {
 		pressure.handle("p72.5");
-		devSwitch.handle("707");
+		devSwitch.handle("87");
 		chain.setEnable(true);
 		Linkage subChain = chain.getListLinkage().get(0);
 		subChain.setEnable(true);

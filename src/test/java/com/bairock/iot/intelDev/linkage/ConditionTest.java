@@ -16,12 +16,16 @@ public class ConditionTest extends TestCase {
 	protected void setUp() throws Exception {
 		super.setUp();
 		DevSwitch ds = new DevSwitchTwoRoad(MainCodeHelper.KG_2LU_2TAI, "0001");
-		ds.handle("707");
+		ds.handle("88");
 		c.setDevice(ds.getListDev().get(0));
 		c.setCompareSymbol(CompareSymbol.EQUAL);
 		c.setCompareValue(0);
 		
 		Pressure p = new Pressure();
+		p.getCollectProperty().setCrestValue(100f);
+		p.getCollectProperty().setLeastValue(0f);
+		p.getCollectProperty().setCrestReferValue(100f);
+		p.getCollectProperty().setLeastReferValue(0f);
 		p.handle("p30");
 		c2.setDevice(p);
 		c2.setCompareSymbol(CompareSymbol.GREAT);

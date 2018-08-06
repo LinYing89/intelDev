@@ -29,7 +29,7 @@ public class DevGroupTest {
 	public void testGetDeviceWithCoding() {
 		Device dev = DeviceAssistent.createDeviceByMcId(MainCodeHelper.XIE_TIAO_QI, "0001");
 		devGroup.addDevice(dev);
-		Device dd = devGroup.findDeviceWithCoding(dev.getCoding());
+		Device dd = devGroup.findDeviceWithCoding(dev.getLongCoding());
 		assertEquals(true, dev == dd);
 		
 		DevHaveChild dhc = (DevHaveChild)dev;
@@ -37,7 +37,7 @@ public class DevGroupTest {
 		devS.getListDev().get(0).setMainCodeId(MainCodeHelper.SMC_DENG);
 		devS.getListDev().get(0).setId("123456");
 		dhc.addChildDev(devS);
-		dd = devGroup.findDeviceWithCoding(devS.getListDev().get(0).getCoding());
+		dd = devGroup.findDeviceWithCoding(devS.getListDev().get(0).getLongCoding());
 		assertEquals(true, devS.getListDev().get(0) == dd);
 		assertEquals(true, devS == dhc.getListDev().get(0));
 		
@@ -45,8 +45,8 @@ public class DevGroupTest {
 		devSwitch.getListDev().get(1).setMainCodeId(MainCodeHelper.SMC_DENG);
 		devSwitch.getListDev().get(1).setId("1234567");
 		devGroup.addDevice(devSwitch);
-		dd = devGroup.findDeviceWithCoding(devSwitch.getListDev().get(1).getCoding());
-		assertEquals("B30002_10_2", dd.getCoding());
+		dd = devGroup.findDeviceWithCoding(devSwitch.getListDev().get(1).getLongCoding());
+		assertEquals("B30002_10_2", dd.getLongCoding());
 		
 		Device ed = devGroup.findDeviceByDevId("123456");
 		assertEquals(true, devS.getListDev().get(0) == ed);

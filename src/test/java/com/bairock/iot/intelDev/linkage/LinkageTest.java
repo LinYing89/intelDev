@@ -3,6 +3,8 @@ package com.bairock.iot.intelDev.linkage;
 import java.util.Calendar;
 import java.util.concurrent.TimeUnit;
 
+import org.junit.Ignore;
+
 import com.bairock.iot.intelDev.device.CompareSymbol;
 import com.bairock.iot.intelDev.device.CtrlModel;
 import com.bairock.iot.intelDev.device.DevStateHelper;
@@ -29,6 +31,7 @@ import com.bairock.iot.intelDev.linkage.timing.TimingHolder;
 import com.bairock.iot.intelDev.linkage.timing.WeekHelper;
 import com.bairock.iot.intelDev.linkage.timing.ZTimer;
 
+@Ignore
 public class LinkageTest {
 
 	public static float preV = 0;

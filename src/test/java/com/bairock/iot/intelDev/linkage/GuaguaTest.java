@@ -17,6 +17,11 @@ public class GuaguaTest extends TestCase {
 	GuaguaMouth guaguaMouth = new GuaguaMouth(MainCodeHelper.GUAGUA_MOUTH, "0001");
 	
 	protected void setUp() throws Exception {
+		pressure.getCollectProperty().setCrestValue(100f);
+		pressure.getCollectProperty().setLeastValue(0f);
+		pressure.getCollectProperty().setCrestReferValue(100f);
+		pressure.getCollectProperty().setLeastReferValue(0f);
+		
 		GuaguaHelper.getIns().setOnOrderSendListener(new GuaguaHelper.OnOrderSendListener() {
 
 			@Override
