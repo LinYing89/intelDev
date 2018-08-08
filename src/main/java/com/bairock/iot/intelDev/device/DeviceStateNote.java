@@ -6,6 +6,8 @@ import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -14,18 +16,20 @@ import javax.persistence.TemporalType;
  *
  */
 @Entity
-
 public class DeviceStateNote implements Serializable {
 
 	@Id
 	@Column(nullable = false)
 	private String id;
 	
+	@ManyToOne
+	@JoinColumn(name = "dev_id")
 	private Device device;
+	
 	private int state;
 	
 	@Temporal(TemporalType.TIMESTAMP)
-	private Date registerTime;
+	private Date noteTime;
 	
 	private static final long serialVersionUID = 1L;
 
@@ -53,11 +57,11 @@ public class DeviceStateNote implements Serializable {
 	public void setState(int state) {
 		this.state = state;
 	}
-	public Date getRegisterTime() {
-		return registerTime;
+	public Date getNoteTime() {
+		return noteTime;
 	}
-	public void setRegisterTime(Date registerTime) {
-		this.registerTime = registerTime;
+	public void setNoteTime(Date noteTime) {
+		this.noteTime = noteTime;
 	}
    
 }

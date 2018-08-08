@@ -26,7 +26,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 public class User {
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Long id;
 	
 	private String name;
@@ -252,6 +252,20 @@ public class User {
 		return null;
 	}
 	
+	/**
+     * 根据组id寻找组
+     * @param devGroupId 组id
+     * @return 组对象
+     */
+    public DevGroup findDevGroupById(long devGroupId){
+        for(DevGroup group : listDevGroup){
+            if(group.getId() == devGroupId){
+                return group;
+            }
+        }
+        return null;
+    }
+    
 	@Override
 	public int hashCode() {
 		final int prime = 31;

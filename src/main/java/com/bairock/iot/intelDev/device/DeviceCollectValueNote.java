@@ -10,7 +10,6 @@ import javax.persistence.*;
  *
  */
 @Entity
-
 public class DeviceCollectValueNote implements Serializable {
 
 	
@@ -20,11 +19,14 @@ public class DeviceCollectValueNote implements Serializable {
 	@Column(nullable = false)
 	private String id;
 	
+	@ManyToOne
+	@JoinColumn(name = "dev_id")
 	private Device device;
+	
 	private float value;
 	
 	@Temporal(TemporalType.TIMESTAMP)
-	private Date registerTime;
+	private Date noteTime;
 
 	public DeviceCollectValueNote() {
 		super();
@@ -50,11 +52,10 @@ public class DeviceCollectValueNote implements Serializable {
 	public void setValue(float value) {
 		this.value = value;
 	}
-	public Date getRegisterTime() {
-		return registerTime;
+	public Date getNoteTime() {
+		return noteTime;
 	}
-	public void setRegisterTime(Date registerTime) {
-		this.registerTime = registerTime;
+	public void setNoteTime(Date noteTime) {
+		this.noteTime = noteTime;
 	}
-   
 }

@@ -5,11 +5,11 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.UUID;
 
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -40,8 +40,8 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 public class DevGroup {
 
 	@Id
-	@Column(nullable = false)
-	private String id;
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	private Long id;
 
 	@ManyToOne
 	@JsonBackReference("user_group")
@@ -67,7 +67,6 @@ public class DevGroup {
 	 * 
 	 */
 	public DevGroup() {
-		setId(UUID.randomUUID().toString());
 		listLinkageHolder.add(new ChainHolder());
 		listLinkageHolder.add(new LoopHolder());
 		listLinkageHolder.add(new TimingHolder());
@@ -90,19 +89,11 @@ public class DevGroup {
 		this.petName = petName;
 	}
 
-	/**
-	 * 
-	 * @return
-	 */
-	public String getId() {
+	public Long getId() {
 		return id;
 	}
 
-	/**
-	 * 
-	 * @param id
-	 */
-	public void setId(String id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
