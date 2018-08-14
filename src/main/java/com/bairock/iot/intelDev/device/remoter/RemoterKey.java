@@ -30,6 +30,16 @@ public class RemoterKey implements IRemoterKey {
 	public RemoterKey() {
 		setId(UUID.randomUUID().toString());
 	}
+	
+	public RemoterKey(String number) {
+		this();
+		this.number = number;
+	}
+	
+	public RemoterKey(String number, String name) {
+		this(number);
+		this.name = name;
+	}
 
 	public String getId() {
 		return id;

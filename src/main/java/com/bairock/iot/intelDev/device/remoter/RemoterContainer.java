@@ -103,7 +103,16 @@ public class RemoterContainer extends DevHaveChild {
 		}
 	}
 	
+	/**
+	 * 按键命令反馈接口
+	 * @author 44489
+	 *
+	 */
 	public interface OnRemoterOrderSuccessListener{
+		/**
+		 * 按键命令收到反馈
+		 * @param studingKey
+		 */
 		void onRemoterOrderSuccess(RemoterKey studingKey);
 	}
 }
