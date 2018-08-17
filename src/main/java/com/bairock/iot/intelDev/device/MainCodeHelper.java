@@ -188,9 +188,9 @@ public class MainCodeHelper {
 		listMainCode.add(new MainCode(BAO_JING2, "a2", "duogongnengbaojing2"));
 		
 		listMainCode.add(new MainCode(SMC_WU, "0", "wu"));
-		listMainCode.add(new MainCode(SMC_REMOTER_CHUANG_LIAN, "1", "chuanglian"));
-		listMainCode.add(new MainCode(SMC_REMOTER_DIAN_SHI, "2", "dianshi"));
-		listMainCode.add(new MainCode(SMC_REMOTER_KONG_TIAO, "3", "kongtiao"));
+		listMainCode.add(new MainCode(SMC_REMOTER_CHUANG_LIAN, "3", "chuanglian"));
+		listMainCode.add(new MainCode(SMC_REMOTER_DIAN_SHI, "1", "dianshi"));
+		listMainCode.add(new MainCode(SMC_REMOTER_KONG_TIAO, "2", "kongtiao"));
 		listMainCode.add(new MainCode(SMC_REMOTER_TOU_YING, "4", "touyingyi"));
 		listMainCode.add(new MainCode(SMC_REMOTER_MU_BU, "5", "mubu"));
 		listMainCode.add(new MainCode(SMC_REMOTER_SHENG_JIANG_JIA, "6", "shenjiangjia"));

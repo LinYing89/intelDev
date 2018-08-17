@@ -134,13 +134,13 @@ public class RemoterContainerTest {
 	
 	@Test
 	public void testCreateRemoter() {
-		Remoter r = rc.createRemoter("1");
+		Remoter r = rc.createRemoter(MainCodeHelper.SMC_REMOTER_DIAN_SHI);
 		assertEquals("2", r.getSubCode());
 		
-		Remoter r1 = rc.createRemoter("2");
+		Remoter r1 = rc.createRemoter(MainCodeHelper.SMC_REMOTER_CHUANG_LIAN);
 		rc.addChildDev(r1);
 		assertEquals("2", r1.getSubCode());
-		Remoter r2 = rc.createRemoter("2");
+		Remoter r2 = rc.createRemoter(MainCodeHelper.SMC_REMOTER_CHUANG_LIAN);
 		assertEquals("3", r2.getSubCode());
 	}
 	

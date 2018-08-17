@@ -41,18 +41,18 @@ public class RemoterContainer extends DevHaveChild {
 		this.onRemoterOrderSuccessListener = onRemoterOrderSuccessListener;
 	}
 
-	public String createSubCode(String mainCode) {
+	public String createSubCode(String mainCodeId) {
 		int subCode = 1;
 		boolean haved = false;
-		String coding = "";
 		for(int i = 1; i < 100; i++) {
 			haved = false;
 			subCode = i;
-			coding = mainCode + subCode;
 			for(Device r : getListDev()) {
-				if(r.getCoding().equals(coding)) {
-					haved = true;
-					break;
+				if(r.getMainCodeId().equals(mainCodeId)) {
+					if(r.getSubCode().equals(String.valueOf(subCode))) {
+						haved = true;
+						break;
+					}
 				}
 			}
 			if(!haved) {
@@ -62,9 +62,9 @@ public class RemoterContainer extends DevHaveChild {
 		return String.valueOf(subCode);
 	}
 	
-	public Remoter createRemoter(String mainCode) {
-		String subCode = createSubCode(mainCode);
-		Remoter r = (Remoter) DeviceAssistent.createDeviceByMc(mainCode, subCode);
+	public Remoter createRemoter(String mainCodeId) {
+		String subCode = createSubCode(mainCodeId);
+		Remoter r = (Remoter) DeviceAssistent.createDeviceByMc(mainCodeId, subCode);
 		return r;
 	}
 	

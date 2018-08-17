@@ -17,8 +17,11 @@ import com.bairock.iot.intelDev.device.devswitch.DevSwitchThreeState;
 import com.bairock.iot.intelDev.device.devswitch.DevSwitchTwoRoad;
 import com.bairock.iot.intelDev.device.devswitch.DevSwitchXRoad;
 import com.bairock.iot.intelDev.device.devswitch.SubDev;
+import com.bairock.iot.intelDev.device.remoter.Curtain;
+import com.bairock.iot.intelDev.device.remoter.CustomRemoter;
 import com.bairock.iot.intelDev.device.remoter.Remoter;
 import com.bairock.iot.intelDev.device.remoter.RemoterContainer;
+import com.bairock.iot.intelDev.device.remoter.Television;
 import com.bairock.iot.intelDev.user.DevGroup;
 
 /**
@@ -138,6 +141,15 @@ public class DeviceAssistent {
 		case MainCodeHelper.YAN_WU:
 		case MainCodeHelper.MEN_JIN:
 			device = new DevAlarm(mcId, sc);
+			break;
+		case MainCodeHelper.SMC_REMOTER_CHUANG_LIAN:
+			device = new Curtain(mcId, sc);
+			break;
+		case MainCodeHelper.SMC_REMOTER_DIAN_SHI:
+			device = new Television(mcId, sc);
+			break;
+		case MainCodeHelper.SMC_REMOTER_ZI_DING_YI:
+			device = new CustomRemoter(mcId, sc);
 			break;
 		}
 		if(null == device) {
