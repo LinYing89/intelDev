@@ -49,6 +49,14 @@ public class Television extends Remoter {
 		RemoterKey rk19 = new RemoterKey("19", "右");
 		RemoterKey rk20 = new RemoterKey("20", "下");
 		RemoterKey rk21 = new RemoterKey("21", "确定");
+		RemoterKey rk22 = new RemoterKey("22", "扩展1");
+		RemoterKey rk23 = new RemoterKey("23", "扩展2");
+		RemoterKey rk24 = new RemoterKey("24", "扩展3");
+		RemoterKey rk25 = new RemoterKey("25", "扩展4");
+		RemoterKey rk26 = new RemoterKey("26", "扩展5");
+		RemoterKey rk27 = new RemoterKey("27", "扩展6");
+		RemoterKey rk28 = new RemoterKey("28", "扩展7");
+		RemoterKey rk29 = new RemoterKey("29", "扩展8");
 		
 		addRemoterKey(rk);
 		addRemoterKey(rk2);
@@ -71,5 +79,13 @@ public class Television extends Remoter {
 		addRemoterKey(rk19);
 		addRemoterKey(rk20);
 		addRemoterKey(rk21);
+		addRemoterKey(rk22);
+		addRemoterKey(rk23);
+		addRemoterKey(rk24);
+		addRemoterKey(rk25);
+		addRemoterKey(rk26);
+		addRemoterKey(rk27);
+		addRemoterKey(rk28);
+		addRemoterKey(rk29);
 	}
 }

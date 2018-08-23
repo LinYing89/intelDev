@@ -16,7 +16,9 @@ public class RefreshCollectorValueHelper {
 	public static int REFRESH_INTERVAL = 2000;
 	private Set<Device> stMsg;
 	private TSender tSender;
+	//更新线程是否已经在运行, 在运行为true
 	private boolean isFinding;
+	//判断程序是否退出, 程序退出为true
 	public boolean isStoped = false;
 
 	/**

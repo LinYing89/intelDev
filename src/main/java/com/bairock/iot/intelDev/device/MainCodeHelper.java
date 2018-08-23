@@ -25,10 +25,6 @@ public class MainCodeHelper {
 	 */
 	public static final String MEN_JIN = "omc_mj";
 	/**
-	 * 多功能采集器
-	 */
-	public static final String DGN_CAI_JI = "omc_dcj";
-	/**
 	 * 液位计
 	 */
 	public static final String YE_WEI = "omc_ywj";
@@ -37,7 +33,7 @@ public class MainCodeHelper {
 	 */
 	public static final String COLLECTOR_SIGNAL_CONTAINER = "signal_collector_container";
 	/**
-	 * 信号采集器，单个设备，一次只能采集一直信号，目前作为虚拟设备挂在信号采集控制器下使用
+	 * 信号采集器，单个设备，一次只能采集一种信号，目前作为虚拟设备挂在信号采集控制器下使用
 	 */
 	public static final String COLLECTOR_SIGNAL = "signal_collector";
 	/**

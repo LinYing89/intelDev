@@ -714,7 +714,8 @@ public class DevGroup {
 	}
 	
 	/**
-	 * 为设备创建默认名称，根据MainCodeHelper中的主编码描述创建，名称加上设备此编码
+	 * 为设备创建默认名称，根据MainCodeHelper中的主编码描述创建，名称加上设备次编码
+	 * 如果次编码为1, 则不加次编码
 	 * @param device
 	 */
 	public static void createDefaultDeviceNameAddSubCode(Device device) {
@@ -722,7 +723,10 @@ public class DevGroup {
 			return;
 		}
 		String name = MainCodeHelper.getIns().getMainCodeInfo(device.getMainCodeId());
-		device.setName(name + device.getSubCode());
+		if(!device.getSubCode().equals("1")) {
+			name += device.getSubCode();
+		}
+		device.setName(name);
 		
 	}
 

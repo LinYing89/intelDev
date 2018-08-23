@@ -55,4 +55,12 @@ public class DevGroupTest {
 		assertEquals(true, devSwitch.getListDev().get(1) == ed2);
 	}
 
+	@Test
+	public void testcreateDefaultDeviceNameAddSubCode() {
+		Device dev = new Device(MainCodeHelper.KG_3LU_2TAI, "1");
+		DevGroup.createDefaultDeviceNameAddSubCode(dev);
+		System.out.println(dev.getName());
+		assertEquals(false, dev.getName().contains("1"));
+	}
+	
 }
