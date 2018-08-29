@@ -2,6 +2,7 @@ com\bairock\iot\intelDev\device\CompareSymbol.class
 com\bairock\iot\intelDev\linkage\ZLogic.class
 com\bairock\iot\intelDev\device\devswitch\DevSocket.class
 com\bairock\iot\intelDev\communication\FindDevHelper$OnSendListener.class
+com\bairock\iot\intelDev\device\remoter\CustomRemoter.class
 com\bairock\iot\intelDev\communication\DevServer$1.class
 com\bairock\iot\intelDev\user\AppVersion.class
 com\bairock\iot\intelDev\user\User.class
@@ -20,6 +21,7 @@ com\bairock\iot\intelDev\linkage\loop\LoopHolder.class
 com\bairock\iot\intelDev\device\devcollect\CollectProperty$OnSimulatorChangedListener.class
 com\bairock\iot\intelDev\communication\RefreshCollectorValueHelper.class
 com\bairock\iot\intelDev\device\devcollect\DevCollectSignalContainer.class
+com\bairock\iot\intelDev\device\remoter\Curtain.class
 com\bairock\iot\intelDev\linkage\LinkageCondition.class
 com\bairock\iot\intelDev\user\DevGroup$OnDeviceCollectionChangedListener.class
 com\bairock\iot\intelDev\device\alarm\AlarmInfo.class
@@ -42,6 +44,7 @@ com\bairock\iot\intelDev\communication\DevChannelBridge$OnCommunicationListener.
 com\bairock\iot\intelDev\device\IThreeStateDev.class
 com\bairock\iot\intelDev\user\DevGroup.class
 com\bairock\iot\intelDev\device\DevHaveChild$OnDeviceCollectionChangedListener.class
+com\bairock\iot\intelDev\device\remoter\RemoterJack.class
 com\bairock\iot\intelDev\linkage\Linkage.class
 com\bairock\iot\intelDev\device\DeviceAssistent.class
 com\bairock\iot\intelDev\device\devcollect\CollectProperty$OnCurrentValueChangedListener.class
@@ -50,6 +53,7 @@ com\bairock\iot\intelDev\communication\DevServer.class
 com\bairock\iot\intelDev\device\MainCode.class
 com\bairock\iot\intelDev\linkage\LinkageTab$OnOrderSendListener.class
 com\bairock\iot\intelDev\device\Device$OnAliasChangedListener.class
+com\bairock\iot\intelDev\device\remoter\Television.class
 com\bairock\iot\intelDev\device\DevStateHelper.class
 com\bairock\iot\intelDev\linkage\timing\ZTimer.class
 com\bairock\iot\intelDev\device\Gear$1.class
