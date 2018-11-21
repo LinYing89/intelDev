@@ -7,9 +7,8 @@ import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -40,8 +39,8 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 public class DevGroup {
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	private Long id;
+	@Column(nullable=false)
+	private String id;
 
 	@ManyToOne
 	@JsonBackReference("user_group")
@@ -89,11 +88,11 @@ public class DevGroup {
 		this.petName = petName;
 	}
 
-	public Long getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 

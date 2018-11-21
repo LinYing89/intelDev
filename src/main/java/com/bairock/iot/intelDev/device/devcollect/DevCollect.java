@@ -43,6 +43,8 @@ public class DevCollect extends Device{
 	 */
 	public DevCollect(String mcId, String sc) {
 		super(mcId, sc);
+		collectProperty  = new CollectProperty();
+		collectProperty.setDevCollect(this);
 	}
 	
 	public CollectProperty getCollectProperty() {

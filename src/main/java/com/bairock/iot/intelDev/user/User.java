@@ -257,7 +257,15 @@ public class User {
      * @param devGroupId 组id
      * @return 组对象
      */
-    public DevGroup findDevGroupById(long devGroupId){
+//    public DevGroup findDevGroupById(long devGroupId){
+//        for(DevGroup group : listDevGroup){
+//            if(group.getId() == devGroupId){
+//                return group;
+//            }
+//        }
+//        return null;
+//    }
+	public DevGroup findDevGroupById(String devGroupId){
         for(DevGroup group : listDevGroup){
             if(group.getId() == devGroupId){
                 return group;

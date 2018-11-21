@@ -4,6 +4,7 @@ import java.util.UUID;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 
@@ -21,7 +22,7 @@ public class AlarmTrigger {
 	@Column(nullable = false)
 	private String id;
 	
-	@OneToOne
+	@OneToOne(fetch=FetchType.LAZY)
 	@JsonBackReference("devalarm_trigger")
 	private DevAlarm devAlarm;
 	

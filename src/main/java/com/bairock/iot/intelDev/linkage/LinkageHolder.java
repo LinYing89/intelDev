@@ -10,6 +10,7 @@ import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
@@ -42,7 +43,7 @@ public class LinkageHolder {
 	
 	private boolean enable;
 	
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.LAZY)
 	@JsonBackReference("group_linkage_holder")
 	private DevGroup devGroup;
 	

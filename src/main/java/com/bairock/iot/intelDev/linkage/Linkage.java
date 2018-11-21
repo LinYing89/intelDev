@@ -11,6 +11,7 @@ import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorType;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
@@ -38,7 +39,7 @@ public class Linkage {
 	@Column(nullable = false)
 	private String id;
 	
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.LAZY)
 	@JsonBackReference("linkageholder_linkage")
 	private LinkageHolder linkageHolder;
 	

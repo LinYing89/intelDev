@@ -11,6 +11,7 @@ import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorType;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.ManyToOne;
@@ -39,11 +40,11 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, include = As.PROPERTY, property = "class")
 public class Device extends MyHome implements Comparable<Device>, IDevice {
 
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.LAZY)
 	@JsonBackReference("group_dev")
 	private DevGroup devGroup;
 
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.LAZY)
 	@JsonBackReference("devparent_child")
 	private DevHaveChild parent;
 

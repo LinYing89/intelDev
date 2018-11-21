@@ -31,9 +31,9 @@ public class CollectProperty {
 	private DevCollect devCollect;
 
 	// max value
-	private Float crestValue = 0f;
+	private Float crestValue = 100f;
 	// max value refer to show value
-	private Float crestReferValue = 0f;
+	private Float crestReferValue = 100f;
 	// min value
 	private Float leastValue = 0f;
 	// min value refer to show value
