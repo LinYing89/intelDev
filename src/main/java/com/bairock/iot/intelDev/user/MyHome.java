@@ -80,7 +80,9 @@ public abstract class MyHome {
 	}
 	
 	public void addOnNameChangedListener(OnNameChangedListener listener) {
-		stOnNameChangedListener.add(listener);
+		if(!stOnNameChangedListener.contains(listener)) {
+			stOnNameChangedListener.add(listener);
+		}
 	}
 
 	public void removeOnNameChangedListener(OnNameChangedListener listener) {

@@ -8,6 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import com.bairock.iot.intelDev.device.DevStateHelper;
 import com.bairock.iot.intelDev.device.Device;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
@@ -94,6 +95,13 @@ public class Effect {
 	 */
 	public void setDsId(String dsId) {
 		this.dsId = dsId;
+	}
+	
+	public String effectStateStr() {
+		if(dsId.equals(DevStateHelper.DS_KAI)) {
+			return "ON";
+		}
+		return "OFF";
 	}
 
 	/**

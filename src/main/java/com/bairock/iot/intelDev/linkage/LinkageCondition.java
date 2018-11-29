@@ -97,6 +97,22 @@ public class LinkageCondition {
 	public CompareSymbol getCompareSymbol() {
 		return compareSymbol;
 	}
+	public String compareSymbolStr() {
+		String str;
+		switch(compareSymbol) {
+		case LESS:
+			str = "<";
+			break;
+		case EQUAL:
+			str = "=";
+			break;
+		case GREAT:
+			str = ">";
+			break;
+			default : str = "="; break;
+		}
+		return str;
+	}
 
 	/**
 	 * set compare symbol

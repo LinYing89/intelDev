@@ -18,13 +18,17 @@ import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.fasterxml.jackson.annotation.JsonTypeInfo.As;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 
 @Entity
 //@Inheritance(strategy = InheritanceType.JOINED)
@@ -46,6 +50,9 @@ public class Linkage {
 	private String name;
 	private boolean enable;
 	private boolean deleted;
+	
+	@Transient
+	private BooleanProperty enableProperty = null;
 	
 	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
 	@JoinColumn(name="linkage_id")
@@ -97,12 +104,20 @@ public class Linkage {
 		this.name = name;
 	}
 	
+	public final BooleanProperty enableProperty() {
+		if(null == enableProperty) {
+			enableProperty = new SimpleBooleanProperty(this, "enable", enable);
+			enableProperty.addListener((ena)-> enable = enableProperty.get());
+		}
+		return enableProperty;
+	}
+	
 	/**
 	 * 
 	 * @return
 	 */
 	public boolean isEnable() {
-		return enable;
+		return null == enableProperty ? enable : enableProperty.get();
 	}
 	
 	/**
@@ -110,7 +125,11 @@ public class Linkage {
 	 * @param enable
 	 */
 	public void setEnable(boolean enable) {
+		//hibernate保存时不走setter, 所以要保证属性实时
 		this.enable = enable;
+		if(null != enableProperty) {
+			this.enableProperty.set(enable);
+		}
 	}
 	
 	/**
