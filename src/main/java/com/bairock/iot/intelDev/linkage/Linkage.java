@@ -171,12 +171,14 @@ public class Linkage {
 	 * 
 	 * @param effect
 	 */
-	public void addEffect(Effect effect){
+	public boolean addEffect(Effect effect){
 		if(null != effect 
 				&& !listEffect.contains(effect)){
 			effect.setLinkage(this);
 			listEffect.add(effect);
+			return true;
 		}
+		return false;
 	}
 	
 	/**

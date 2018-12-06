@@ -28,7 +28,7 @@ public class LoopDuration {
 	private ZLoop zLoop;
 	
 	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-	@JoinColumn(name = "timer_id")
+	//@JoinColumn(name = "timer_id")
 	private List<MyTime> listTimes = new ArrayList<>(2);
 	
 	private boolean deleted;

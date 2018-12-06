@@ -8,7 +8,6 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -23,22 +22,22 @@ public class ZTimer {
 	@Id
 	@Column(nullable = false)
 	private String id;
-	
+
 	@ManyToOne
 	@JsonBackReference("timimg_ztimer")
 	private Timing timing;
-	
+
 	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-	@JoinColumn(name = "timer_id")
+	//@JoinColumn(name = "timer_id")
 	private List<MyTime> listTimes = new ArrayList<>(2);
-	
-	@OneToOne(mappedBy="zTimer", cascade = CascadeType.ALL, orphanRemoval = true)
+
+	@OneToOne(mappedBy = "zTimer", cascade = CascadeType.ALL, orphanRemoval = true)
 	@JsonManagedReference("ztimer_weekhelper")
 	private WeekHelper weekHelper;
-	
+
 	private boolean enable;
 	private boolean deleted;
-	
+
 	/**
 	 * 
 	 */
@@ -53,7 +52,7 @@ public class ZTimer {
 		listTimes.add(t1);
 		listTimes.add(t2);
 	}
-	
+
 	/**
 	 * 
 	 * @return
@@ -88,8 +87,8 @@ public class ZTimer {
 
 	@JsonIgnore
 	public MyTime getOnTime() {
-		for(MyTime myTime : listTimes) {
-			if(myTime.getType() == 1) {
+		for (MyTime myTime : listTimes) {
+			if (myTime.getType() == 1) {
 				return myTime;
 			}
 		}
@@ -101,8 +100,8 @@ public class ZTimer {
 	 * @param onKeepTime
 	 */
 	public void setOnKeepTime(MyTime onKeepTime) {
-		for(MyTime myTime : listTimes) {
-			if(myTime.getType() == 1) {
+		for (MyTime myTime : listTimes) {
+			if (myTime.getType() == 1) {
 				myTime = onKeepTime;
 				return;
 			}
@@ -115,8 +114,8 @@ public class ZTimer {
 	 */
 	@JsonIgnore
 	public MyTime getOffTime() {
-		for(MyTime myTime : listTimes) {
-			if(myTime.getType() == 0) {
+		for (MyTime myTime : listTimes) {
+			if (myTime.getType() == 0) {
 				return myTime;
 			}
 		}
@@ -127,8 +126,8 @@ public class ZTimer {
 	 * 
 	 */
 	public void setOffKeepTime(MyTime offKeepTime) {
-		for(MyTime myTime : listTimes) {
-			if(myTime.getType() == 0) {
+		for (MyTime myTime : listTimes) {
+			if (myTime.getType() == 0) {
 				myTime = offKeepTime;
 				return;
 			}
@@ -137,6 +136,7 @@ public class ZTimer {
 
 	/**
 	 * get week helper
+	 * 
 	 * @return
 	 */
 	public WeekHelper getWeekHelper() {
@@ -145,6 +145,7 @@ public class ZTimer {
 
 	/**
 	 * set week helper
+	 * 
 	 * @param weekHelper
 	 */
 	public void setWeekHelper(WeekHelper weekHelper) {
@@ -154,6 +155,7 @@ public class ZTimer {
 
 	/**
 	 * is enable
+	 * 
 	 * @return
 	 */
 	public boolean isEnable() {
@@ -162,6 +164,7 @@ public class ZTimer {
 
 	/**
 	 * set enable
+	 * 
 	 * @param enable
 	 */
 	public void setEnable(boolean enable) {
@@ -170,6 +173,7 @@ public class ZTimer {
 
 	/**
 	 * is deleted
+	 * 
 	 * @return
 	 */
 	public boolean isDeleted() {
@@ -178,9 +182,18 @@ public class ZTimer {
 
 	/**
 	 * set deleted
+	 * 
 	 * @param deleted
 	 */
 	public void setDeleted(boolean deleted) {
 		this.deleted = deleted;
+	}
+
+	public String onOffTimerStr() {
+		MyTime onTime = getOnTime();
+		MyTime offTime = getOffTime();
+		return String.format("%02d:%02d:%02d - %02d:%02d:%02d\n%s", onTime.getHour(), onTime.getMinute(),
+				onTime.getSecond(), offTime.getHour(), offTime.getMinute(), offTime.getSecond(),
+				getWeekHelper().getWeeksName());
 	}
 }

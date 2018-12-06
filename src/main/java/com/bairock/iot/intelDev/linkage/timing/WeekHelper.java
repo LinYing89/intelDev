@@ -195,25 +195,32 @@ public class WeekHelper {
      * @return
      */
     @JsonIgnore
+    @Transient
     public String getWeeksName(){
     	StringBuilder sb = new StringBuilder();
     	if(sun){
         	sb.append(ARRAY_WEEKS[0]);
+        	sb.append(" ");
         }
         if(mon){
         	sb.append(ARRAY_WEEKS[1]);
+        	sb.append(" ");
         }
         if(tues){
         	sb.append(ARRAY_WEEKS[2]);
+        	sb.append(" ");
         }
         if(wed){
         	sb.append(ARRAY_WEEKS[3]);
+        	sb.append(" ");
         }
         if(thur){
         	sb.append(ARRAY_WEEKS[4]);
+        	sb.append(" ");
         }
         if(fri){
         	sb.append(ARRAY_WEEKS[5]);
+        	sb.append(" ");
         }
         if(sat){
         	sb.append(ARRAY_WEEKS[6]);
