@@ -91,11 +91,11 @@ public class Device extends MyHome implements Comparable<Device>, IDevice {
 
 	@Transient
 	@JsonIgnore
-	private OnStateChangedListener onStateChanged;
+	private Set<OnStateChangedListener> stOnStateChangedListener = new HashSet<>();
 
 	@Transient
 	@JsonIgnore
-	private OnGearChangedListener onGearChanged;
+	private Set<OnGearChangedListener> stOnGearChangedListener = new HashSet<>();
 
 	@Transient
 	@JsonIgnore
@@ -309,8 +309,8 @@ public class Device extends MyHome implements Comparable<Device>, IDevice {
 	public void setGear(Gear gear) {
 		if (this.gear != gear) {
 			this.gear = gear;
-			if (null != onGearChanged) {
-				onGearChanged.onGearChanged(this, gear);
+			for(OnGearChangedListener listener : stOnGearChangedListener) {
+				listener.onGearChanged(this, gear);
 			}
 		}
 	}
@@ -334,8 +334,8 @@ public class Device extends MyHome implements Comparable<Device>, IDevice {
 			String oldStateId = this.devStateId;
 			this.devStateId = dsId;
 			if (oldStateId.equals(DevStateHelper.DS_YI_CHANG)) {
-				if (null != onStateChanged) {
-					onStateChanged.onAbnormalToNormal(this);
+				for(OnStateChangedListener listener : stOnStateChangedListener) {
+					listener.onAbnormalToNormal(this);
 				}
 			} else if (dsId.equals(DevStateHelper.DS_YI_CHANG)) {
 				// if (this instanceof DevHaveChild) {
@@ -343,12 +343,12 @@ public class Device extends MyHome implements Comparable<Device>, IDevice {
 				// dev.setDevStateId(DevStateHelper.DS_YI_CHANG);
 				// }
 				// }
-				if (null != onStateChanged) {
-					onStateChanged.onNormalToAbnormal(this);
+				for(OnStateChangedListener listener : stOnStateChangedListener) {
+					listener.onNormalToAbnormal(this);
 				}
 			}
-			if (null != onStateChanged) {
-				onStateChanged.onStateChanged(this, dsId);
+			for(OnStateChangedListener listener : stOnStateChangedListener) {
+				listener.onStateChanged(this, dsId);
 			}
 		}
 	}
@@ -468,8 +468,8 @@ public class Device extends MyHome implements Comparable<Device>, IDevice {
 	public void noResponsePlus() {
 		noResponse++;
 		if (noResponse > 3 && getLastResponseInterval() > 20000) {
-			if (null != onStateChanged) {
-				onStateChanged.onNoResponse(this);
+			for(OnStateChangedListener listener : stOnStateChangedListener) {
+				listener.onNoResponse(this);
 			}
 		}
 	}
@@ -680,20 +680,12 @@ public class Device extends MyHome implements Comparable<Device>, IDevice {
 		return this.sortIndex - o.sortIndex;
 	}
 
-	public OnStateChangedListener getOnStateChanged() {
-		return onStateChanged;
+	public void addOnGearChangedListener(OnGearChangedListener listener) {
+		stOnGearChangedListener.add(listener);
 	}
 
-	public void setOnStateChanged(OnStateChangedListener onStateChanged) {
-		this.onStateChanged = onStateChanged;
-	}
-
-	public OnGearChangedListener getOnGearChanged() {
-		return onGearChanged;
-	}
-
-	public void setOnGearChanged(OnGearChangedListener onGearChanged) {
-		this.onGearChanged = onGearChanged;
+	public void removeOnGearChangedListener(OnGearChangedListener listener) {
+		stOnGearChangedListener.remove(listener);
 	}
 
 	public OnCtrlModelChangedListener getOnCtrlModelChanged() {
@@ -704,6 +696,14 @@ public class Device extends MyHome implements Comparable<Device>, IDevice {
 		this.onCtrlModelChanged = onCtrlModelChanged;
 	}
 
+	public void addOnStateChangedListener(OnStateChangedListener listener) {
+		stOnStateChangedListener.add(listener);
+	}
+
+	public void removeOnStateChangedListener(OnStateChangedListener listener) {
+		stOnStateChangedListener.remove(listener);
+	}
+	
 	public void addOnAliasChangedListener(OnAliasChangedListener listener) {
 		stOnAliasChangedListener.add(listener);
 	}

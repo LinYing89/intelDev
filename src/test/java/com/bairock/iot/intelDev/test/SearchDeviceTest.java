@@ -92,7 +92,7 @@ public class SearchDeviceTest {
 	}
 	
 	public static void setListener(Device dev){
-		dev.setOnStateChanged(lis);
+		dev.addOnStateChangedListener(lis);
 		if(dev instanceof DevHaveChild){
 			for(Device dd : ((DevHaveChild)dev).getListDev()){
 				setListener(dd);

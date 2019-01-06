@@ -452,7 +452,7 @@ public class CollectProperty {
 				return String.valueOf(getCurrentValue());
 			}
 		}
-		return null;
+		return "0";
 	}
 
 	/**
