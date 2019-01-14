@@ -99,7 +99,7 @@ public class Device extends MyHome implements Comparable<Device>, IDevice {
 
 	@Transient
 	@JsonIgnore
-	private OnCtrlModelChangedListener onCtrlModelChanged;
+	private Set<OnCtrlModelChangedListener> stOnCtrlModelChanged = new HashSet<>();
 
 	@Transient
 	@JsonIgnore
@@ -378,8 +378,8 @@ public class Device extends MyHome implements Comparable<Device>, IDevice {
 	public void setCtrlModel(CtrlModel ctrlModel) {
 		if (this.ctrlModel != ctrlModel) {
 			this.ctrlModel = ctrlModel;
-			if (null != onCtrlModelChanged) {
-				onCtrlModelChanged.onCtrlModelChanged(this, ctrlModel);
+			for(OnCtrlModelChangedListener listener : stOnCtrlModelChanged) {
+				listener.onCtrlModelChanged(this, ctrlModel);
 			}
 		}
 	}
@@ -687,13 +687,13 @@ public class Device extends MyHome implements Comparable<Device>, IDevice {
 	public void removeOnGearChangedListener(OnGearChangedListener listener) {
 		stOnGearChangedListener.remove(listener);
 	}
-
-	public OnCtrlModelChangedListener getOnCtrlModelChanged() {
-		return onCtrlModelChanged;
+	
+	public void addOnCtrlModelChangedListener(OnCtrlModelChangedListener listener) {
+		stOnCtrlModelChanged.add(listener);
 	}
 
-	public void setOnCtrlModelChanged(OnCtrlModelChangedListener onCtrlModelChanged) {
-		this.onCtrlModelChanged = onCtrlModelChanged;
+	public void removeOnCtrlModelChangedListener(OnCtrlModelChangedListener listener) {
+		stOnCtrlModelChanged.remove(listener);
 	}
 
 	public void addOnStateChangedListener(OnStateChangedListener listener) {
