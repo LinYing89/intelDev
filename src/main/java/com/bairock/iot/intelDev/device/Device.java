@@ -88,6 +88,12 @@ public class Device extends MyHome implements Comparable<Device>, IDevice {
 	@Transient
 	@JsonIgnore
 	private boolean gearNeedToAuto = false;
+	@Transient
+	@JsonIgnore
+	private String username = "";
+	@Transient
+	@JsonIgnore
+	private String devGroupName = "";
 
 	@Transient
 	@JsonIgnore
@@ -676,8 +682,43 @@ public class Device extends MyHome implements Comparable<Device>, IDevice {
 	public int compareTo(Device o) {
 		if (o == null) {
 			return -1;
+		}else if(this.sortIndex == o.sortIndex) {
+			return this.getLongCoding().compareTo(o.getLongCoding());
+		}else {
+			return this.sortIndex - o.sortIndex;
 		}
-		return this.sortIndex - o.sortIndex;
+	}
+
+	public Set<OnStateChangedListener> getStOnStateChangedListener() {
+		return stOnStateChangedListener;
+	}
+
+	public void setStOnStateChangedListener(Set<OnStateChangedListener> stOnStateChangedListener) {
+		this.stOnStateChangedListener = stOnStateChangedListener;
+	}
+
+	public Set<OnGearChangedListener> getStOnGearChangedListener() {
+		return stOnGearChangedListener;
+	}
+
+	public void setStOnGearChangedListener(Set<OnGearChangedListener> stOnGearChangedListener) {
+		this.stOnGearChangedListener = stOnGearChangedListener;
+	}
+
+	public Set<OnCtrlModelChangedListener> getStOnCtrlModelChanged() {
+		return stOnCtrlModelChanged;
+	}
+
+	public void setStOnCtrlModelChanged(Set<OnCtrlModelChangedListener> stOnCtrlModelChanged) {
+		this.stOnCtrlModelChanged = stOnCtrlModelChanged;
+	}
+
+	public Set<OnAliasChangedListener> getStOnAliasChangedListener() {
+		return stOnAliasChangedListener;
+	}
+
+	public void setStOnAliasChangedListener(Set<OnAliasChangedListener> stOnAliasChangedListener) {
+		this.stOnAliasChangedListener = stOnAliasChangedListener;
 	}
 
 	public void addOnGearChangedListener(OnGearChangedListener listener) {
@@ -901,4 +942,21 @@ public class Device extends MyHome implements Comparable<Device>, IDevice {
 		longCoding += getCoding();
 		return longCoding;
 	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public String getDevGroupName() {
+		return devGroupName;
+	}
+
+	public void setDevGroupName(String devGroupName) {
+		this.devGroupName = devGroupName;
+	}
+	
 }

@@ -9,6 +9,7 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.OneToMany;
@@ -22,7 +23,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 @DiscriminatorValue("DevHaveChild")
 public class DevHaveChild extends Device {
 
-	@OneToMany(mappedBy = "parent", cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(mappedBy = "parent", cascade = CascadeType.ALL, orphanRemoval = true, fetch=FetchType.EAGER)
 	@JsonManagedReference("devparent_child")
 	private List<Device> listDev = Collections.synchronizedList(new ArrayList<>());
 

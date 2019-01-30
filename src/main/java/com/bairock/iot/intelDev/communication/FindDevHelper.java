@@ -68,6 +68,12 @@ public class FindDevHelper {
 	public void alreadyFind(String devCoding) {
 		stMsg.remove(devCoding);
 	}
+	
+	public void cleanAll() {
+		if(null != stMsg) {
+			stMsg.clear();
+		}
+	}
 
 	class TSender extends Thread {
 
