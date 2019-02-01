@@ -1,6 +1,9 @@
 package com.bairock.iot.intelDev.communication;
 
+import com.bairock.iot.intelDev.device.OrderHelper;
+
 import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 
@@ -10,7 +13,7 @@ public class DevServerHandler extends ChannelInboundHandlerAdapter {
 	public void channelActive(ChannelHandlerContext ctx) throws Exception {
 		DevChannelBridge.channelGroup.add(ctx.channel());
 		DevChannelBridgeHelper.getIns().setChannelId(ctx.channel().id().asShortText());
-		//ctx.writeAndFlush(Unpooled.copiedBuffer(OrderHelper.getOrderMsg("h2").getBytes()));
+//		ctx.writeAndFlush(Unpooled.copiedBuffer(OrderHelper.getOrderMsg("h2").getBytes()));
 		super.channelActive(ctx);
 	}
 

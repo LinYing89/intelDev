@@ -43,6 +43,10 @@ public enum OrderType {
 	/**
 	 * 设备值, 采集设备
 	 */
-	VALUE
+	VALUE,
+	/**
+	 * 设置控制模式
+	 */
+	CHANGE_CTRL_MODEL
 	
 }
