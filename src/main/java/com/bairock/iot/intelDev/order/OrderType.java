@@ -45,8 +45,20 @@ public enum OrderType {
 	 */
 	VALUE,
 	/**
-	 * 设置控制模式
+	 * 设为远程模式
 	 */
-	CHANGE_CTRL_MODEL
+	TO_REMOTE_CTRL_MODEL,
+	/**
+	 * 设为本地模式
+	 */
+	TO_LOCAL_CTRL_MODEL,
+	/**
+	 * 文本消息
+	 */
+	MESSAGE,
+	/**
+	 * 透传
+	 */
+	PASS_THROUGH
 	
 }

@@ -9,6 +9,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorType;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
@@ -32,6 +33,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
  */
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorValue("LinkageHolder")
 @DiscriminatorColumn(name = "linkage_type", discriminatorType = DiscriminatorType.STRING)
 @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "@id")
 @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, include = As.PROPERTY, property = "class")
@@ -48,8 +50,8 @@ public class LinkageHolder {
 	private DevGroup devGroup;
 	
 	@OneToMany(mappedBy = "linkageHolder",cascade = CascadeType.ALL, orphanRemoval = true)
-	@JsonManagedReference("linkageholder_linkage")
-	private List<Linkage> listLinkage;
+//	@JsonManagedReference("lh_linkage")
+	private List<Linkage> listLinkage = Collections.synchronizedList(new ArrayList<>());
 	
 	public LinkageHolder() {
 		id = UUID.randomUUID().toString();

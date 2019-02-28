@@ -15,7 +15,7 @@ public class TestMessageAnalysis {
 	public class MyMessageAna extends MessageAnalysiser{
 
 		@Override
-		public void deviceFeedback(Device device, String msg) {
+		public void deviceHandleAfter(Device device, String msg) {
 			// TODO Auto-generated method stub
 			
 		}
@@ -45,13 +45,13 @@ public class TestMessageAnalysis {
 		}
 
 		@Override
-		public void configDeviceCtrlModel(Device device, String msg) {
+		public void unKnowDev(Device device, String msg) {
 			// TODO Auto-generated method stub
 			
 		}
 
 		@Override
-		public void unKnowDev(Device device, String msg) {
+		public void deviceHandleBefore(Device device, String msg) {
 			// TODO Auto-generated method stub
 			
 		}

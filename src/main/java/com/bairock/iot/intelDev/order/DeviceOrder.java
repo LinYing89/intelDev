@@ -15,6 +15,15 @@ public class DeviceOrder extends OrderBase {
 		setData(data);
 	}
 	
+	public DeviceOrder(String username, String devGroupName, OrderType orderType, String devId, String longCoding, String data) {
+		setUsername(username);
+		setDevGroupName(devGroupName);
+		setOrderType(orderType);
+		this.devId = devId;
+		this.longCoding = longCoding;
+		setData(data);
+	}
+	
 	public String getDevId() {
 		return devId;
 	}

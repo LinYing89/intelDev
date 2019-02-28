@@ -325,6 +325,9 @@ public class DevChannelBridge {
 		if(null != channel) {
 			channel.close();
 		}
+		if(null != device) {
+			device.setDevStateId(DevStateHelper.DS_YI_CHANG);
+		}
 	}
 	
 	public interface OnCommunicationListener {

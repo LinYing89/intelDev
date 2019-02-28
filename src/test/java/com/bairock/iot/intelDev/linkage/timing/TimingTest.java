@@ -7,12 +7,13 @@ import com.bairock.iot.intelDev.device.MainCodeHelper;
 import com.bairock.iot.intelDev.device.devswitch.DevSwitchOneRoad;
 import com.bairock.iot.intelDev.linkage.Effect;
 import com.bairock.iot.intelDev.linkage.LinkageTab;
-import com.bairock.iot.intelDev.linkage.LinkageTabRow;
 import com.bairock.iot.intelDev.linkage.LinkageTab.OnOrderSendListener;
+import com.bairock.iot.intelDev.linkage.LinkageTabRow;
 
+import jdk.nashorn.internal.ir.annotations.Ignore;
 import junit.framework.TestCase;
 
-//@Ignore
+@Ignore
 public class TimingTest extends TestCase {
 	
 	TimingHolder timing = new TimingHolder();

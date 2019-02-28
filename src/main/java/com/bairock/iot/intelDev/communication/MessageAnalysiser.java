@@ -102,11 +102,12 @@ public abstract class MessageAnalysiser {
 				}
 
 				return device;
-			} else if (codingState[1].startsWith("a")) {
-				device = DeviceAssistent.createDeviceByCoding(codingState[0]);
-				configDeviceCtrlModel(device, msg);
-				return device;
-			}
+			} 
+//			else if (codingState[1].startsWith("a")) {
+//				device = DeviceAssistent.createDeviceByCoding(codingState[0]);
+//				configDeviceCtrlModel(device, msg);
+//				return device;
+//			}
 		}
 		if (null != user) {
 			device = user.findDev(codingState[0]);
@@ -122,13 +123,14 @@ public abstract class MessageAnalysiser {
 			}
 		}
 
+		deviceHandleBefore(device, msg);
 		if (codingState[1] != null) {
 			device.handle(codingState[1]);
 		} else {
 			device.handle("21");
 		}
 
-		deviceFeedback(device, msg);
+		deviceHandleAfter(device, msg);
 		singleMessageEnd(device, msg);
 		return device;
 	}
@@ -175,12 +177,13 @@ public abstract class MessageAnalysiser {
 	public void receivedMsg(String msg) {
 	}
 
+	public abstract void deviceHandleBefore(Device device, String msg);
 	/**
 	 * 
 	 * @param msg
 	 * @param device
 	 */
-	public abstract void deviceFeedback(Device device, String msg);
+	public abstract void deviceHandleAfter(Device device, String msg);
 
 	/**
 	 * 系统认识该设备编码，但用户未添加该种设备
@@ -210,5 +213,5 @@ public abstract class MessageAnalysiser {
 
 	public abstract void configDevice(Device device, String msg);
 
-	public abstract void configDeviceCtrlModel(Device device, String msg);
+//	public abstract void configDeviceCtrlModel(Device device, String msg);
 }

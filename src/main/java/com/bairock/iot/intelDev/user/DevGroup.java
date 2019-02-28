@@ -786,12 +786,12 @@ public class DevGroup {
 		return true;
 	}
 
-	@Override
-	public String toString() {
-		String str = String.format("DevGroup(user:%s, id:%s, Name:%s, psd:%s, petName:%s)", user.getName(), id, name,
-				psd, petName);
-		return str;
-	}
+//	@Override
+//	public String toString() {
+//		String str = String.format("DevGroup(user:%s, id:%s, Name:%s, psd:%s, petName:%s)", user.getName(), id, name,
+//				psd, petName);
+//		return str;
+//	}
 
 	public interface OnDeviceCollectionChangedListener {
 		void onAdded(Device device);

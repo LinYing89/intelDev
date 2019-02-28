@@ -124,7 +124,10 @@ public class LinkageHelper {
 			isRunning = true;
 			while (!Thread.interrupted()) {
 				try {
-					
+					if(null == loop || null == chain || null == timing) {
+						Thread.sleep(1000);
+						continue;
+					}
 					loop.run();
 					
 					//on the first, set chain and timing temporary mark to -1

@@ -915,7 +915,7 @@ public class Device extends MyHome implements Comparable<Device>, IDevice {
 	@Override
 	public String createAbnormalOrder() {
 		return OrderHelper.getOrderMsg(OrderHelper.FEEDBACK_HEAD + getCoding() + OrderHelper.SEPARATOR + "2"
-				+ DevStateHelper.getIns().getDs(DevStateHelper.DS_YI_CHANG));
+				+ DevStateHelper.DS_YI_CHANG);
 	}
 
 	@Override

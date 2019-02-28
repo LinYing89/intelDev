@@ -12,6 +12,7 @@ import java.util.concurrent.Executors;
 
 import com.bairock.iot.intelDev.device.Device;
 import com.bairock.iot.intelDev.device.alarm.AlarmInfo;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class IntelDevHelper {
 
@@ -80,6 +81,19 @@ public class IntelDevHelper {
 		ai.setAlarmTime(new Date());
 		return ai;
 	}
+	
+	public static String getUserJson(User user){
+        String json = null;
+        if(null != user){
+            ObjectMapper mapper = new ObjectMapper();
+            try {
+                json = mapper.writeValueAsString(user);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+        return json;
+    }
 //	public static void main(String[] args) {
 //		System.out.println(getLocalIp());
 //	}

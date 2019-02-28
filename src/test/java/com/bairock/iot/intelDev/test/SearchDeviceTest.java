@@ -143,7 +143,7 @@ public class SearchDeviceTest {
 		}
 
 		@Override
-		public void deviceFeedback(Device device, String msg) {
+		public void deviceHandleAfter(Device device, String msg) {
 			System.out.println("deviceFeedback: " + msg);
 		}
 
@@ -159,13 +159,13 @@ public class SearchDeviceTest {
 		}
 
 		@Override
-		public void configDeviceCtrlModel(Device device, String msg) {
+		public void unKnowDev(Device device, String msg) {
 			// TODO Auto-generated method stub
 			
 		}
 
 		@Override
-		public void unKnowDev(Device device, String msg) {
+		public void deviceHandleBefore(Device device, String msg) {
 			// TODO Auto-generated method stub
 			
 		}
