@@ -17,16 +17,16 @@ public enum Gear {
 	 * @param dev
 	 * @param state 0 is off, 1 is on, 2 is auto, 3 is nuknow
 	 */
-	public static void setGearModel(Device dev, int state){
+	public static void setGearModel(Device dev, int state, boolean touchDev){
 		switch(state){
 		case 2:
 			dev.setGear(ZIDONG);
 			break;
 		case 0:
-			dev.setGear(GUAN);
+			dev.setGear(GUAN, touchDev);
 			break;
 		case 1:
-			dev.setGear(KAI);
+			dev.setGear(KAI, touchDev);
 			break;
 		case 3:
 			dev.setGear(UNKNOW);

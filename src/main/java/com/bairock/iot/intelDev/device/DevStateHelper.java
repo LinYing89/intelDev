@@ -36,6 +36,10 @@ public class DevStateHelper {
 	 * identify of abnormal
 	 */
 	public static final String DS_YI_CHANG = "ds_yc";
+	/**
+	 * 未知状态id
+	 */
+	public static final String DS_UNKNOW = "ds_wz";
 	
 	public static final String CONFIGING = "configing";
 	
@@ -52,8 +56,21 @@ public class DevStateHelper {
 		listState.add(new DevState(DS_YI_CHANG,"4","abnormal"));
 		listState.add(new DevState(CONFIGING,"5","configing"));
 		listState.add(new DevState(CONFIG_OK,"6","config_ok"));
+		listState.add(new DevState(CONFIG_OK,"7","weizhi"));
 	}
 
+	/**
+	 * 获取开关状态编码, 0或1
+	 * @return
+	 */
+	public static int getStateCode(String stateId) {
+		if(stateId.equals(DS_KAI)) {
+			return 1;
+		}else {
+			return 0;
+		}
+	}
+	
 	/**
 	 * get instance of DevStateHelper
 	 * @return ins

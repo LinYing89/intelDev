@@ -28,10 +28,8 @@ public class DevSwitch extends DevHaveChild {
 
 	/**
 	 * 
-	 * @param mcId
-	 *            main code identify
-	 * @param sc
-	 *            sub code
+	 * @param mcId main code identify
+	 * @param sc   sub code
 	 */
 	public DevSwitch(String mcId, String sc) {
 		super(mcId, sc);
@@ -39,8 +37,7 @@ public class DevSwitch extends DevHaveChild {
 
 	/**
 	 * 
-	 * @param sc
-	 *            sub code
+	 * @param sc sub code
 	 * @return
 	 */
 	public Device getSubDevBySc(String sc) {
@@ -51,8 +48,6 @@ public class DevSwitch extends DevHaveChild {
 		}
 		return null;
 	}
-	
-	
 
 	@Override
 	public void removeChildDev(Device device) {
@@ -64,11 +59,10 @@ public class DevSwitch extends DevHaveChild {
 		return OrderHelper.getOrderMsg(OrderHelper.QUERY_HEAD + getCoding() + OrderHelper.SEPARATOR + "8");
 	}
 
-	
 	@Override
 	public void turnOn() {
 		super.turnOn();
-		for(Device dev : getListDev()) {
+		for (Device dev : getListDev()) {
 			dev.turnOn();
 		}
 	}
@@ -76,11 +70,11 @@ public class DevSwitch extends DevHaveChild {
 	@Override
 	public void turnOff() {
 		super.turnOff();
-		for(Device dev : getListDev()) {
+		for (Device dev : getListDev()) {
 			dev.turnOff();
 		}
 	}
-	
+
 	@Override
 	public String createInitOrder() {
 		return OrderHelper.getOrderMsg(OrderHelper.QUERY_HEAD + getCoding() + OrderHelper.SEPARATOR + "8");
@@ -93,7 +87,7 @@ public class DevSwitch extends DevHaveChild {
 		}
 		analysisMsgUnit(state);
 	}
-	
+
 //	protected void handle7(String[] msgs) {
 //		if(msgs.length != 3) {
 //			return;
@@ -108,30 +102,41 @@ public class DevSwitch extends DevHaveChild {
 //			DevStateHelper.getIns().setDsId(sd1, strState);
 //		}
 //	}
-	
-	protected Device handle7(String[] msgs) {
-		if(msgs.length != 4) {
+
+	/**
+	 * 
+	 * @param msgs
+	 * @param      changeGear, 是否改变档位
+	 * @return
+	 */
+	protected Device handle7(String[] msgs, boolean touchDev) {
+		if (msgs.length != 4) {
 			return null;
 		}
-		
+
 		int subCode = Integer.parseInt(msgs[1] + msgs[2], 16);
 		String strState = msgs[3].equals("0") ? "1" : "0";
 		SubDev sd1 = (SubDev) getSubDevBySc(String.valueOf(subCode));
-		if(null == sd1) {
+		if (null == sd1) {
 			return null;
 		}
+		if (touchDev) {
+			// 触摸设备返回时要改变档位, 先改档位再改状态
+			Gear.setGearModel(sd1, Integer.parseInt(strState), touchDev);
+		}
+
 		DevStateHelper.getIns().setDsId(sd1, strState);
 		return sd1;
 	}
-	
+
 	protected void handle8(String[] msgs) {
-		if(msgs.length < 2) {
+		if (msgs.length < 2) {
 			return;
 		}
-		for(int i = 0; i < getListDev().size(); i++) {
+		for (int i = 0; i < getListDev().size(); i++) {
 			int moduleNum = i / 4;
 			int roadNum = i % 4;
-			if(moduleNum + 1 >= msgs.length) {
+			if (moduleNum + 1 >= msgs.length) {
 				return;
 			}
 			String strHex = msgs[moduleNum + 1];
@@ -141,33 +146,31 @@ public class DevSwitch extends DevHaveChild {
 			DevStateHelper.getIns().setDsId(dev, strState);
 		}
 	}
-	
+
 	protected void handle9(String[] msgs) {
-		Device dev = handle7(msgs);
-		if(null != dev) {
-			Gear.setGearModel(dev, Integer.parseInt(dev.getDevState()));
-		}
+		handle7(msgs, true);
 	}
 
 	private void analysisMsgUnit(String msgUnit) {
 		if (null == msgUnit || msgUnit.isEmpty()) {
 			return;
 		}
-		
+
 		// msgs[0] is message sign
 		char[] cMsgs = msgUnit.toCharArray();
 		String[] msgs = new String[cMsgs.length];
-		for(int i=0; i<cMsgs.length; i++) {
+		for (int i = 0; i < cMsgs.length; i++) {
 			msgs[i] = String.valueOf(cMsgs[i]);
 		}
-		
+
 		switch (msgs[0]) {
 		case DevSwitchMsgSign.ORDER_CTRL_FEEDBACK:
 			// 7, feedback because of order control
 			// msgs[1] is module number, begin with 0
 			// msgs[2] is four road state of the module, the lowest bit is road one
 
-			handle7(msgs);
+			// 命令返回不需改变档位
+			handle7(msgs, false);
 //			if(msgs.length != 4) {
 //				return;
 //			}
@@ -179,14 +182,14 @@ public class DevSwitch extends DevHaveChild {
 //				return;
 //			}
 //			DevStateHelper.getIns().setDsId(sd1, strState);
-			//moduleNum = Integer.parseInt(msgs[1], 16);
-			//first SubDev subCode number = module number * 4 + 1, subCode begin with 1
-			//firstSubDevSc = moduleNum * 4 + 1;
-			//iHexState = Integer.parseInt(msgs[2], 16);
-			//setDevStateFromFirstSubCode(firstSubDevSc, iHexState);
+			// moduleNum = Integer.parseInt(msgs[1], 16);
+			// first SubDev subCode number = module number * 4 + 1, subCode begin with 1
+			// firstSubDevSc = moduleNum * 4 + 1;
+			// iHexState = Integer.parseInt(msgs[2], 16);
+			// setDevStateFromFirstSubCode(firstSubDevSc, iHexState);
 			break;
 		case DevSwitchMsgSign.ORDER_QUERY_FEEDBACK:
-			//8, feedback because of order query
+			// 8, feedback because of order query
 			handle8(msgs);
 //			if(msgs.length < 2) {
 //				return;
@@ -215,55 +218,55 @@ public class DevSwitch extends DevHaveChild {
 //			}
 			break;
 		case DevSwitchMsgSign.MSG_DEV_PUSHED:
-			//9
+			// 9
 			handle9(msgs);
 			break;
 		}
 	}
-	
+
 	/**
 	 * 
-	 * @param iHexState a hex number 
-	 * @param offset begin with 0
+	 * @param iHexState a hex number
+	 * @param offset    begin with 0
 	 * @return
 	 */
 	protected String getEnsureState(byte bHexState, int offset) {
-		//int iHexState = Integer.parseInt(strHex);
+		// int iHexState = Integer.parseInt(strHex);
 		int iState = (bHexState >> offset) & 1;
 		return iState == 0 ? "1" : "0";
 	}
 
 	public String createStateStr() {
 		int moduleCount = getListDev().size() / 4;
-		if(getListDev().size() % 4 != 0) {
+		if (getListDev().size() % 4 != 0) {
 			moduleCount++;
 		}
 		int[] iHexState = new int[moduleCount];
-		
-		for(Device dev : getListDev()) {
-			//road is begin with 1
+
+		for (Device dev : getListDev()) {
+			// road is begin with 1
 			int road = Integer.parseInt(dev.getSubCode());
 			int moduleNum = (road - 1) / 4;
-			
+
 			int iState;
-			if(dev.getDevStateId().equals(DevStateHelper.DS_KAI)){
+			if (dev.getDevStateId().equals(DevStateHelper.DS_KAI)) {
 				iState = 0;
-			}else {
+			} else {
 				iState = 1;
 			}
 			int moduleRoad = road;
-			if(road > 4) {
+			if (road > 4) {
 				moduleRoad %= 4;
-				if(moduleRoad == 0) {
+				if (moduleRoad == 0) {
 					moduleRoad = 4;
 				}
 			}
 			iState <<= moduleRoad - 1;
 			iHexState[moduleNum] |= iState;
 		}
-		
+
 		String strState = "";
-		for(int hex : iHexState) {
+		for (int hex : iHexState) {
 			strState += Integer.toString(hex, 16);
 		}
 		return strState;
@@ -277,6 +280,6 @@ public class DevSwitch extends DevHaveChild {
 	}
 
 	public static void main(String[] args) {
-		System.out.println(String.valueOf(3%4));
+		System.out.println(String.valueOf(3 % 4));
 	}
 }

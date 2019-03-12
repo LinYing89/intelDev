@@ -24,11 +24,11 @@ public class Effect {
 	@Id
 	private String id;
 
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne
 	@JsonBackReference("linkage_effect")
 	private Linkage linkage;
 
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne
 	@JoinColumn(name = "dev_id")
 	private Device device;
 

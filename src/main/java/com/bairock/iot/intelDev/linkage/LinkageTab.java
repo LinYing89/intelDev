@@ -21,6 +21,7 @@ public class LinkageTab {
 	private static LinkageTab ins = new LinkageTab();
 	
 	private OnOrderSendListener onOrderSendListener;
+	private OnCheckTableListener onCheckTableListener;
 
 	public static final int CHAIN = 1;
 	public static final int TIMING = 2;
@@ -72,18 +73,18 @@ public class LinkageTab {
 		if(null != eqTabRow){
 			switch (which){
 				case CHAIN :
-					if(eqTabRow.getiChainTem() == -1){
-						eqTabRow.setiChainTem(event);
+					if(eqTabRow.getChainTem() == -1){
+						eqTabRow.setChainTem(event);
 					}else{
-						eqTabRow.setiChainTem(eqTabRow.getiChainTem() * event);
+						eqTabRow.setChainTem(eqTabRow.getChainTem() * event);
 					}
 //					eqDevice.setChain(event);
 					break;
 				case TIMING :
-					if(eqTabRow.getiTimingTem() == -1){
-						eqTabRow.setiTimingTem(event);
+					if(eqTabRow.getTimingTem() == -1){
+						eqTabRow.setTimingTem(event);
 					}else{
-						eqTabRow.setiTimingTem(eqTabRow.getiTimingTem() * event);
+						eqTabRow.setTimingTem(eqTabRow.getTimingTem() * event);
 					}
 					//eqDevice.setTiming(event);
 					break;
@@ -153,7 +154,11 @@ public class LinkageTab {
 	 */
 	public void checkTabRows() throws InterruptedException{
 		List<LinkageTabRow> list = new ArrayList<>(listLinkageTabRow);
+		if(null != onCheckTableListener) {
+			onCheckTableListener.onBeforCheck(list);
+		}
 		for(LinkageTabRow tabRow : list){
+			tabRow.analysisLinkageResult();
 			Device device = tabRow.getDevice();
 			if(!device.isNormal()) {
 				continue;
@@ -173,7 +178,7 @@ public class LinkageTab {
 				//zi dong
 				String order = tabRow.createOrder();
 				stateChangedListener(device, order, device.getCtrlModel());
-				Thread.sleep(300);
+				Thread.sleep(200);
 			}else{
 				//shou dong
 				if(device.getGear() == Gear.KAI && 
@@ -185,8 +190,11 @@ public class LinkageTab {
 					String order = device.getDevOrder(OrderHelper.CTRL_HEAD, CtrlCodeHelper.DCT_KAIGUAN_GUAN);
 					stateChangedListener(device, order, device.getCtrlModel());
 				}
-				Thread.sleep(300);
+				Thread.sleep(200);
 			}
+		}
+		if(null != onCheckTableListener) {
+			onCheckTableListener.onAfterCheck(list);
 		}
 	}
 	
@@ -198,6 +206,14 @@ public class LinkageTab {
 		this.onOrderSendListener = onOrderSendListener;
 	}
 	
+	public OnCheckTableListener getOnCheckTableListener() {
+		return onCheckTableListener;
+	}
+
+	public void setOnCheckTableListener(OnCheckTableListener onCheckTableListener) {
+		this.onCheckTableListener = onCheckTableListener;
+	}
+
 	/**
 	 * interface definition for a callback to be invoked when an order need send
 	 * @author LinQiang
@@ -205,6 +221,11 @@ public class LinkageTab {
 	 */
 	public interface OnOrderSendListener{
 		void onChanged(Device device, String order, CtrlModel ctrlModel);
+	}
+	
+	public interface OnCheckTableListener{
+		void onBeforCheck(List<LinkageTabRow> list);
+		void onAfterCheck(List<LinkageTabRow> list);
 	}
 	
 	private void stateChangedListener(Device device, String order, CtrlModel ctrlModel){

@@ -105,8 +105,16 @@ public class LinkageHelper {
 	 */
 	public void stopCheckLinkageThread(){
 		if(null != checkLinkageThread){
-			checkLinkageThread.isRunning = false;
 			checkLinkageThread.interrupt();
+			if(checkLinkageThread.isRunning) {
+				try {
+					Thread.sleep(200);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+//			checkLinkageThread.isRunning = false;
 			checkLinkageThread = null;
 		}
 	}
@@ -143,10 +151,10 @@ public class LinkageHelper {
 					for (LinkageTabRow tabRow : 
 						LinkageTab.getIns().getListLinkageTabRow()) {
 						//if temporary value is -1, not change the ensure value
-						if (tabRow.getiChainTem() != -1) {
-							tabRow.setChain(tabRow.getiChainTem());
+						if (tabRow.getChainTem() != -1) {
+							tabRow.setChain(tabRow.getChainTem());
 						}
-						tabRow.setTiming(tabRow.getiTimingTem());
+						tabRow.setTiming(tabRow.getTimingTem());
 						//System.out.println("LinkageHelper run item: " + tabRow.getITemString());
 					}
 
@@ -159,6 +167,7 @@ public class LinkageHelper {
 					
 					TimeUnit.MILLISECONDS.sleep(200);
 				} catch (Exception ex) {
+					isRunning = false;
 					ex.printStackTrace();
 				}
 			}

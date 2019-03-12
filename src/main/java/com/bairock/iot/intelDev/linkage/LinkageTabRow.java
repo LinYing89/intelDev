@@ -14,11 +14,12 @@ public class LinkageTabRow {
 
 	private Device device;
 	//chain temporary mark, if this mark is -1, this chain will not participation operation
-	private int iChainTem = -1;
-	private int iTimingTem = -1;
+	private int chainTem = -1;
+	private int timingTem = -1;
 	private int chain = -1;
 	private int timing = -1;
 	private int loop = -1;
+	private int result = -1;
 	private boolean first = true;
 	
 	/**
@@ -45,38 +46,22 @@ public class LinkageTabRow {
 		this.device = device;
 	}
 
-	/**
-	 * 
-	 * @return
-	 */
-	public int getiChainTem() {
-		return iChainTem;
+	public int getChainTem() {
+		return chainTem;
 	}
 
-	/**
-	 * 
-	 * @param iChainTem
-	 */
-	public void setiChainTem(int iChainTem) {
-		this.iChainTem = iChainTem;
+	public void setChainTem(int chainTem) {
+		this.chainTem = chainTem;
 	}
 
-	/**
-	 * 
-	 * @return
-	 */
-	public int getiTimingTem() {
-		return iTimingTem;
+	public int getTimingTem() {
+		return timingTem;
 	}
 
-	/**
-	 * 
-	 * @param iTimingTem
-	 */
-	public void setiTimingTem(int iTimingTem) {
-		this.iTimingTem = iTimingTem;
+	public void setTimingTem(int timingTem) {
+		this.timingTem = timingTem;
 	}
-
+	
 	/**
 	 * 
 	 * @return
@@ -125,6 +110,14 @@ public class LinkageTabRow {
 		this.loop = loop;
 	}
 
+	public int getResult() {
+		return result;
+	}
+
+	public void setResult(int result) {
+		this.result = result;
+	}
+
 	/**
 	 * 
 	 * @return
@@ -145,24 +138,20 @@ public class LinkageTabRow {
 		chain = -1;
 		timing = -1;
 		loop = -1;
-		iChainTem = -1;
-		iTimingTem = -1;
+		chainTem = -1;
+		timingTem = -1;
+		result = -1;
 	}
 	
 	public void initIChainTem(){
-		iChainTem = -1;
-		iTimingTem = -1;
+		chainTem = -1;
+		timingTem = -1;
 	}
 
-	/**
-	 * 
-	 * @return
-	 */
-	public String createOrder(){
-		//Log.w("DeviceChain","sendAble");
-		String state;
+	public void analysisLinkageResult() {
 		if(getChain() == -1 && getTiming() == -1 && getLoop() == -1){
-			return null;
+			result = -1;
+			return;
 		}
 		//target value
 		int iS = 1;
@@ -175,13 +164,20 @@ public class LinkageTabRow {
 		if(getLoop() != -1){
 			iS *= loop;
 		}
-		/*String log = getDevice().getName() + ": " +getChain() + "," + getTiming() + "," + getLoop();
-		WebClient.getInstance().sendMessage(log);*/
-		//Log.e("DeviceChain",log);
-
+		result = iS;
+	}
+	/**
+	 * 
+	 * @return
+	 */
+	public String createOrder(){
+		if(result == -1) {
+			return null;
+		}
+		String state;
 		// it always send on first, then judge the state, if this state is equal device state, don't send
 		String dctId = "";
-		if(iS == 1){
+		if(result == 1){
 			state = DevStateHelper.DS_KAI;
 			dctId = CtrlCodeHelper.DCT_KAIGUAN_KAI;
 		}else{
@@ -211,6 +207,6 @@ public class LinkageTabRow {
 	}
 	
 	public String getITemString(){
-		return getDevice().getCoding() + getDevice().getName() + ": " +iChainTem + "," + iTimingTem + "," + getLoop();
+		return getDevice().getCoding() + getDevice().getName() + ": " +chainTem + "," + timingTem + "," + getLoop();
 	}
 }

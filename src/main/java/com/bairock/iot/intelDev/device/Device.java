@@ -316,7 +316,16 @@ public class Device extends MyHome implements Comparable<Device>, IDevice {
 		if (this.gear != gear) {
 			this.gear = gear;
 			for(OnGearChangedListener listener : stOnGearChangedListener) {
-				listener.onGearChanged(this, gear);
+				listener.onGearChanged(this, gear, false);
+			}
+		}
+	}
+	
+	public void setGear(Gear gear, boolean touchDev) {
+		if (this.gear != gear) {
+			this.gear = gear;
+			for(OnGearChangedListener listener : stOnGearChangedListener) {
+				listener.onGearChanged(this, gear, touchDev);
 			}
 		}
 	}
@@ -361,7 +370,7 @@ public class Device extends MyHome implements Comparable<Device>, IDevice {
 
 	@Override
 	public boolean isNormal() {
-		if (devStateId.equals(DevStateHelper.DS_YI_CHANG)) {
+		if (devStateId.equals(DevStateHelper.DS_YI_CHANG) || devStateId.equals(DevStateHelper.DS_UNKNOW)) {
 			return false;
 		}
 		return true;
@@ -772,7 +781,13 @@ public class Device extends MyHome implements Comparable<Device>, IDevice {
 	}
 
 	public interface OnGearChangedListener {
-		void onGearChanged(Device dev, Gear gear);
+		/**
+		 * 档位改变事件
+		 * @param dev 设备
+		 * @param gear 改变后的档位
+		 * @param touchDev 是否是触摸设备改变的, 触摸实体设备为true, 点击软件上的按钮改变的为false
+		 */
+		void onGearChanged(Device dev, Gear gear, boolean touchDev);
 	}
 
 	public interface OnCtrlModelChangedListener {

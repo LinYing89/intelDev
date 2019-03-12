@@ -293,7 +293,42 @@ public class DevGroup {
 			}
 		}
 	}
+	
+	private int getNxtSortIndex(DevHaveChild device) {
+		int index = 0;
+		for(Device dev : device.getListDev()) {
+			if(dev.getSortIndex() > index) {
+				index = dev.getSortIndex();
+			}
+		}
+		return index;
+	}
 
+	public int createNextSortIndex() {
+		int index = 0;
+		for(Device dev : listDevice) {
+			if(dev.getSortIndex() > index) {
+				index = dev.getSortIndex();
+			}
+			if(dev instanceof DevHaveChild) {
+				int i = getNxtSortIndex((DevHaveChild)dev);
+				if(i > index) {
+					index = i;
+				}
+			}
+		}
+		return index;
+	}
+	
+	public void setDeviceSortIndex(Device device, int index) {
+		device.setSortIndex(index);
+		if(device instanceof DevHaveChild) {
+			for(Device dev : ((DevHaveChild) device).getListDev()) {
+				setDeviceSortIndex(dev, index++);
+			}
+		}
+	}
+	
 	/**
 	 * 
 	 * @param device
@@ -302,12 +337,15 @@ public class DevGroup {
 		if (null == device) {
 			return;
 		}
+		
 		for (Device dev : listDevice) {
 			if (dev.equals(device)) {
 				return;
 			}
 		}
 
+		int index = createNextSortIndex();
+		setDeviceSortIndex(device, index);
 		device.setDevGroup(this);
 		listDevice.add(device);
 		for (OnDeviceCollectionChangedListener listener : stOnDeviceCollectionChangedListener) {

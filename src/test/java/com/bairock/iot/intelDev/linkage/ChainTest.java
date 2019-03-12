@@ -54,8 +54,8 @@ public class ChainTest extends TestCase {
 		//chain.run();
 		assertEquals(true, subChain.getConditionResult());
 		LinkageTabRow linkTR = LinkageTab.getIns().getEqLinkageTabRow(devSwitch.getListDev().get(0));
-		assertEquals(1, linkTR.getiChainTem());
-		assertEquals(-1, linkTR.getiTimingTem());
+		assertEquals(1, linkTR.getChainTem());
+		assertEquals(-1, linkTR.getTimingTem());
 		assertEquals(-1, linkTR.getLoop());
 	}
 
