@@ -65,7 +65,7 @@ public class DevHaveChild extends Device {
 	@Override
 	public void setDevStateId(String dsId) {
 		super.setDevStateId(dsId);
-		if (dsId.equals(DevStateHelper.DS_YI_CHANG)) {
+		if (dsId.equals(DevStateHelper.DS_YI_CHANG) || dsId.equals(DevStateHelper.DS_UNKNOW)) {
 			for (Device dev : listDev) {
 				dev.setDevStateId(dsId);
 			}

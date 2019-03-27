@@ -344,8 +344,8 @@ public class DevGroup {
 			}
 		}
 
-		int index = createNextSortIndex();
-		setDeviceSortIndex(device, index);
+//		int index = createNextSortIndex();
+//		setDeviceSortIndex(device, index);
 		device.setDevGroup(this);
 		listDevice.add(device);
 		for (OnDeviceCollectionChangedListener listener : stOnDeviceCollectionChangedListener) {

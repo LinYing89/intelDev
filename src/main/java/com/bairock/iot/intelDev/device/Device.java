@@ -622,7 +622,7 @@ public class Device extends MyHome implements Comparable<Device>, IDevice {
 	 * if last communication interval great 5s,can send if last communication
 	 * interval lest 5s, but device responded, can send if last communication
 	 * interval lest 5s, and device didn't responded, can't send
-	 * 
+	 * 针对顶级父设备, 子设备不可判断
 	 * @return
 	 */
 	public boolean canSend() {

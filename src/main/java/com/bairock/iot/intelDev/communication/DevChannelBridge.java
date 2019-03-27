@@ -307,6 +307,20 @@ public class DevChannelBridge {
 			}
 		}
 	}
+	
+	/**
+	 * 防频繁发送, 一定时间内不允许连续发送
+	 * @param order
+	 * @param dev
+	 */
+	public void sendOrder(String order, Device dev) {
+		if (dev.findSuperParent().canSend()) {
+			dev.setLastOrder(order);
+			dev.noResponsePlus();
+			dev.resetLastCommunicationTime();
+			sendOrder(order);
+		}
+	}
 
 	public void sendOrder(String msg) {
 		if (null != getChannel()) {
