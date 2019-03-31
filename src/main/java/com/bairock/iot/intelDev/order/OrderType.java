@@ -59,6 +59,14 @@ public enum OrderType {
 	/**
 	 * 透传
 	 */
-	PASS_THROUGH
+	PASS_THROUGH,
+	/**
+	 * 登录
+	 */
+	LOGIN,
+	/**
+	 * 登出
+	 */
+	LOGOUT
 	
 }

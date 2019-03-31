@@ -12,6 +12,8 @@ import io.netty.channel.socket.nio.NioServerSocketChannel;
 
 public class DevServer {
 
+	private static DevServer ins = new DevServer();
+	
 	public static int PORT = 8000;
 
 	private ServerBootstrap b;
@@ -19,6 +21,12 @@ public class DevServer {
 	private EventLoopGroup bossGroup;
 	private EventLoopGroup workerGroup;
 
+	private DevServer() {}
+	
+	public static DevServer getIns() {
+		return ins;
+	}
+	
 	public void run() throws Exception {
 		bossGroup = new NioEventLoopGroup(); // (1)
 		workerGroup = new NioEventLoopGroup();

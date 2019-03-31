@@ -21,6 +21,7 @@ public class FindDevHelper {
 	private Set<String> stMsg;
 	private TSender tSender;
 	private boolean isFinding;
+	public boolean enable = true;
 
 	/**
 	 * 
@@ -57,6 +58,9 @@ public class FindDevHelper {
 	}
 
 	public void findDev(String devCoding) {
+		if(!enable) {
+			return;
+		}
 		stMsg.add(devCoding);
 		if (!isFinding) {
 			isFinding = true;
@@ -81,7 +85,7 @@ public class FindDevHelper {
 
 		@Override
 		public void run() {
-			while (!isInterrupted() && stMsg.size() > 0) {
+			while (enable && !isInterrupted() && stMsg.size() > 0) {
 				String localIp = IntelDevHelper.getLocalIp();
 				try {
 					Set<String> st = new HashSet<>(stMsg);

@@ -731,7 +731,9 @@ public class Device extends MyHome implements Comparable<Device>, IDevice {
 	}
 
 	public void addOnGearChangedListener(OnGearChangedListener listener) {
-		stOnGearChangedListener.add(listener);
+		if(null != listener && !stOnGearChangedListener.contains(listener)) {
+			stOnGearChangedListener.add(listener);
+		}
 	}
 
 	public void removeOnGearChangedListener(OnGearChangedListener listener) {
@@ -747,7 +749,9 @@ public class Device extends MyHome implements Comparable<Device>, IDevice {
 	}
 
 	public void addOnStateChangedListener(OnStateChangedListener listener) {
-		stOnStateChangedListener.add(listener);
+		if(null != listener && !stOnStateChangedListener.contains(listener)) {
+			stOnStateChangedListener.add(listener);
+		}
 	}
 
 	public void removeOnStateChangedListener(OnStateChangedListener listener) {
@@ -755,15 +759,17 @@ public class Device extends MyHome implements Comparable<Device>, IDevice {
 	}
 	
 	public void addOnAliasChangedListener(OnAliasChangedListener listener) {
-		stOnAliasChangedListener.add(listener);
+		if(null != listener && !stOnAliasChangedListener.contains(listener)) {
+			stOnAliasChangedListener.add(listener);
+		}
 	}
 
 	public void removeOnAliasChangedListener(OnAliasChangedListener listener) {
 		stOnAliasChangedListener.remove(listener);
 	}
 	
-	public void setOnSortIndexChangedListener(OnSortIndexChangedListener onSortIndexChangedListener) {
-		this.onSortIndexChangedListener = onSortIndexChangedListener;
+	public void setOnSortIndexChangedListener(OnSortIndexChangedListener listener) {
+		this.onSortIndexChangedListener = listener;
 	}
 
 	public void setOnGearNeedToAutoListener(OnGearNeedToAutoListener onGearNeedToAutoListener) {

@@ -29,7 +29,7 @@ public class SearchDeviceTest {
 		DevChannelBridgeHelper.getIns().setUser(user);
 		
 		try {
-			new DevServer().run();
+			DevServer.getIns().run();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

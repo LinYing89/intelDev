@@ -5,7 +5,6 @@ import javax.persistence.Entity;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 
-import com.bairock.iot.intelDev.device.OrderHelper;
 import com.bairock.iot.intelDev.user.IntelDevHelper;
 
 /**
@@ -28,11 +27,11 @@ public class DevCollectSignal extends DevCollect {
 		// TODO Auto-generated constructor stub
 	}
 
-	public String createCalibrationOrder(float calibrationValue) {
-		calibrationValue = IntelDevHelper.scale(calibrationValue);
-		calibrationValue = calibrationValue * 100f;
-		return OrderHelper.getOrderMsg(getCoding() + OrderHelper.SEPARATOR + "c" + calibrationValue);
-	}
+//	public String createCalibrationOrder(float calibrationValue) {
+//		calibrationValue = IntelDevHelper.scale(calibrationValue);
+//		calibrationValue = calibrationValue * 100f;
+//		return OrderHelper.getOrderMsg(getCoding() + OrderHelper.SEPARATOR + "c" + calibrationValue);
+//	}
 
 	@Override
 	public void handleSingleMsg(String state) {
@@ -41,6 +40,7 @@ public class DevCollectSignal extends DevCollect {
 				return;
 			}
 
+			super.handleSingleMsg(state);
 			//String msgId = state.substring(0, 1);
 			int iValue = 0;
 			float srcValue = 0;

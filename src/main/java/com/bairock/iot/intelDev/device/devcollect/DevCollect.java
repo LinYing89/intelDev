@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.OneToOne;
+import javax.persistence.Transient;
 
 import com.bairock.iot.intelDev.device.CtrlCodeHelper;
 import com.bairock.iot.intelDev.device.DevStateHelper;
@@ -13,6 +14,7 @@ import com.bairock.iot.intelDev.device.Device;
 import com.bairock.iot.intelDev.device.MainCodeHelper;
 import com.bairock.iot.intelDev.device.OrderHelper;
 import com.bairock.iot.intelDev.user.IntelDevHelper;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 /**
@@ -28,6 +30,10 @@ public class DevCollect extends Device{
 	@OneToOne(mappedBy = "devCollect", cascade = CascadeType.ALL, orphanRemoval = true)
 	@JsonManagedReference("devcollect_property")
 	private CollectProperty collectProperty;
+	
+	@Transient
+	@JsonIgnore
+	private CalibrationnListener calibrationnListener;
 	
 	/**
 	 * 
@@ -62,7 +68,14 @@ public class DevCollect extends Device{
 		}
 	}
 	
-	
+	public CalibrationnListener getCalibrationnListener() {
+		return calibrationnListener;
+	}
+
+	public void setCalibrationnListener(CalibrationnListener calibrationnListener) {
+		this.calibrationnListener = calibrationnListener;
+	}
+
 	@Override
 	public void setDevStateId(String dsId) {
 		super.setDevStateId(dsId);
@@ -86,6 +99,12 @@ public class DevCollect extends Device{
 		return OrderHelper.getOrderMsg(OrderHelper.QUERY_HEAD + getCoding() + OrderHelper.SEPARATOR + "8");
 	}
 	
+	//创建标定报文
+	public String createCalibrationOrder(int order) {
+		String strHex = Integer.toHexString(order);
+		return OrderHelper.getOrderMsg(OrderHelper.SET_HEAD + getCoding() + OrderHelper.SEPARATOR + "B" + strHex);
+	}
+	
 	@Override
 	public String createInitOrder() {
 		return createQueueOrder();
@@ -96,5 +115,33 @@ public class DevCollect extends Device{
 				+ CtrlCodeHelper.getIns().getDct(CtrlCodeHelper.DCT_PRESSURE_PER_VALUE)
 				+ collectProperty.getPercent();
 		return OrderHelper.getOrderMsg(order);
+	}
+	
+	@Override
+	public void handleSingleMsg(String state) {
+		if (null != state) {
+			if (state.length() < 2) {
+				return;
+			}
+			if(state.startsWith("C")) {
+				//标定返回
+				if(null != calibrationnListener) {
+					calibrationnListener.calibration(true);
+				}
+			}
+		}
+	}
+	
+	/**
+	 * 标定监听器
+	 * @author 44489
+	 *
+	 */
+	public interface CalibrationnListener{
+		/**
+		 * 标定结果返回
+		 * @param result true为成功, false为失败
+		 */
+		void calibration(boolean result);
 	}
 }

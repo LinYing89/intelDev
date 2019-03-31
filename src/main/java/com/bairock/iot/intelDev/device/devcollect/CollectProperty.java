@@ -114,7 +114,7 @@ public class CollectProperty {
 	}
 	
 	public void addOnCurrentValueChangedListener(OnCurrentValueChangedListener listener) {
-		if(null != listener) {
+		if(null != listener && !setOnCurrentValueChanged.contains(listener)) {
 			setOnCurrentValueChanged.add(listener);
 		}
 	}

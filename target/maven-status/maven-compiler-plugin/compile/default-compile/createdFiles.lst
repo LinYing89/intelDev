@@ -20,6 +20,7 @@ com\bairock\iot\intelDev\http\LoginTask$1.class
 com\bairock\iot\intelDev\device\DeviceStateNote.class
 com\bairock\iot\intelDev\http\HttpDownloadTask$OnExecutedListener.class
 com\bairock\iot\intelDev\device\devcollect\CollectProperty$1.class
+com\bairock\iot\intelDev\order\JsonOrder.class
 com\bairock\iot\intelDev\linkage\guagua\GuaguaHolder.class
 com\bairock\iot\intelDev\data\Result.class
 com\bairock\iot\intelDev\device\CtrlCode.class
@@ -27,6 +28,7 @@ com\bairock\iot\intelDev\linkage\loop\LoopHolder.class
 com\bairock\iot\intelDev\device\devcollect\CollectProperty$OnSimulatorChangedListener.class
 com\bairock\iot\intelDev\communication\RefreshCollectorValueHelper.class
 com\bairock\iot\intelDev\device\devcollect\DevCollectSignalContainer.class
+com\bairock\iot\intelDev\order\LoginModel.class
 com\bairock\iot\intelDev\device\remoter\Curtain.class
 com\bairock\iot\intelDev\linkage\LinkageCondition.class
 com\bairock\iot\intelDev\user\DevGroup$OnDeviceCollectionChangedListener.class
@@ -115,6 +117,7 @@ com\bairock\iot\intelDev\data\DevGroupLoginResult.class
 com\bairock\iot\intelDev\device\devswitch\DevSwitchOneRoad.class
 com\bairock\iot\intelDev\device\IDevice.class
 com\bairock\iot\intelDev\device\devcollect\ValueTrigger$OnTriggedChangedListener.class
+com\bairock\iot\intelDev\order\LoginOrder.class
 com\bairock\iot\intelDev\device\devswitch\DevSwitchMsgSign.class
 com\bairock\iot\intelDev\user\MyHome$OnNameChangedListener.class
 com\bairock\iot\intelDev\device\DevState.class
@@ -160,6 +163,7 @@ com\bairock\iot\intelDev\communication\DevChannelBridgeHelper.class
 com\bairock\iot\intelDev\http\CheckDevImgVersionCode$1.class
 com\bairock\iot\intelDev\device\devswitch\SubDev.class
 com\bairock\iot\intelDev\communication\DevChannelBridgeHelper$OnHeartSendListener.class
+com\bairock\iot\intelDev\device\devcollect\DevCollect$CalibrationnListener.class
 com\bairock\iot\intelDev\linkage\timing\MyTime.class
 com\bairock\iot\intelDev\data\DeviceImg.class
 com\bairock\iot\intelDev\device\Device$OnStateChangedListener.class

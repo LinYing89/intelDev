@@ -15,7 +15,7 @@ import com.bairock.iot.intelDev.device.CtrlCodeHelper;
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorValue("Pressure")
-public class Pressure extends DevCollectSignal {
+public class Pressure extends DevCollect {
 
 	/**
 	 * 
@@ -41,6 +41,7 @@ public class Pressure extends DevCollectSignal {
 				return;
 			}
 
+			super.handleSingleMsg(state);
 			if (state.startsWith(CtrlCodeHelper.getIns().getDct(CtrlCodeHelper.DCT_PRESSURE_PER_VALUE))) {
 				String strState = state.substring(1);
 				getCollectProperty().setPercent(Float.valueOf(strState));

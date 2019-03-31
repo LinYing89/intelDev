@@ -7,7 +7,7 @@ public class ConfigNewDevice {
 
 	public static void main(String[] args) {
 		try {
-			new DevServer().run();
+			DevServer.getIns().run();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
