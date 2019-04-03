@@ -168,4 +168,5 @@ com\bairock\iot\intelDev\linkage\timing\MyTime.class
 com\bairock\iot\intelDev\data\DeviceImg.class
 com\bairock\iot\intelDev\device\Device$OnStateChangedListener.class
 com\bairock\iot\intelDev\linkage\guagua\GuaguaHelper$CheckGuaguaThread.class
+com\bairock\iot\intelDev\enums\ResultEnum.class
 com\bairock\iot\intelDev\linkage\TriggerStyle.class
