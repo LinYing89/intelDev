@@ -10,7 +10,6 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Transient;
 
@@ -42,7 +41,10 @@ public class DevGroup {
 	@Column(nullable=false)
 	private String id;
 
-	@ManyToOne
+	private String userid;
+	private String userPetname;
+	
+	@Transient
 	@JsonBackReference("user_group")
 	private User user;
 
@@ -94,6 +96,22 @@ public class DevGroup {
 
 	public void setId(String id) {
 		this.id = id;
+	}
+
+	public String getUserid() {
+		return userid;
+	}
+
+	public void setUserid(String userid) {
+		this.userid = userid;
+	}
+
+	public String getUserPetname() {
+		return userPetname;
+	}
+
+	public void setUserPetname(String userPetname) {
+		this.userPetname = userPetname;
 	}
 
 	/**

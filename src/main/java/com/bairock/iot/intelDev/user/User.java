@@ -4,16 +4,17 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 import com.bairock.iot.intelDev.device.Device;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 /**
@@ -28,17 +29,24 @@ public class User {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Long id;
-	
-	private String name;
-	private String psd;
+	private String userid;
+	private String username;
+	private String password;
+	private String petname;
+	//性别,true为男, false为女
+	@Column(columnDefinition="boolean default true")
+	private boolean gender;
 	private String email;
 	private String tel;
-	private String petName;
-
+	@Column(columnDefinition="boolean default false")
+	private boolean enable=false;
+	private String remark;
+	
 	@Temporal(TemporalType.TIMESTAMP)
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone="GMT+8")
 	private Date registerTime;
 
-	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+	@Transient
 	@JsonManagedReference("user_group")
 	private List<DevGroup> listDevGroup = new ArrayList<>();
 
@@ -46,24 +54,6 @@ public class User {
 	 * 
 	 */
 	public User() {
-	}
-
-	/**
-	 * 
-	 * @param name
-	 * @param psd
-	 * @param email
-	 * @param tel
-	 * @param petName
-	 * @param registerTime
-	 */
-	public User(String name, String psd, String email, String tel, String petName, Date registerTime) {
-		this.name = name;
-		this.psd = psd;
-		this.email = email;
-		this.tel = tel;
-		this.petName = petName;
-		this.registerTime = registerTime;
 	}
 
 	/**
@@ -82,40 +72,60 @@ public class User {
 		this.id = id;
 	}
 
-	/**
-	 * get user name
-	 * 
-	 * @return
-	 */
-	public String getName() {
-		return name;
+	public String getUserid() {
+		return userid;
 	}
 
-	/**
-	 * set user name
-	 * 
-	 * @param userName
-	 */
-	public void setName(String userName) {
-		this.name = userName;
+	public void setUserid(String userid) {
+		this.userid = userid;
 	}
 
-	/**
-	 * get user password
-	 * 
-	 * @return
-	 */
-	public String getPsd() {
-		return psd;
+	public String getUsername() {
+		return username;
 	}
 
-	/**
-	 * set user password
-	 * 
-	 * @param userPsd
-	 */
-	public void setPsd(String userPsd) {
-		this.psd = userPsd;
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public String getPetname() {
+		return petname;
+	}
+
+	public void setPetname(String petname) {
+		this.petname = petname;
+	}
+
+	public boolean isGender() {
+		return gender;
+	}
+
+	public void setGender(boolean gender) {
+		this.gender = gender;
+	}
+
+	public boolean isEnable() {
+		return enable;
+	}
+
+	public void setEnable(boolean enable) {
+		this.enable = enable;
+	}
+
+	public String getRemark() {
+		return remark;
+	}
+
+	public void setRemark(String remark) {
+		this.remark = remark;
 	}
 
 	/**
@@ -152,24 +162,6 @@ public class User {
 	 */
 	public void setTel(String tel) {
 		this.tel = tel;
-	}
-
-	/**
-	 * get pet name
-	 * 
-	 * @return
-	 */
-	public String getPetName() {
-		return petName;
-	}
-
-	/**
-	 * set pet name
-	 * 
-	 * @param petName
-	 */
-	public void setPetName(String petName) {
-		this.petName = petName;
 	}
 
 	/**
@@ -219,6 +211,8 @@ public class User {
 	public void addGroup(DevGroup group) {
 		if(null != group) {
 			group.setUser(this);
+			group.setUserid(userid);
+			group.setUserPetname(petname);
 			listDevGroup.add(group);
 		}
 	}
@@ -273,73 +267,5 @@ public class User {
         }
         return null;
     }
-    
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((email == null) ? 0 : email.hashCode());
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		result = prime * result + ((petName == null) ? 0 : petName.hashCode());
-		result = prime * result + ((registerTime == null) ? 0 : registerTime.hashCode());
-		result = prime * result + ((tel == null) ? 0 : tel.hashCode());
-		result = prime * result + ((name == null) ? 0 : name.hashCode());
-		result = prime * result + ((psd == null) ? 0 : psd.hashCode());
-		return result;
-	}
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		User other = (User) obj;
-		if (email == null) {
-			if (other.email != null)
-				return false;
-		} else if (!email.equals(other.email))
-			return false;
-		if (id == null) {
-			if (other.id != null)
-				return false;
-		} else if (!id.equals(other.id))
-			return false;
-		if (petName == null) {
-			if (other.petName != null)
-				return false;
-		} else if (!petName.equals(other.petName))
-			return false;
-		if (registerTime == null) {
-			if (other.registerTime != null)
-				return false;
-		} else if (!registerTime.equals(other.registerTime))
-			return false;
-		if (tel == null) {
-			if (other.tel != null)
-				return false;
-		} else if (!tel.equals(other.tel))
-			return false;
-		if (name == null) {
-			if (other.name != null)
-				return false;
-		} else if (!name.equals(other.name))
-			return false;
-		if (psd == null) {
-			if (other.psd != null)
-				return false;
-		} else if (!psd.equals(other.psd))
-			return false;
-		return true;
-	}
-
-	@Override
-	public String toString() {
-		String str = String.format("User(id:%d, Name:%s, psd:%s, email:%s, tel:%s, petName:%s)", 
-				id, name, psd, email, tel, petName);
-		return str;
-	}
-	
 }

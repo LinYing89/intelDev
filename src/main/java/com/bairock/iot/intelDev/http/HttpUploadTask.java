@@ -10,19 +10,19 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 import com.bairock.iot.intelDev.data.Result;
-import com.bairock.iot.intelDev.user.User;
+import com.bairock.iot.intelDev.user.DevGroup;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class HttpUploadTask extends Thread {
 
 	private String strUrl;
-	private User user;
+	private DevGroup devGroup;
 	private OnExecutedListener onExecutedListener;
 	
-	public HttpUploadTask(User user, String serverName) {
+	public HttpUploadTask(DevGroup devGroup, String serverName) {
 		this.strUrl = "http://" + serverName + "/group/client/groupUpload";
-		this.user = user;
+		this.devGroup = devGroup;
 	}
 	
 	public OnExecutedListener getOnExecutedListener() {
@@ -57,7 +57,7 @@ public class HttpUploadTask extends Thread {
 			urlConnection.connect();
 			
 			ObjectMapper mapperWrite = new ObjectMapper();
-			String jsonUser = mapperWrite.writeValueAsString(user);
+			String jsonUser = mapperWrite.writeValueAsString(devGroup);
 			
 //			String json = "{\"name\":\"admin\"}";
 			//建立输入流，向指向的URL传入参数

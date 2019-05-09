@@ -99,9 +99,14 @@ public class DevCollect extends Device{
 		return OrderHelper.getOrderMsg(OrderHelper.QUERY_HEAD + getCoding() + OrderHelper.SEPARATOR + "8");
 	}
 	
-	//创建标定报文
-	public String createCalibrationOrder(int order) {
-		String strHex = Integer.toHexString(order);
+	/**
+	 * 创建标定报文, 精度0.01, 传入参数为原始数据, 方法内会乘以100
+	 * @param order
+	 * @return
+	 */
+	public String createCalibrationOrder(float order) {
+		int iOrder = (int) (order * 100);
+		String strHex = Integer.toHexString(iOrder);
 		return OrderHelper.getOrderMsg(OrderHelper.SET_HEAD + getCoding() + OrderHelper.SEPARATOR + "B" + strHex);
 	}
 	

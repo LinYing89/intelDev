@@ -45,7 +45,7 @@ public class DevChannelBridgeHelper {
 		DevChannelBridge dcb = null;
 		for (DevChannelBridge db : listDevChannelBridge) {
 			if(db.getDevice() != null){
-				if(db.getDevice().getDevGroup().getUser().getName().equals(userName)
+				if(db.getDevice().getDevGroup().getUser().getUserid().equals(userName)
 						&& db.getDevice().getDevGroup().getName().equals(groupName)) {
 					if(devInDevChannelBridge(db, dev)) {
 						return db;
@@ -100,7 +100,7 @@ public class DevChannelBridgeHelper {
 	public DevChannelBridge getDevChannelBridge(String devCoding, String userName, String groupName) {
 		for (DevChannelBridge db : listDevChannelBridge) {
 			if(db.getDevice() != null){
-				if(db.getDevice().getDevGroup().getUser().getName().equals(userName)
+				if(db.getDevice().getDevGroup().getUser().getUserid().equals(userName)
 						&& db.getDevice().getDevGroup().getName().equals(groupName)) {
 					if(devInDevChannelBridge(db, devCoding)) {
 						return db;

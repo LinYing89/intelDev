@@ -45,11 +45,6 @@ public class SubDev extends Device implements IStateDev {
 	}
 
 	@Override
-	public boolean isNormal() {
-		return getParent().isNormal();
-	}
-
-	@Override
 	public void turnOn() {
 		setDevStateId(DevStateHelper.DS_KAI);
 	}
