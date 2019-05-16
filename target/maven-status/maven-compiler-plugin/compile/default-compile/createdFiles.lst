@@ -32,6 +32,7 @@ com\bairock\iot\intelDev\order\LoginModel.class
 com\bairock\iot\intelDev\device\remoter\Curtain.class
 com\bairock\iot\intelDev\linkage\LinkageCondition.class
 com\bairock\iot\intelDev\user\DevGroup$OnDeviceCollectionChangedListener.class
+com\bairock\iot\intelDev\http\HttpDownloadBase$OnExecutedListener.class
 com\bairock\iot\intelDev\http\HttpDownloadDeviceImgTask$OnExecutedListener.class
 com\bairock\iot\intelDev\http\HttpDownloadTask.class
 com\bairock\iot\intelDev\device\alarm\AlarmInfo.class
@@ -67,14 +68,18 @@ com\bairock\iot\intelDev\device\Device$OnAliasChangedListener.class
 com\bairock\iot\intelDev\device\remoter\Television.class
 com\bairock\iot\intelDev\device\DevStateHelper.class
 com\bairock\iot\intelDev\linkage\timing\ZTimer.class
+com\bairock\iot\intelDev\http\HttpDownloadBase.class
+com\bairock\iot\intelDev\data\DragDeviceHelper.class
 com\bairock\iot\intelDev\device\Gear$1.class
 com\bairock\iot\intelDev\communication\SearchDeviceHelper.class
 com\bairock\iot\intelDev\device\remoter\Remoter.class
+com\bairock\iot\intelDev\data\DragConfig.class
 com\bairock\iot\intelDev\device\devcollect\Pressure.class
 com\bairock\iot\intelDev\http\CheckDevImgVersionCode$OnExecutedListener.class
 com\bairock\iot\intelDev\communication\FindDevHelper.class
 com\bairock\iot\intelDev\device\DevContainer.class
 com\bairock\iot\intelDev\device\VirTualDevice.class
+com\bairock\iot\intelDev\http\HttpUploadBase$1.class
 com\bairock\iot\intelDev\communication\SearchDeviceHelper$OnSearchListener.class
 com\bairock\iot\intelDev\device\DevCategory.class
 com\bairock\iot\intelDev\device\devcollect\CollectSignalSource.class
@@ -103,6 +108,7 @@ com\bairock\iot\intelDev\http\LoginTask$OnExecutedListener.class
 com\bairock\iot\intelDev\device\devcollect\ValueTrigger$1.class
 com\bairock\iot\intelDev\device\Coordinator.class
 com\bairock\iot\intelDev\user\Util.class
+com\bairock\iot\intelDev\data\DragDevice.class
 com\bairock\iot\intelDev\linkage\LinkageHelper.class
 com\bairock\iot\intelDev\communication\SearchDeviceHelper$SearchDeviceThread.class
 com\bairock\iot\intelDev\device\devcollect\DevCollectSwitch.class
@@ -124,6 +130,7 @@ com\bairock\iot\intelDev\device\DevState.class
 com\bairock\iot\intelDev\device\remoter\IRemoter.class
 com\bairock\iot\intelDev\device\devcollect\CollectProperty$OnValueTriggedListener.class
 com\bairock\iot\intelDev\communication\FindDevHelper$TSender.class
+com\bairock\iot\intelDev\http\HttpUploadBase$OnExecutedListener.class
 com\bairock\iot\intelDev\device\Device$OnGearChangedListener.class
 com\bairock\iot\intelDev\device\devswitch\DevSwitch.class
 com\bairock\iot\intelDev\device\OrderHelper.class
@@ -141,6 +148,7 @@ com\bairock\iot\intelDev\device\AlarmStyle.class
 com\bairock\iot\intelDev\device\CtrlCodeHelper.class
 com\bairock\iot\intelDev\device\remoter\IRemoterKey.class
 com\bairock\iot\intelDev\device\SetDevModelTask.class
+com\bairock\iot\intelDev\http\HttpUploadBase.class
 com\bairock\iot\intelDev\device\devcollect\CollectProperty$OnUnitSymbolChangedListener.class
 com\bairock\iot\intelDev\user\IntelDevHelper.class
 com\bairock\iot\intelDev\device\Gear.class

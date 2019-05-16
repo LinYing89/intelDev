@@ -39,6 +39,13 @@ public class DragDevice {
 	//图标名称, 如果时预定于图标, 则为图标名称, 否则为图片路径
 	private String imageName = "";
 	
+	//图标宽度
+	@Column(columnDefinition = "int default 50", nullable = false)
+	private Integer imageWidth = 50;
+	//图标高度
+	@Column(columnDefinition = "int default 50", nullable = false)
+	private Integer imageHeight = 50;
+	
 	public String getId() {
 		return id;
 	}
@@ -81,4 +88,16 @@ public class DragDevice {
 	public void setImageName(String imageName) {
 		this.imageName = imageName;
 	}
+    public Integer getImageWidth() {
+        return imageWidth;
+    }
+    public void setImageWidth(Integer imageWidth) {
+        this.imageWidth = imageWidth;
+    }
+    public Integer getImageHeight() {
+        return imageHeight;
+    }
+    public void setImageHeight(Integer imageHeight) {
+        this.imageHeight = imageHeight;
+    }
 }

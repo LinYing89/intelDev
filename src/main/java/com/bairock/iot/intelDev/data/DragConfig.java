@@ -16,6 +16,8 @@ public class DragConfig {
     private int dragBackgroundWidth = 300;
     @Column(columnDefinition = "int default 300", nullable = false)
     private int dragBackgroundHeight = 300;
+    @Column(columnDefinition="boolean default true",nullable=false)
+    private boolean showDeviceName = true;
 
     public String getDevGroupId() {
         return devGroupId;
@@ -47,5 +49,13 @@ public class DragConfig {
 
     public void setDragBackgroundHeight(int dragBackgroundHeight) {
         this.dragBackgroundHeight = dragBackgroundHeight;
+    }
+
+    public boolean isShowDeviceName() {
+        return showDeviceName;
+    }
+
+    public void setShowDeviceName(boolean showDeviceName) {
+        this.showDeviceName = showDeviceName;
     }
 }
