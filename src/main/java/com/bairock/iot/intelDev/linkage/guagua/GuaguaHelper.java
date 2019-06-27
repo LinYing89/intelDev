@@ -2,12 +2,19 @@ package com.bairock.iot.intelDev.linkage.guagua;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.util.Iterator;
 import java.util.concurrent.TimeUnit;
 
 import javax.persistence.Transient;
 
 import com.bairock.iot.intelDev.device.CtrlModel;
+import com.bairock.iot.intelDev.device.Device;
 import com.bairock.iot.intelDev.device.GuaguaMouth;
+import com.bairock.iot.intelDev.linkage.Effect;
+import com.bairock.iot.intelDev.linkage.Linkage;
+import com.bairock.iot.intelDev.linkage.LinkageCondition;
+import com.bairock.iot.intelDev.linkage.OnRemovedListener;
+import com.bairock.iot.intelDev.linkage.SubChain;
 import com.bairock.iot.intelDev.user.IntelDevHelper;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -25,6 +32,7 @@ public class GuaguaHelper {
 	@Transient
 	@JsonIgnore
 	private OnOrderSendListener onOrderSendListener;
+	private OnRemovedListener onRemovedListener;
 
 	/**
 	 * 
@@ -60,6 +68,14 @@ public class GuaguaHelper {
 		this.guaguaHolder = guaguaHolder;
 	}
 
+	public OnRemovedListener getOnRemovedListener() {
+        return onRemovedListener;
+    }
+
+    public void setOnRemovedListener(OnRemovedListener onRemovedListener) {
+        this.onRemovedListener = onRemovedListener;
+    }
+    
 	/**
 	 * 
 	 */
@@ -113,6 +129,37 @@ public class GuaguaHelper {
 		 */
 		void onChanged(GuaguaMouth guaguaMouth, String order, CtrlModel ctrlModel);
 	}
+	
+	public void removeDevice(Device device) {
+        for (Linkage linkage : guaguaHolder.getListLinkage()) {
+            //删除条件设备
+            if (linkage instanceof SubChain) {
+                Iterator<LinkageCondition> iterator = ((SubChain) linkage).getListCondition().iterator();
+                if (iterator.hasNext()) {
+                    LinkageCondition lc = iterator.next();
+                    if (lc.getDevice().getId().equals(device.getId())) {
+                        lc.setDevice(null);
+                        iterator.remove();
+                        if(onRemovedListener != null) {
+                            onRemovedListener.onLinkageConditionRemoved(lc);
+                        }
+                    }
+                }
+            }
+            //删除影响设备
+            Iterator<Effect> iterator = linkage.getListEffect().iterator();
+            if (iterator.hasNext()) {
+                Effect effect = iterator.next();
+                if (effect.getDevice().getId().equals(device.getId())) {
+                    effect.setDevice(null);
+                    iterator.remove();
+                    if(onRemovedListener != null) {
+                        onRemovedListener.onEffectRemoved(effect);
+                    }
+                }
+            }
+        }
+    }
 	
 	/**
 	 * 

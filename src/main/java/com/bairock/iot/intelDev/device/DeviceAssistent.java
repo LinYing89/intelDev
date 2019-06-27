@@ -91,6 +91,7 @@ public class DeviceAssistent {
 		Device device = null;
 		switch(mcId){
 		case MainCodeHelper.XIE_TIAO_QI:
+		case MainCodeHelper.PLC:
 			device = new Coordinator(mcId, sc);
 			break;
 		case MainCodeHelper.KG_1LU_2TAI:

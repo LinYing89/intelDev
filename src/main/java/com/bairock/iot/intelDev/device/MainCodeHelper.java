@@ -17,6 +17,10 @@ public class MainCodeHelper {
 	 */
 	public static final String XIE_TIAO_QI = "omc_xtq";
 	/**
+     * PLC
+     */
+    public static final String PLC = "omc_plc";
+	/**
 	 * 呱呱嘴
 	 */
 	public static final String GUAGUA_MOUTH = "omc_ggz";
@@ -163,6 +167,7 @@ public class MainCodeHelper {
 	private MainCodeHelper(){
 		listMainCode = new ArrayList<MainCode>();
 		listMainCode.add(new MainCode(XIE_TIAO_QI, "A1", "xietiaoqi"));
+		listMainCode.add(new MainCode(PLC, "Ax", "PLC"));
 		listMainCode.add(new MainCode(GUAGUA_MOUTH, "R1", "guaguazui"));
 		listMainCode.add(new MainCode(MEN_JIN, "w1", "menjin"));
 		listMainCode.add(new MainCode(YE_WEI, "y1", "qiyachuanganyeweiji"));

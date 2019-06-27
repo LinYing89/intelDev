@@ -45,6 +45,9 @@ public class DragDevice {
 	//图标高度
 	@Column(columnDefinition = "int default 50", nullable = false)
 	private Integer imageHeight = 50;
+	//图标选择角度
+    @Column(columnDefinition = "double default 0", nullable = false)
+	private Double rotate = (double) 0;
 	
 	public String getId() {
 		return id;
@@ -99,5 +102,11 @@ public class DragDevice {
     }
     public void setImageHeight(Integer imageHeight) {
         this.imageHeight = imageHeight;
+    }
+    public Double getRotate() {
+        return rotate;
+    }
+    public void setRotate(Double rotate) {
+        this.rotate = rotate;
     }
 }

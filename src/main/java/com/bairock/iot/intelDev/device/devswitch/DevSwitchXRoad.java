@@ -5,6 +5,8 @@ import javax.persistence.Entity;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 
+import com.bairock.iot.intelDev.device.Device;
+
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorValue("DevSwitchXRoad")
@@ -25,6 +27,30 @@ public class DevSwitchXRoad extends DevSwitch {
 			}
 			addChildDev(sd);
 		}
+	}
+	
+	/**
+	 * 根据指定路数, 重新构建子设备, 添加或删除, 原有的不变
+	 * @param roadNumber 路数
+	 */
+	public void rebuildSubDev(int roadNumber) {
+	    int oldSize = getListDev().size();
+	    if(roadNumber == oldSize) {
+	        return;
+	    }
+	    
+	    if(roadNumber > oldSize) {
+	        for(int i = oldSize + 1; i <= roadNumber; i++) {
+	            SubDev sd = new SubDev("smc_w", String.valueOf(i));
+	            sd.setVisibility(true);
+	            addChildDev(sd);
+	        }
+	    }else {
+	        for(int i = roadNumber + 1; i <= oldSize; i++) {
+	            Device dev = getSubDevBySc(String.valueOf(i));
+	            removeChildDev(dev);
+	        }
+	    }
 	}
 	
 //	@Override
