@@ -11,11 +11,12 @@ import com.bairock.iot.intelDev.device.Device;
 import com.bairock.iot.intelDev.device.DeviceAssistent;
 import com.bairock.iot.intelDev.device.MainCodeHelper;
 import com.bairock.iot.intelDev.device.OrderHelper;
+import com.bairock.iot.intelDev.device.XRoadDevice;
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorValue("DevCollectSignalContainer")
-public class DevCollectSignalContainer extends DevContainer {
+public class DevCollectSignalContainer extends DevContainer implements XRoadDevice{
 
 	public DevCollectSignalContainer() {
 		this("", "");
@@ -40,10 +41,33 @@ public class DevCollectSignalContainer extends DevContainer {
 		return OrderHelper.getOrderMsg(OrderHelper.QUERY_HEAD + getCoding() + OrderHelper.SEPARATOR + "8");
 	}
 
+//	@Override
+//	public void removeChildDev(Device device) {
+//		return;
+//	}
+	
 	@Override
-	public void removeChildDev(Device device) {
-		return;
-	}
+    public void rebuildChildren(int roadNumber) {
+        int oldSize = getListDev().size();
+        if(roadNumber == oldSize) {
+            return;
+        }
+        
+        if(roadNumber > oldSize) {
+            for(int i = oldSize + 1; i <= roadNumber; i++) {
+                DevCollectSignal sd = (DevCollectSignal) DeviceAssistent.createDeviceByMcId(MainCodeHelper.COLLECTOR_SIGNAL,
+                        String.valueOf(i));
+                sd.setName(this.getCoding() + "_" + sd.getCoding());
+                sd.setVisibility(true);
+                addChildDev(sd);
+            }
+        }else {
+            for(int i = roadNumber + 1; i <= oldSize; i++) {
+                Device dev = getSubDevBySc(String.valueOf(i));
+                removeChildDev(dev);
+            }
+        }
+    }
 
 	@Override
 	public void handleSingleMsg(String state) {

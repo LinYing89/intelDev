@@ -113,6 +113,19 @@ public class DevHaveChild extends Device {
 		return null;
 	}
 	
+	/**
+     * 
+     * @param sc sub code
+     * @return
+     */
+    public Device getSubDevBySc(String sc) {
+        for (Device dev : getListDev()) {
+            if (dev.getSubCode().equals(sc)) {
+                return dev;
+            }
+        }
+        return null;
+    }
 	
 	public Device findDeviceByMainCodeAndSubCode(String mainCode, String subCode){
 		if(null == mainCode || null == subCode) {
@@ -162,7 +175,11 @@ public class DevHaveChild extends Device {
 		}
 	}
 	
-	public void addOnDeviceCollectionChangedListener(OnDeviceCollectionChangedListener listener) {
+	public Set<OnDeviceCollectionChangedListener> getStOnDeviceCollectionChangedListener() {
+        return stOnDeviceCollectionChangedListener;
+    }
+
+    public void addOnDeviceCollectionChangedListener(OnDeviceCollectionChangedListener listener) {
 		stOnDeviceCollectionChangedListener.add(listener);
 	}
 	

@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 
+import com.bairock.iot.intelDev.device.Device;
 import com.bairock.iot.intelDev.user.IntelDevHelper;
 
 /**
@@ -146,4 +147,19 @@ public class DevCollectSignal extends DevCollect {
 				/ (cp.getCrestReferValue() - cp.getLeastReferValue());
 		return percent;
 	}
+	
+	@Override
+    public int compareTo(Device o) {
+        if (o == null) {
+            return -1;
+        }else if(this.getSortIndex() == o.getSortIndex()) {
+            try {
+                return Integer.parseInt(this.getSubCode()) - Integer.parseInt(o.getSubCode());
+            }catch(Exception e) {
+                return this.getLongCoding().compareTo(o.getLongCoding());
+            }
+        }else {
+            return this.getSortIndex() - o.getSortIndex();
+        }
+    }
 }

@@ -18,7 +18,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorValue("SubDev")
-public class SubDev extends Device implements IStateDev {
+public class SubDev extends Device implements IStateDev{
 
 	public SubDev() {
 		super();
@@ -77,4 +77,16 @@ public class SubDev extends Device implements IStateDev {
 				+ Integer.toHexString(road);
 		return OrderHelper.getOrderMsg(order);
 	}
+
+    @Override
+    public int compareTo(Device o) {
+        if (o == null) {
+            return -1;
+        }else if(this.getSortIndex() == o.getSortIndex()) {
+            return Integer.parseInt(this.getSubCode()) - Integer.parseInt(o.getSubCode());
+        }else {
+            return this.getSortIndex() - o.getSortIndex();
+        }
+    }
+	
 }

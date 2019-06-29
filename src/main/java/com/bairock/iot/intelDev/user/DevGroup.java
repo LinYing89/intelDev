@@ -533,7 +533,7 @@ public class DevGroup {
 //			dev = parentDev.findDeviceByMainCodeAndSubCode(codes[1], codes[2]);
 		} else {
 			// it maybe not the sub device
-			if (coding.length() < 6) {
+			if (coding.length() < 3) {
 				return null;
 			}
 			String mc = coding.substring(0, 2);

@@ -35,25 +35,6 @@ public class DevSwitch extends DevHaveChild {
 		super(mcId, sc);
 	}
 
-	/**
-	 * 
-	 * @param sc sub code
-	 * @return
-	 */
-	public Device getSubDevBySc(String sc) {
-		for (Device dev : getListDev()) {
-			if (dev.getSubCode().equals(sc)) {
-				return dev;
-			}
-		}
-		return null;
-	}
-
-	@Override
-	public void removeChildDev(Device device) {
-		return;
-	}
-
 	@Override
 	public String createQueueOrder() {
 		return OrderHelper.getOrderMsg(OrderHelper.QUERY_HEAD + getCoding() + OrderHelper.SEPARATOR + "8");

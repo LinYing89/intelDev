@@ -6,11 +6,12 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 
 import com.bairock.iot.intelDev.device.Device;
+import com.bairock.iot.intelDev.device.XRoadDevice;
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorValue("DevSwitchXRoad")
-public class DevSwitchXRoad extends DevSwitch {
+public class DevSwitchXRoad extends DevSwitch implements XRoadDevice{
 
 	public DevSwitchXRoad() {
 		this("", "");
@@ -33,7 +34,8 @@ public class DevSwitchXRoad extends DevSwitch {
 	 * 根据指定路数, 重新构建子设备, 添加或删除, 原有的不变
 	 * @param roadNumber 路数
 	 */
-	public void rebuildSubDev(int roadNumber) {
+	@Override
+	public void rebuildChildren(int roadNumber) {
 	    int oldSize = getListDev().size();
 	    if(roadNumber == oldSize) {
 	        return;
