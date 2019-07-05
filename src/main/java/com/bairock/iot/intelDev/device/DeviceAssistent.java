@@ -175,7 +175,7 @@ public class DeviceAssistent {
 		if (null == coding) {
 			return null;
 		}
-		if (null == coding || coding.length() < 6) {
+		if (null == coding || coding.length() < 3) {
 			return null;
 		}
 		Device device = null;
@@ -226,7 +226,7 @@ public class DeviceAssistent {
 	 * @return
 	 */
 	public static Device getDeviceWithCoding(String coding, List<Device> listDevice){
-		if(null == coding){
+		if(null == coding || coding.length() < 3){
 			return null;
 		}
 		Device dev = null;

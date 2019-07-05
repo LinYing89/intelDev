@@ -774,7 +774,7 @@ public class DevGroup {
 	 * @param device
 	 */
 	public static void createDefaultDeviceNameAddSubCode(Device device) {
-		if(device.getMainCodeId().equals(MainCodeHelper.SMC_WU)) {
+		if(null == device || device.getMainCodeId().equals(MainCodeHelper.SMC_WU)) {
 			return;
 		}
 		String name = MainCodeHelper.getIns().getMainCodeInfo(device.getMainCodeId());
