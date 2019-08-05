@@ -236,8 +236,18 @@ public class LinkageCondition {
 			return false;
 		}
 		LinkageCondition lc = (LinkageCondition)obj;
+		boolean devEquals = false;
+		if(lc.getDevice() == null && null == getDevice()) {
+		    devEquals = true;
+		}else {
+		    if(lc.getDevice() == null || null == getDevice()) {
+		        devEquals = false;
+		        return false;
+		    }
+		    devEquals = lc.getDevice().equals(getDevice());
+		}
 		if(lc.getCompareSymbol() == getCompareSymbol()
-                && lc.getDevice().equals(getDevice())
+                && devEquals
                 && lc.getLogic() == getLogic()
                 && lc.getCompareValue() == getCompareValue()){
 			return true;

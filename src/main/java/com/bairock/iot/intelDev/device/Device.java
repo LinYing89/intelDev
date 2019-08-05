@@ -348,7 +348,7 @@ public class Device extends MyHome implements Comparable<Device>, IDevice {
 		if (!this.devStateId.equals(dsId)) {
 			String oldStateId = this.devStateId;
 			this.devStateId = dsId;
-			if (oldStateId.equals(DevStateHelper.DS_YI_CHANG)) {
+			if (oldStateId.equals(DevStateHelper.DS_YI_CHANG) || oldStateId.equals(DevStateHelper.DS_UNKNOW)) {
 				for(OnStateChangedListener listener : stOnStateChangedListener) {
 					listener.onAbnormalToNormal(this);
 				}

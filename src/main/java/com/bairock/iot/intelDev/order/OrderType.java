@@ -67,6 +67,10 @@ public enum OrderType {
 	/**
 	 * 登出
 	 */
-	LOGOUT
+	LOGOUT,
+	/**
+	 * 向本地客户端发送命令, 使其提交设备状态
+	 */
+	REFRESH_STATE
 	
 }

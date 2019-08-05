@@ -15,6 +15,7 @@ com\bairock\iot\intelDev\communication\DevServerHandler.class
 com\bairock\iot\intelDev\linkage\LinkageCondition$1.class
 com\bairock\iot\intelDev\linkage\LinkageTab$OnCheckTableListener.class
 com\bairock\iot\intelDev\device\devcollect\CollectProperty.class
+com\bairock\iot\intelDev\device\XRoadDevice.class
 com\bairock\iot\intelDev\http\HttpDownloadTask$1.class
 com\bairock\iot\intelDev\http\LoginTask$1.class
 com\bairock\iot\intelDev\device\DeviceStateNote.class
@@ -75,6 +76,7 @@ com\bairock\iot\intelDev\communication\SearchDeviceHelper.class
 com\bairock\iot\intelDev\device\remoter\Remoter.class
 com\bairock\iot\intelDev\data\DragConfig.class
 com\bairock\iot\intelDev\device\devcollect\Pressure.class
+com\bairock\iot\intelDev\linkage\OnRemovedListener.class
 com\bairock\iot\intelDev\http\CheckDevImgVersionCode$OnExecutedListener.class
 com\bairock\iot\intelDev\communication\FindDevHelper.class
 com\bairock\iot\intelDev\device\DevContainer.class
