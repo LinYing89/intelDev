@@ -133,11 +133,11 @@ public class DevChannelBridge {
 					break;
 				}
 			}
-			if (null == device) {
-				DevChannelBridgeHelper.getIns().cleanBrigdes(rootDev.findSuperParent());
-			}
+//			if (null == device) {
+//				DevChannelBridgeHelper.getIns().cleanBrigdes(rootDev.findSuperParent());
+//			}
 			if (rootDev.findSuperParent() != device) {
-				if(null != device  && device instanceof Coordinator) {
+				if(null != device && device instanceof Coordinator) {
 					return;
 				}
 				device = rootDev.findSuperParent();
@@ -206,6 +206,10 @@ public class DevChannelBridge {
 	public static final int HAVE_COMMUNICATION_RECENTLY = 3;
 	public static final int ONE_ORDER_COMMUNICATION_OFTEN = 4;
 
+	public void sendH2() {
+	    sendOrder(OrderHelper.getOrderMsg("H0:h2"), null, true);
+	}
+	
 	public int sendHeart() {
 		int result = 0;
 		if (null == device) {

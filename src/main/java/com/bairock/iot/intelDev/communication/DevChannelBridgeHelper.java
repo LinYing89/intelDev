@@ -18,7 +18,7 @@ public class DevChannelBridgeHelper {
 	private DevHeartThread seekDeviceOnlineThread;
 
 	private static DevChannelBridgeHelper ins = new DevChannelBridgeHelper();
-	public static String DEV_CHANNELBRIDGE_NAME = DevChannelBridge.class.getName();
+	public static String DEV_CHANNELBRIDGE_NAME = DeviceChannelBridge.class.getName();
 //	public static String BRIDGE_COMMUNICATION_LISTENER_NAME = 
 //			DevChannelBridge.OnCommunicationListener.class.getName();
 	public static String BRIDGE_COMMUNICATION_LISTENER_NAME = null;
@@ -265,7 +265,7 @@ public class DevChannelBridgeHelper {
 			if(null != onBridgesChangedListener) {
 				onBridgesChangedListener.onAdd(db);
 			}
-			db.sendHeart();
+			db.sendH2();
 		}
 	}
 
