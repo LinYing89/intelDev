@@ -64,6 +64,7 @@ com\bairock\iot\intelDev\device\devswitch\DevSwitchThreeState.class
 com\bairock\iot\intelDev\communication\DevServer.class
 com\bairock\iot\intelDev\device\MainCode.class
 com\bairock\iot\intelDev\linkage\LinkageTab$OnOrderSendListener.class
+com\bairock\iot\intelDev\communication\CheckClientHeart.class
 com\bairock\iot\intelDev\http\CheckDevImgVersionCode.class
 com\bairock\iot\intelDev\device\Device$OnAliasChangedListener.class
 com\bairock\iot\intelDev\device\remoter\Television.class
@@ -79,6 +80,7 @@ com\bairock\iot\intelDev\device\devcollect\Pressure.class
 com\bairock\iot\intelDev\linkage\OnRemovedListener.class
 com\bairock\iot\intelDev\http\CheckDevImgVersionCode$OnExecutedListener.class
 com\bairock\iot\intelDev\communication\FindDevHelper.class
+com\bairock\iot\intelDev\communication\DeviceChannelBridge.class
 com\bairock\iot\intelDev\device\DevContainer.class
 com\bairock\iot\intelDev\device\VirTualDevice.class
 com\bairock\iot\intelDev\http\HttpUploadBase$1.class
@@ -151,6 +153,7 @@ com\bairock\iot\intelDev\device\CtrlCodeHelper.class
 com\bairock\iot\intelDev\device\remoter\IRemoterKey.class
 com\bairock\iot\intelDev\device\SetDevModelTask.class
 com\bairock\iot\intelDev\http\HttpUploadBase.class
+com\bairock\iot\intelDev\communication\CheckClientHeart$CheckThread.class
 com\bairock\iot\intelDev\device\devcollect\CollectProperty$OnUnitSymbolChangedListener.class
 com\bairock\iot\intelDev\user\IntelDevHelper.class
 com\bairock\iot\intelDev\device\Gear.class

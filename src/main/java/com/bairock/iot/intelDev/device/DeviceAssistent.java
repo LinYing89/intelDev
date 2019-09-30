@@ -22,6 +22,8 @@ import com.bairock.iot.intelDev.device.remoter.CustomRemoter;
 import com.bairock.iot.intelDev.device.remoter.Remoter;
 import com.bairock.iot.intelDev.device.remoter.RemoterContainer;
 import com.bairock.iot.intelDev.device.remoter.Television;
+import com.bairock.iot.intelDev.device.virtual.Counter;
+import com.bairock.iot.intelDev.device.virtual.DevParam;
 import com.bairock.iot.intelDev.user.DevGroup;
 
 /**
@@ -115,6 +117,12 @@ public class DeviceAssistent {
 		case MainCodeHelper.YAO_KONG:
 			device = new RemoterContainer(mcId, sc);
 			break;
+		case MainCodeHelper.VT_PARAM:
+            device = new DevParam(mcId, sc);
+            break;
+		case MainCodeHelper.VT_COUNTER:
+            device = new Counter(mcId, sc);
+            break;
 		case MainCodeHelper.YE_WEI:
 			device = new Pressure(mcId, sc);
 			break;

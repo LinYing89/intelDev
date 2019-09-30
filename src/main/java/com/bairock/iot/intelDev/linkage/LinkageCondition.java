@@ -11,7 +11,9 @@ import javax.persistence.ManyToOne;
 import com.bairock.iot.intelDev.device.CompareSymbol;
 import com.bairock.iot.intelDev.device.Device;
 import com.bairock.iot.intelDev.device.IStateDev;
+import com.bairock.iot.intelDev.device.IValueDevice;
 import com.bairock.iot.intelDev.device.devcollect.DevCollect;
+import com.bairock.iot.intelDev.device.virtual.VirTualDevice;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -196,22 +198,30 @@ public class LinkageCondition {
 		if (null == getDevice()) {
 			return result;
 		}
-		float value = 0;
+		double value = 0;
 		if (device instanceof IStateDev) {
 			value = device.isKaiState() ? 1 : 0;
-		} else if (device instanceof DevCollect) {
-			DevCollect cd = (DevCollect) device;
-			Float fValue = null;
-//			if(getTriggerStyle() == TriggerStyle.PERCENT) {
-//				fValue = cd.getCollectProperty().getPercent();
-//			}else {
-//				fValue = cd.getCollectProperty().getCurrentValue();
-//			}
-			fValue = cd.getCollectProperty().getCurrentValue();
-			if (fValue == null) {
-				return null;
-			}
-			value = fValue;
+		} else if (device instanceof IValueDevice) {
+		    if(device instanceof DevCollect) {
+		        DevCollect cd = (DevCollect) device;
+		        Float fValue = null;
+		        fValue = cd.getCollectProperty().getCurrentValue();
+		        if (fValue == null) {
+		            return null;
+		        }
+		        value = fValue;
+		    }else if(device instanceof VirTualDevice){
+		        Double dValue = null;
+		        try {
+		            dValue = Double.parseDouble(((VirTualDevice) device).getValue());
+		        }catch(Exception e) {
+		            e.printStackTrace();
+		        }
+		        if(dValue == null) {
+		            return null;
+		        }
+		        value = dValue;
+		    }
 		}
 		boolean compara = false;
 		switch (compareSymbol) {

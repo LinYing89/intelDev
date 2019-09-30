@@ -11,6 +11,7 @@ import javax.persistence.Transient;
 import com.bairock.iot.intelDev.device.CtrlCodeHelper;
 import com.bairock.iot.intelDev.device.DevStateHelper;
 import com.bairock.iot.intelDev.device.Device;
+import com.bairock.iot.intelDev.device.IValueDevice;
 import com.bairock.iot.intelDev.device.MainCodeHelper;
 import com.bairock.iot.intelDev.device.OrderHelper;
 import com.bairock.iot.intelDev.user.IntelDevHelper;
@@ -25,7 +26,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorValue("DevCollect")
-public class DevCollect extends Device{
+public class DevCollect extends Device implements IValueDevice{
 
 	@OneToOne(mappedBy = "devCollect", cascade = CascadeType.ALL, orphanRemoval = true)
 	@JsonManagedReference("devcollect_property")

@@ -14,6 +14,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 
+import com.bairock.iot.intelDev.user.Util;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -465,6 +466,17 @@ public class CollectProperty {
 			return getPercent() + "%";
 		}
 		return null;
+	}
+	
+	/**
+	 * 获取格式化后的字符串值
+	 * @return
+	 */
+	public String createFormatValue() {
+	    if(null == currentValue) {
+	        currentValue = 0f;
+	    }
+	    return Util.format2TwoScale(currentValue);
 	}
 
 	public interface OnCurrentValueChangedListener {

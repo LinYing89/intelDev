@@ -19,6 +19,7 @@ import com.bairock.iot.intelDev.device.GuaguaMouth;
 import com.bairock.iot.intelDev.device.IStateDev;
 import com.bairock.iot.intelDev.device.MainCodeHelper;
 import com.bairock.iot.intelDev.device.devcollect.DevCollect;
+import com.bairock.iot.intelDev.device.virtual.DevParam;
 import com.bairock.iot.intelDev.linkage.ChainHolder;
 import com.bairock.iot.intelDev.linkage.LinkageHolder;
 import com.bairock.iot.intelDev.linkage.guagua.GuaguaHolder;
@@ -666,6 +667,22 @@ public class DevGroup {
 			}
 		}
 	}
+	
+	/**
+	 * 查找所有虚拟设备
+	 * @param visibility
+	 * @return
+	 */
+	public List<DevParam> findListDevParam(boolean visibility) {
+        List<DevParam> listDev = new ArrayList<>();
+        for (Device dev : getListDevice()) {
+            if(dev instanceof DevParam) {
+                listDev.add((DevParam) dev);
+            }
+        }
+        Collections.sort(listDev);
+        return listDev;
+    }
 
 	public Device findDeviceByDevId(String devId) {
 		if (null == devId) {

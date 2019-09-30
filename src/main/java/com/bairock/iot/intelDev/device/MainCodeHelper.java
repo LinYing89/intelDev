@@ -84,6 +84,15 @@ public class MainCodeHelper {
 	 * 遥控器
 	 */
 	public static final String YAO_KONG = "mmc_ykq";
+	
+	/**
+     * 虚拟设备, 参数设备
+     */
+    public static final String VT_PARAM = "mmc_vt_param";
+    /**
+     * 虚拟设备, 计数器
+     */
+    public static final String VT_COUNTER = "mmc_vt_count";
 	/**
 	 * 插座
 	 */
@@ -184,6 +193,8 @@ public class MainCodeHelper {
 		listMainCode.add(new MainCode(KG_XLU_2TAI, "Bx", "xlu2taikaiguan"));
 		listMainCode.add(new MainCode(KG_3TAI, "C1", "3taikaiguan"));
 		listMainCode.add(new MainCode(YAO_KONG, "D1", "xuexiyaokongqi"));
+		listMainCode.add(new MainCode(VT_PARAM, "V1", "canshushibei"));
+		listMainCode.add(new MainCode(VT_COUNTER, "V2", "jishuqi"));
 		listMainCode.add(new MainCode(CHA_ZUO, "E1", "chazuo"));
 		listMainCode.add(new MainCode(BAO_JING1, "a1", "duogongnengbaojing1"));
 		listMainCode.add(new MainCode(BAO_JING2, "a2", "duogongnengbaojing2"));

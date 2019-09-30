@@ -1,5 +1,8 @@
 package com.bairock.iot.intelDev.user;
 
+import java.math.BigInteger;
+import java.text.DecimalFormat;
+
 import com.bairock.iot.intelDev.device.CtrlModel;
 import com.bairock.iot.intelDev.order.OrderBase;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -31,4 +34,30 @@ public class Util {
 		}
 		return order;
 	}
+	
+	/**
+	 * 固定保留两位小数, 不足两位的后面补0
+	 * @param value
+	 * @return
+	 */
+	public static String format2TwoScale(double value) {
+	    return formatValue("0.00", value);
+	}
+	
+	public static String formatValue(String format, double value) {
+        DecimalFormat df = new DecimalFormat(format);
+        return df.format(value);
+    }
+	
+//	public static void main(String[] args) {
+////        float v = 0.123f;
+////        System.out.println(format2TwoScale(v));
+//	    
+//	    int var = -1;
+//	    String hex = Integer.toHexString(var);
+//	    System.out.println(hex);
+//	    hex = "-1";
+//	    BigInteger bi = new BigInteger(hex, 16);
+//	    System.out.println(Integer.parseInt("-a", 16));
+//    }
 }

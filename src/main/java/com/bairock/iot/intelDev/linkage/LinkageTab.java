@@ -10,6 +10,7 @@ import com.bairock.iot.intelDev.device.DevStateHelper;
 import com.bairock.iot.intelDev.device.Device;
 import com.bairock.iot.intelDev.device.Gear;
 import com.bairock.iot.intelDev.device.OrderHelper;
+import com.bairock.iot.intelDev.device.virtual.VirTualDevice;
 
 /**
  * 
@@ -158,8 +159,12 @@ public class LinkageTab {
 			onCheckTableListener.onBeforCheck(list);
 		}
 		for(LinkageTabRow tabRow : list){
+		    Device device = tabRow.getDevice();
+		    //虚拟设备不发送报文, 计数器在Linkage-run中已经处理了
+		    if(device instanceof VirTualDevice) {
+		        continue;
+		    }
 			tabRow.analysisLinkageResult();
-			Device device = tabRow.getDevice();
 			if(!device.isNormal()) {
 				continue;
 			}
