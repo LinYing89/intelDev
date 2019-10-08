@@ -1,6 +1,7 @@
 com\bairock\iot\intelDev\device\CompareSymbol.class
 com\bairock\iot\intelDev\linkage\ZLogic.class
 com\bairock\iot\intelDev\device\devswitch\DevSocket.class
+com\bairock\iot\intelDev\device\virtual\DevParam.class
 com\bairock\iot\intelDev\communication\FindDevHelper$OnSendListener.class
 com\bairock\iot\intelDev\device\remoter\CustomRemoter.class
 com\bairock\iot\intelDev\communication\DevServer$1.class
@@ -82,7 +83,6 @@ com\bairock\iot\intelDev\http\CheckDevImgVersionCode$OnExecutedListener.class
 com\bairock\iot\intelDev\communication\FindDevHelper.class
 com\bairock\iot\intelDev\communication\DeviceChannelBridge.class
 com\bairock\iot\intelDev\device\DevContainer.class
-com\bairock\iot\intelDev\device\VirTualDevice.class
 com\bairock\iot\intelDev\http\HttpUploadBase$1.class
 com\bairock\iot\intelDev\communication\SearchDeviceHelper$OnSearchListener.class
 com\bairock\iot\intelDev\device\DevCategory.class
@@ -92,6 +92,7 @@ com\bairock\iot\intelDev\communication\DevChannelBridge.class
 com\bairock\iot\intelDev\device\CtrlModel.class
 com\bairock\iot\intelDev\linkage\loop\ZLoop.class
 com\bairock\iot\intelDev\linkage\LinkageTab.class
+com\bairock\iot\intelDev\device\virtual\VirTualDevice.class
 com\bairock\iot\intelDev\device\GuaguaMouth.class
 com\bairock\iot\intelDev\http\HttpUploadTask.class
 com\bairock\iot\intelDev\linkage\LinkageTabRow.class
@@ -104,6 +105,7 @@ com\bairock\iot\intelDev\order\OrderBase.class
 com\bairock\iot\intelDev\device\devswitch\SubDevThreeState.class
 com\bairock\iot\intelDev\http\LoginTask.class
 com\bairock\iot\intelDev\device\devswitch\DevSwitchXRoad.class
+com\bairock\iot\intelDev\device\virtual\DevParam$OnValueChangedListener.class
 com\bairock\iot\intelDev\user\TableVersion.class
 com\bairock\iot\intelDev\device\DeviceModelHelper.class
 com\bairock\iot\intelDev\device\remoter\RemoterKey.class
@@ -120,7 +122,6 @@ com\bairock\iot\intelDev\http\HttpUploadTask$1.class
 com\bairock\iot\intelDev\device\devcollect\CollectProperty$OnSignalSourceChangedListener.class
 com\bairock\iot\intelDev\device\devcollect\Formaldehyde.class
 com\bairock\iot\intelDev\linkage\timing\WeekHelper.class
-com\bairock\iot\intelDev\device\devcollect\Counter.class
 com\bairock\iot\intelDev\device\devcollect\DevCollectSignal$1.class
 com\bairock\iot\intelDev\device\devcollect\ValueTrigger.class
 com\bairock\iot\intelDev\data\DevGroupLoginResult.class
@@ -149,6 +150,7 @@ com\bairock\iot\intelDev\communication\DevChannelBridgeHelper$OnBridgesChangedLi
 com\bairock\iot\intelDev\device\Device$OnCtrlModelChangedListener.class
 com\bairock\iot\intelDev\order\DeviceOrder.class
 com\bairock\iot\intelDev\device\AlarmStyle.class
+com\bairock\iot\intelDev\device\virtual\Counter.class
 com\bairock\iot\intelDev\device\CtrlCodeHelper.class
 com\bairock\iot\intelDev\device\remoter\IRemoterKey.class
 com\bairock\iot\intelDev\device\SetDevModelTask.class
@@ -171,6 +173,7 @@ com\bairock\iot\intelDev\communication\RefreshCollectorValueHelper$TSender.class
 com\bairock\iot\intelDev\device\devcollect\DevCollectSignal.class
 com\bairock\iot\intelDev\device\alarm\AlarmTrigger.class
 com\bairock\iot\intelDev\device\devswitch\DevSwitchThreeRoad.class
+com\bairock\iot\intelDev\device\IValueDevice.class
 com\bairock\iot\intelDev\linkage\loop\ZLoop$LoopThread.class
 com\bairock\iot\intelDev\communication\DevChannelBridgeHelper.class
 com\bairock\iot\intelDev\http\CheckDevImgVersionCode$1.class

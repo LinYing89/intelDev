@@ -60,6 +60,10 @@ public class Device extends MyHome implements Comparable<Device>, IDevice {
 	private int sortIndex;
 	private boolean visibility = true;
 	private boolean deleted;
+	
+	@Transient
+    @JsonIgnore
+	protected String value = "0";
 
 	@OneToMany(mappedBy = "sourceDevice", cascade = CascadeType.ALL, orphanRemoval = true)
 	@JsonManagedReference("device_linkage")
@@ -457,7 +461,15 @@ public class Device extends MyHome implements Comparable<Device>, IDevice {
 		this.deleted = deleted;
 	}
 
-	public List<DeviceLinkage> getListDeviceLinkage() {
+	public String getValue() {
+        return value;
+    }
+
+    public void setValue(String value) {
+        this.value = value;
+    }
+
+    public List<DeviceLinkage> getListDeviceLinkage() {
 		return listDeviceLinkage;
 	}
 

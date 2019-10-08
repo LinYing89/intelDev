@@ -128,10 +128,12 @@ public class Timing extends Linkage {
 			for(Effect effect : getListEffect()) {
 				effect.setDsId(DevStateHelper.DS_KAI);
 			}
+			setTriggered(true);
 		}else {
 			for(Effect effect : getListEffect()) {
 				effect.setDsId(DevStateHelper.DS_GUAN);
 			}
+			setTriggered(false);
 		}
 		effectLinkageTab(LinkageTab.TIMING);
 	}

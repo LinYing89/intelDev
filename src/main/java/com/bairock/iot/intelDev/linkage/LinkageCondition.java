@@ -215,7 +215,7 @@ public class LinkageCondition {
 		        try {
 		            dValue = Double.parseDouble(((VirTualDevice) device).getValue());
 		        }catch(Exception e) {
-		            e.printStackTrace();
+		            //e.printStackTrace();
 		        }
 		        if(dValue == null) {
 		            return null;

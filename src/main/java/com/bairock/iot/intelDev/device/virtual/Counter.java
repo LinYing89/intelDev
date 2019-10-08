@@ -25,12 +25,20 @@ public class Counter extends DevParam {
 		super(mcId, sc);
 	}
 	
+	@Override
+    public String getValue() {
+        if(this.value == null || this.value.equals("")) {
+            this.value = "0";
+        }
+        return value;
+    }
+	
 	/**
 	 * and 1 number
 	 */
 	public void and1() {
 		String value = getValue();
-		if(null == value) {
+		if(null == value || this.value.equals("")) {
 			setValue("1");
 		}else {
 		    setValue(String.valueOf(Integer.parseInt(value) + 1));
@@ -42,7 +50,7 @@ public class Counter extends DevParam {
 	 */
 	public void minus1() {
 	    String value = getValue();
-        if(null == value) {
+        if(null == value || this.value.equals("")) {
             setValue("-1");
         }else {
             setValue(String.valueOf(Integer.parseInt(value) - 1));

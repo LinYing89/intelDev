@@ -18,12 +18,15 @@ import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Transient;
 
 import com.bairock.iot.intelDev.device.Device;
 import com.bairock.iot.intelDev.device.virtual.Counter;
+import com.bairock.iot.intelDev.device.virtual.DevParam;
 import com.bairock.iot.intelDev.device.virtual.VirTualDevice;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonTypeInfo.As;
@@ -55,6 +58,10 @@ public class Linkage {
     @JsonManagedReference("linkage_effect")
     private List<Effect> listEffect;
 
+    @Transient
+    @JsonIgnore
+    protected boolean triggered;
+    
     public Linkage() {
         id = UUID.randomUUID().toString();
         listEffect = Collections.synchronizedList(new ArrayList<>());
@@ -154,6 +161,14 @@ public class Linkage {
         }
     }
 
+    public boolean isTriggered() {
+        return triggered;
+    }
+
+    public void setTriggered(boolean triggered) {
+        this.triggered = triggered;
+    }
+
     /**
      * 
      * @param effect
@@ -208,12 +223,17 @@ public class Linkage {
      * @param linkageType
      */
     public void effectLinkageTab(int linkageType) {
+        
         for (Effect effect : getListEffect()) {
             Device device = effect.getDevice();
             if (device instanceof VirTualDevice) {
                 //计数器
                 if(device instanceof Counter) {
-                    counterEffect(effect);
+                    if(!triggered) {
+                        counterEffect(effect);
+                    }
+                }else if(device instanceof DevParam) {
+                    ((VirTualDevice) device).setValue(effect.getEffectContent());
                 }
             } else {
                 LinkageTab.getIns().setChain(effect.getDevice(), linkageType, effect.getDsId());

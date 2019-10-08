@@ -24,8 +24,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @DiscriminatorValue("DevParam")
 public class DevParam extends Device implements VirTualDevice{
 
-    private String value = "";
-
     @Transient
     @JsonIgnore
     private Set<OnValueChangedListener> setOnValueChanged = new HashSet<>();

@@ -19,8 +19,6 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 @DiscriminatorValue("SubCahin")
 public class SubChain extends Linkage {
 	
-	private boolean triggered;
-	
 	@OneToMany(mappedBy = "subChain",cascade = CascadeType.ALL, orphanRemoval = true)
 	@JsonManagedReference("subchain_linkagecondition")
 	private List<LinkageCondition> listCondition;
@@ -31,22 +29,6 @@ public class SubChain extends Linkage {
 	public SubChain() {
 		super();
 		listCondition = Collections.synchronizedList(new ArrayList<LinkageCondition>());
-	}
-
-//	public LinkageHolder getLinkageHolder() {
-//		return linkageHolder;
-//	}
-//
-//	public void setLinkageHolder(LinkageHolder linkageHolder) {
-//		this.linkageHolder = linkageHolder;
-//	}
-
-	public boolean isTriggered() {
-		return triggered;
-	}
-
-	public void setTriggered(boolean triggered) {
-		this.triggered = triggered;
 	}
 
 	/**
@@ -139,7 +121,11 @@ public class SubChain extends Linkage {
 			}
 		}
 		//System.out.println("getConditionResult:" + (result != null && result > 0));
-		return  result != null && result > 0;
+		boolean res = result != null && result > 0;
+		if(!res) {
+		    setTriggered(false);
+		}
+		return res;
 	}
 	
 	/**
@@ -152,6 +138,7 @@ public class SubChain extends Linkage {
 		}
 		if(getConditionResult()){
 			effectLinkageTab(LinkageTab.CHAIN);
+			setTriggered(true);
 		}
 	}
 }
