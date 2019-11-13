@@ -61,7 +61,7 @@ public class RefreshCollectorValueHelper {
 				try {
 					Set<Device> set = new HashSet<>(stMsg);
 					for (Device dev : set) {
-						String order = dev.createQueueOrder();
+						String order = dev.createQueryOrder();
 						DevChannelBridgeHelper.getIns().sendDevOrder(dev, order, true);
 					}
 					TimeUnit.MILLISECONDS.sleep(REFRESH_INTERVAL);

@@ -33,7 +33,7 @@ public class DevCollectClimateContainerTest {
 	
 	@Test
 	public void testQueneOrder() {
-		assertEquals("$Qx10001:3:4:5#05", container.createQueueOrder());
+		assertEquals("$Qx10001:3:4:5#05", container.createQueryOrder());
 	}
 	
 	@Test

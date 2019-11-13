@@ -676,11 +676,32 @@ public class DevGroup {
 	public List<DevParam> findListDevParam(boolean visibility) {
         List<DevParam> listDev = new ArrayList<>();
         for (Device dev : getListDevice()) {
-            if(dev instanceof DevParam) {
+            listDev.addAll(findListDevParam(dev, visibility));
+        }
+        Collections.sort(listDev);
+        return listDev;
+    }
+	
+	private List<DevParam> findListDevParam(Device dev, boolean visibility) {
+	    List<DevParam> listDev = new ArrayList<>();
+        if(visibility) {
+            if(!dev.isVisibility()) {
+                return listDev;
+            }
+        }
+        if (dev instanceof DevHaveChild) {
+            for (Device childDev : ((DevHaveChild) dev).getListDev()) {
+                listDev.addAll(findListDevParam(childDev, visibility));
+            }
+        } else if (dev instanceof DevParam) {
+            if (visibility) {
+                if (dev.isVisibility()) {
+                    listDev.add((DevParam) dev);
+                }
+            } else {
                 listDev.add((DevParam) dev);
             }
         }
-        Collections.sort(listDev);
         return listDev;
     }
 

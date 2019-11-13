@@ -96,7 +96,7 @@ public class DevCollect extends Device implements IValueDevice{
 	}
 	
 	@Override
-	public String createQueueOrder() {
+	public String createQueryOrder() {
 		return OrderHelper.getOrderMsg(OrderHelper.QUERY_HEAD + getCoding() + OrderHelper.SEPARATOR + "8");
 	}
 	
@@ -113,7 +113,7 @@ public class DevCollect extends Device implements IValueDevice{
 	
 	@Override
 	public String createInitOrder() {
-		return createQueueOrder();
+		return createQueryOrder();
 	}
 
 	public String createPrecentOrder() {

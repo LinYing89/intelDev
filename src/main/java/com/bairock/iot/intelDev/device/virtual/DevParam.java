@@ -12,6 +12,7 @@ import javax.persistence.Transient;
 import com.bairock.iot.intelDev.device.DevStateHelper;
 import com.bairock.iot.intelDev.device.Device;
 import com.bairock.iot.intelDev.device.MainCodeHelper;
+import com.bairock.iot.intelDev.user.Util;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
@@ -80,7 +81,24 @@ public class DevParam extends Device implements VirTualDevice{
         }
     }
     
-    
+    @Override
+    public void handleSingleMsg(String singleMsg) {
+        if (null == singleMsg || singleMsg.isEmpty()) {
+            return;
+        }
+        if(singleMsg.startsWith("8")) {
+            try {
+                String strState = singleMsg.substring(1);
+                int iValue = Integer.parseInt(strState, 16);
+                double srcValue = iValue / 100f;
+                String strValue = Util.format2TwoScale(srcValue);
+                setValue(strValue);
+            } catch (Exception e) {
+                return;
+            }
+        }
+    }
+
     public Set<OnValueChangedListener> getSetOnValueChanged() {
         return setOnValueChanged;
     }

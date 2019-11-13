@@ -824,10 +824,31 @@ public class Device extends MyHome implements Comparable<Device>, IDevice {
 		void onGearNeedToAuto(Device dev, boolean gearNeedToAuto);
 	}
 
+	/**
+	 * 创建设置报文, 默认消息体标识符为8
+	 * @return
+	 */
+	public String createSetOrder(String value) {
+        return OrderHelper.getOrderMsg(OrderHelper.SET_HEAD + getCoding() + OrderHelper.SEPARATOR + "8" + value);
+    }
+	
+	/**
+	 * 创建设置报文
+	 * @param signal, 消息体标识符
+	 * @return
+	 */
+	public String createSetOrder(String signal, String value) {
+        return OrderHelper.getOrderMsg(OrderHelper.SET_HEAD + getCoding() + OrderHelper.SEPARATOR + signal + value);
+    }
+	
 	@Override
-	public String createQueueOrder() {
+	public String createQueryOrder() {
 		return OrderHelper.getOrderMsg(OrderHelper.QUERY_HEAD + getCoding() + OrderHelper.SEPARATOR + "2");
 	}
+	
+	public String createQueryOrder(String signal) {
+        return OrderHelper.getOrderMsg(OrderHelper.QUERY_HEAD + getCoding() + OrderHelper.SEPARATOR + signal);
+    }
 
 	@Override
 	public String createTurnLocalModelOrder(String ip, int port) {

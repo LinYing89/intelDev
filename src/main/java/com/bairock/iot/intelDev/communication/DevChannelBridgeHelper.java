@@ -7,7 +7,6 @@ import java.util.List;
 import com.bairock.iot.intelDev.device.Coordinator;
 import com.bairock.iot.intelDev.device.Device;
 import com.bairock.iot.intelDev.device.devswitch.SubDev;
-import com.bairock.iot.intelDev.user.IntelDevHelper;
 import com.bairock.iot.intelDev.user.User;
 
 public class DevChannelBridgeHelper {
@@ -15,7 +14,7 @@ public class DevChannelBridgeHelper {
 	private User user;
 
 	private int interval = 10 * 1000;
-	private DevHeartThread seekDeviceOnlineThread;
+//	private DevHeartThread seekDeviceOnlineThread;
 
 	private static DevChannelBridgeHelper ins = new DevChannelBridgeHelper();
 	public static String DEV_CHANNELBRIDGE_NAME = DeviceChannelBridge.class.getName();
@@ -315,22 +314,22 @@ public class DevChannelBridgeHelper {
 	 * 
 	 */
 	public void startSeekDeviceOnLineThread() {
-		if (null == seekDeviceOnlineThread || !seekDeviceOnlineThread.isRunning) {
-			seekDeviceOnlineThread = new DevHeartThread();
-			seekDeviceOnlineThread.isRunning = true;
-			IntelDevHelper.executeThread(seekDeviceOnlineThread);
-		}
+//		if (null == seekDeviceOnlineThread || !seekDeviceOnlineThread.isRunning) {
+//			seekDeviceOnlineThread = new DevHeartThread();
+//			seekDeviceOnlineThread.isRunning = true;
+//			IntelDevHelper.executeThread(seekDeviceOnlineThread);
+//		}
 	}
 
 	/**
 	 * 
 	 */
 	public void stopSeekDeviceOnLineThread() {
-		if (null != seekDeviceOnlineThread) {
-			seekDeviceOnlineThread.isRunning = false;
-			seekDeviceOnlineThread.interrupt();
-			seekDeviceOnlineThread = null;
-		}
+//		if (null != seekDeviceOnlineThread) {
+//			seekDeviceOnlineThread.isRunning = false;
+//			seekDeviceOnlineThread.interrupt();
+//			seekDeviceOnlineThread = null;
+//		}
 	}
 
 	public void channelInActive(String channelId) {

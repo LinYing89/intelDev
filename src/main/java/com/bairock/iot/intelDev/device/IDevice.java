@@ -60,7 +60,7 @@ public interface IDevice {
 	 */
 	String getDevOrder(String orderHead,String dctId);
 	
-	String createQueueOrder();
+	String createQueryOrder();
 	String createTurnLocalModelOrder(String ip, int port);
 	String createTurnRemoteModelOrder(String ip, int port);
 	String createAbnormalOrder();

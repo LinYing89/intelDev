@@ -288,11 +288,6 @@ public class DevChannelBridge {
 			dev.setDevStateId(DevStateHelper.DS_YI_CHANG);
 			return NO_REPONSE;
 		}
-		// if (dev.getLastOrder().equals(order)) {
-		// if (dev.getCommunicationInterval() < 5000 && noReponse > 0) {
-		// return ONE_ORDER_COMMUNICATION_OFTEN;
-		// }
-		// }
 		if (immediately) {
 			dev.setLastOrder(order);
 			dev.noResponsePlus();

@@ -37,7 +37,7 @@ public class DevCollectSignalContainer extends DevContainer implements XRoadDevi
 	}
 
 	@Override
-	public String createQueueOrder() {
+	public String createQueryOrder() {
 		return OrderHelper.getOrderMsg(OrderHelper.QUERY_HEAD + getCoding() + OrderHelper.SEPARATOR + "8");
 	}
 
